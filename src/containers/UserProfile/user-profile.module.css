@@ -1,0 +1,173 @@
+p,
+h3,
+label {
+  margin: 0;
+  padding: 0;
+}
+
+.Container {
+  max-width: 1300px;
+  margin: auto;
+  overflow: auto;
+  box-sizing: border-box;
+}
+
+.Header {
+  display: flex;
+  justify-content: start;
+  align-items: flex-start;
+  padding: 10px 15px;
+}
+
+.ProfilePic {
+  padding: 10px;
+  border: 5px solid #dfe3ee;
+  margin: 10px 15px;
+  border-radius: 5px;
+}
+
+.ProfilePic img {
+  max-width: 190px;
+  max-height: 190px;
+}
+
+.UserDetails {
+  flex-grow: 1;
+}
+
+.UserDetails h3 {
+  padding: 15px 0;
+}
+
+.CompanyLocation {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.Company,
+.Location {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  margin-right: 10px;
+}
+
+.Company p,
+.Location p {
+  padding: 0 5px;
+}
+
+.Skills,
+.Education {
+  display: flex;
+  justify-content: start;
+  margin: 10px 0;
+}
+
+.Skills label,
+.Education label {
+  width: 150px;
+}
+/* .Skills p,
+.Education p {
+  flex-grow: 2;
+} */
+
+.EditBtn {
+  margin-top: 10px;
+}
+
+.EditBtn button {
+  display: inline-block;
+  border: none;
+  background-color: #ffca28;
+  color: #fff;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.EditBtn button:hover {
+  background-color: #f5c431;
+}
+
+.ProfileContent {
+  display: flex;
+  justify-content: flex-start;
+  padding: 20px 0;
+}
+
+.SideBar {
+}
+
+.Connections {
+  padding: 10px;
+  margin: 10px 0;
+}
+
+.Connections ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.Connections ul li {
+  border-bottom: 1px dotted #ccc;
+  padding: 15px 0;
+}
+
+.Connections a {
+  color: #333;
+  text-decoration: none;
+}
+
+.Social {
+  text-align: center;
+  padding: 10px;
+  margin: 10px 0;
+}
+
+.Social ul {
+  display: flex;
+  list-style: none;
+}
+
+.Social ul li a {
+  color: #333;
+}
+
+.ProfileLink h4 {
+  margin: 0;
+  padding: 0;
+  padding-bottom: 10px;
+}
+.ProfileLink {
+  padding: 10px;
+  text-align: center;
+}
+
+.MainContent {
+  margin-left: 3rem;
+}
+
+.Heading {
+  background-color: #f4f4f4;
+  color: #333;
+}
+
+.BoxContent {
+  padding: 15px 5px;
+}
+
+.WorkExpDetails h3,
+.EducationDetails h3 {
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.CGPA {
+  display: flex;
+}
+
+.CGPA p {
+  margin-left: 10px;
+}

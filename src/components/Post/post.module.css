@@ -1,0 +1,90 @@
+.Post {
+  padding: 0.75rem;
+  margin: 15px auto;
+  text-align: center;
+  box-sizing: border-box;
+  width: 50%;
+  box-shadow: 0.2px 0.2px 2px 0.2px #ccc;
+  background-color: #dfe3ee;
+}
+
+.Author {
+  background-color: #f7f7f7;
+  text-align: center;
+  margin: 5px;
+  color: #4b545a;
+  padding: 5px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  border-radius: 5px;
+}
+
+.Author img {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  padding: 0 10px;
+}
+
+.AuthorDetails {
+  text-align: start;
+}
+
+.AuthorDetails h3,
+.AuthorDetails p {
+  margin: 0;
+  padding: 0;
+}
+
+.AuthorDetails p {
+  font-size: 13px;
+  color: #86949e;
+}
+
+.AuthorDetails p:hover {
+  text-decoration: underline;
+  cursor: pointer;
+  color: #75818a;
+}
+.PostText {
+  padding: 10px;
+  color: #333;
+}
+
+.PostTools a {
+  color: #7986cb;
+  margin: 0;
+  padding: 0;
+}
+
+.PostTools {
+  display: flex;
+  justify-content: flex-start;
+  padding: 10px;
+  background-color: #f7f7f7;
+  border-radius: 5px;
+}
+
+.PostBtn {
+  display: flex;
+  align-items: center;
+  background-color: #bfc0c0;
+  padding: 10px 15px;
+  margin: 0 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  box-sizing: border-box;
+  color: #3b5998;
+}
+.PostBtn small {
+  color: #777;
+  font-weight: bold;
+  font-size: 12px;
+  padding: 0 5px;
+}
+
+.PostBtn:hover {
+  background-color: #c5d2ec;
+}

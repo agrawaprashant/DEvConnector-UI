@@ -1,0 +1,28 @@
+.SignupForm {
+  text-align: center;
+  border: 1px solid #ccc;
+  width: 60%;
+  margin: 7rem auto;
+  padding: 15px;
+  box-sizing: border-box;
+}
+
+.SignupForm h3 {
+  color: rgb(92, 91, 91);
+}
+
+.SignupBtn {
+  display: inline-block;
+  padding: 10px 20px;
+  margin: auto;
+  margin-top: 10px;
+  border: none;
+  cursor: pointer;
+  background-color: #5ab75c;
+  color: #fff;
+  border-radius: 5px;
+}
+
+.SignupForm a {
+  color: #00aced;
+}
