@@ -1,0 +1,57 @@
+.Dashboard {
+  display: flex;
+  padding: 20px;
+  border-bottom: 1px solid #ccc;
+}
+
+.DashboardForm {
+  width: 100%;
+  margin: 0 10px;
+  margin-top: 15px;
+  max-width: 50%;
+}
+
+.DashbordFormElements {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.SaveBtn {
+  display: block;
+  border: none;
+  background-color: #5bc0de;
+  padding: 10px 50px;
+  color: #fff;
+  cursor: pointer;
+  margin: 20px auto;
+  grid-column-start: 1;
+  grid-column-end: 3;
+}
+
+.SaveBtn:hover {
+  background-color: #7bcce4;
+}
+.PhotoEdit {
+  margin: 0 30px;
+}
+.PhotoEdit .PhotoPickerBtn {
+  display: block;
+  color: #5bc0de;
+  font-weight: bold;
+  border: none;
+  background: none;
+  margin: auto;
+  padding: 10px 0;
+  cursor: pointer;
+  outline: none;
+}
+.ProfilePhoto {
+  border: 2px solid #ccc;
+  padding: 5px;
+  box-sizing: border-box;
+}
+
+.ProfilePhoto img {
+  max-height: 150px;
+  max-width: 150px;
+}

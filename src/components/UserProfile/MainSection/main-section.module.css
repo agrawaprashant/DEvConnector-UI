@@ -1,0 +1,44 @@
+.ProfileContent {
+  display: grid;
+  grid-template-columns: 1fr 3fr 1fr;
+  padding: 20px 0;
+}
+
+.SideBar {
+}
+
+.Connections {
+  padding: 10px;
+  margin: 10px 0;
+}
+
+.Connections ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.Connections ul li {
+  border-bottom: 1px dotted #ccc;
+  padding: 15px 0;
+}
+
+.Connections a {
+  color: #333;
+  text-decoration: none;
+}
+
+.ProfileLink h4 {
+  margin: 0;
+  padding: 0;
+  padding-bottom: 10px;
+}
+.ProfileLink {
+  padding: 10px;
+  text-align: center;
+}
+
+.MainContent {
+  margin-left: 2rem;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}

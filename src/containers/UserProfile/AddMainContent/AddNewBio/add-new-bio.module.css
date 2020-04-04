@@ -1,0 +1,20 @@
+.BioForm {
+  max-width: 500px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+}
+
+.BioForm button {
+  border: none;
+  background-color: #5cb85c;
+  padding: 10px 15px;
+  color: #fff;
+  cursor: pointer;
+  outline: none;
+  margin-top: 8px;
+}
+
+.BioForm button:hover {
+  background-color: #77d177;
+}

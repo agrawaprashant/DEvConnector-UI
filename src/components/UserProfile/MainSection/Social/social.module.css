@@ -1,0 +1,26 @@
+.Social {
+  text-align: center;
+  padding: 10px;
+  margin: 10px 0;
+}
+
+.Social ul {
+  display: flex;
+  list-style: none;
+}
+
+.Social ul li a {
+  color: #333;
+}
+
+.EditSocialBtn {
+  display: block;
+  background: none;
+  color: #3366ff;
+  font-size: 13px;
+  border: none;
+}
+
+.EditSocialBtn:hover {
+  text-decoration: underline;
+}

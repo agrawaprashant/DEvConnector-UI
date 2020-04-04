@@ -143,3 +143,67 @@ export const logout = () => {
     dispatch(authLogout());
   };
 };
+
+const addBioStart = () => {
+  return {
+    type: actionTypes.ADD_BIO_START
+  };
+};
+const addBioSuccess = profileData => {
+  return {
+    type: actionTypes.ADD_BIO_SUCCESS,
+    payload: {
+      profileData: profileData
+    }
+  };
+};
+const addBioFailed = error => {
+  return {
+    type: actionTypes.ADD_BIO_FAILED,
+    payload: {
+      error: error
+    }
+  };
+};
+const addEducationStart = () => {
+  return {
+    type: actionTypes.ADD_EDUCATION_START
+  };
+};
+const addEducationSuccess = profileData => {
+  return {
+    type: actionTypes.ADD_EDUCATION_SUCCESS,
+    payload: {
+      profileData: profileData
+    }
+  };
+};
+const addEducationFailed = error => {
+  return {
+    type: actionTypes.ADD_EDUCATION_FAILED,
+    payload: {
+      error: error
+    }
+  };
+};
+const addExperienceStart = () => {
+  return {
+    type: actionTypes.ADD_EXPERIENCE_START
+  };
+};
+const addExperienceSuccess = profileData => {
+  return {
+    type: actionTypes.ADD_EXPERIENCE_SUCCESS,
+    payload: {
+      profileData: profileData
+    }
+  };
+};
+const addExpirienceFailed = error => {
+  return {
+    type: actionTypes.ADD_EXPERIENCE_FAILED,
+    payload: {
+      error: error
+    }
+  };
+};

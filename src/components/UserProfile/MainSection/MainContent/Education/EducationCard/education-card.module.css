@@ -1,0 +1,66 @@
+.EducationCard {
+  max-width: 90%;
+  margin: auto;
+  border: 1px solid #ccc;
+  background-color: #f7f7f7;
+  padding: 10px;
+  box-sizing: border-box;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.EducationCard h3 {
+  color: #252c33;
+  font-size: 18px;
+}
+
+.EducationCard p {
+  color: #46535e;
+  font-size: 14px;
+}
+
+.EducationCard small {
+  color: #9ca3a8;
+  font-size: 12px;
+}
+
+.ExtraContent {
+  margin-top: 5px;
+}
+
+.ExtraContent p {
+  font-size: 16px;
+}
+
+.Buttons {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.EditBtn {
+  border: none;
+  background: none;
+  cursor: pointer;
+  display: inline-block;
+  color: #ccc;
+  outline: none;
+  padding: 0 10px;
+}
+
+.EditBtn:hover {
+  color: #777;
+}
+
+.DeleteBtn {
+  border: none;
+  background: none;
+  cursor: pointer;
+  display: inline-block;
+  color: #d9534f;
+  outline: none;
+  padding: 0 10px;
+}
+
+.DeleteBtn:hover {
+  color: #fa4640;
+}

@@ -24,21 +24,21 @@
   align-items: center;
 }
 
-li {
+.Navbar li {
   margin: 0 10px;
 }
 
-input,
-a {
+.Navbar input,
+.Navbar a {
   padding: 10px;
 }
 
-input {
+.Navbar input {
   border: none;
   background: none;
 }
 
-input:focus {
+.Navbar input:focus {
   outline: none;
 }
 

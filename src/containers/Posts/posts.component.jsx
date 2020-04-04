@@ -25,6 +25,7 @@ class Posts extends React.Component {
   componentDidMount() {
     if (this.props.token) {
       this.props.onFetchPosts(this.props.token);
+      this.props.onFetchUserAuthData(this.props.token);
     }
   }
   render() {
@@ -53,7 +54,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onFetchPosts: token => dispatch(actions.fetchPosts(token))
+    onFetchPosts: token => dispatch(actions.fetchPosts(token)),
+    onFetchUserAuthData: token => dispatch(actions.fetchUser(token))
   };
 };
 

@@ -1,0 +1,71 @@
+.AddWorkForm {
+  padding: 15px;
+  max-width: 50%;
+  margin: auto;
+  background-color: #6d4d0836;
+  border-radius: 10px;
+}
+
+.FormGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.FormGroup label {
+  margin: 10px 0;
+  color: #444;
+  font-size: 18px;
+}
+
+.FormControl {
+  max-width: 100%;
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  color: #666;
+}
+
+.Invalid {
+  border: 1px solid #d9534f;
+}
+
+.FormGroup textarea {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 15px;
+}
+
+.Buttons {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.CancelButton {
+  background: none;
+  border: none;
+  color: #d9534f;
+  display: inline-block;
+  padding: 8px 15px;
+  cursor: pointer;
+  font-weight: bold;
+  outline: none;
+}
+
+.CancelButton:hover {
+  color: #a09a99;
+}
+
+.SaveButton {
+  background-color: #5cb85c;
+  display: inline-block;
+  padding: 8px 15px;
+  cursor: pointer;
+  color: #fff;
+  border: none;
+  font-weight: bold;
+}
+
+.SaveButton:hover {
+  background-color: #6cbf6c;
+}

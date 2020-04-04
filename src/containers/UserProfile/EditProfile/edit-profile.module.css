@@ -1,0 +1,11 @@
+.MainContent {
+  display: flex;
+}
+
+.Main {
+  width: 50%;
+}
+
+.GithubEdit {
+  margin: 20px auto;
+}

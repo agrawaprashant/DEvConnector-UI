@@ -1,0 +1,20 @@
+.SkillForm {
+  max-width: 500px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+}
+
+.SkillForm button {
+  border: none;
+  background-color: #5cb85c;
+  padding: 10px 15px;
+  color: #fff;
+  cursor: pointer;
+  outline: none;
+  margin-top: 8px;
+}
+
+.SkillForm button:hover {
+  background-color: #77d177;
+}

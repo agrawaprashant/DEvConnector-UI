@@ -1,0 +1,33 @@
+.ProfileNotFound {
+  height: 30vh;
+  border: 1px solid #ccc;
+  max-width: 70%;
+  margin: 20px auto;
+  padding: 15px;
+  color: #333;
+  background-color: #dfe3ee;
+}
+
+.ProfileNotFoundContent {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.ProfileCreateBtn {
+  display: inline-block;
+  border: none;
+  width: 30%;
+  background-color: #74d600;
+  padding: 15px;
+  color: #fff;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.ProfileCreateBtn:hover {
+  background-color: #f5c431;
+}

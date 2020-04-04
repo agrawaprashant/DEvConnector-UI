@@ -8,6 +8,7 @@ import SignUp from "./containers/Auth/Signup/signup.component";
 import Profile from "./containers/UserProfile/user-profile.component";
 import Logout from "./containers/Auth/Logout/logout.component";
 import Login from "./containers/Auth/Login/login.component";
+import EditProfile from "./containers/UserProfile/EditProfile/edit-profile.component";
 class App extends React.Component {
   render() {
     return (
@@ -16,6 +17,7 @@ class App extends React.Component {
           <Route path="/signup" component={SignUp} />
           <Route path="/login" component={Login} />
           <Route path="/profile" component={Profile} />
+          <Route path="/edit-profile" component={EditProfile} />
           <Route path="/logout" component={Logout} />
           <Route path="/" exact component={Posts} />
         </Layout>

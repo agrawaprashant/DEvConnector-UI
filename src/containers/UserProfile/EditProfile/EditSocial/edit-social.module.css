@@ -1,0 +1,19 @@
+.SaveBtn {
+  display: block;
+  border: none;
+  background-color: #5bc0de;
+  padding: 10px 50px;
+  color: #fff;
+  cursor: pointer;
+  margin: 20px auto;
+  grid-column-start: 1;
+  grid-column-end: 3;
+}
+
+.SaveBtn:hover {
+  background-color: #7bcce4;
+}
+
+.SocialForm {
+  padding: 10px;
+}

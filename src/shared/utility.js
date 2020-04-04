@@ -14,3 +14,21 @@ export const setAuthorizationToken = token => {
     delete axios.defaults.headers.common["x-auth-token"];
   }
 };
+
+export const buildFormControl = (
+  elementType,
+  elementConfig,
+  value,
+  validationRules,
+  styles
+) => {
+  return {
+    elementType: elementType,
+    elementConfig: elementConfig,
+    value: value.value,
+    valid: false,
+    validationRules: validationRules,
+    touched: false,
+    styles: styles
+  };
+};
