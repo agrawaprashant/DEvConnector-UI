@@ -5,16 +5,36 @@
   align-items: center;
 }
 
-.SkillForm button {
+.BtnArea {
+  display: flex;
+  align-items: center;
+}
+
+.SaveBtn {
   border: none;
   background-color: #5cb85c;
-  padding: 10px 15px;
+  padding: 8px 15px;
   color: #fff;
+  cursor: pointer;
+  outline: none;
+  margin-top: 8px;
+  outline: none;
+}
+
+.CancelBtn {
+  border: none;
+  background: none;
+  padding: 8px 15px;
+  color: #d9534f;
   cursor: pointer;
   outline: none;
   margin-top: 8px;
 }
 
-.SkillForm button:hover {
+.SaveBtn:hover {
   background-color: #77d177;
+}
+
+.CancelBtn:hover {
+  color: #ff6a65;
 }

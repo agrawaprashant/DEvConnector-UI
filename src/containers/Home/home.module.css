@@ -1,0 +1,53 @@
+.HomeAuth {
+  background: url("../../assets/img/showcase.jpg") no-repeat center top/cover;
+  height: 89.2vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.HomeContent h1 {
+  margin: 0;
+  padding: 0;
+  color: #fff;
+  font-size: 40px;
+}
+
+.HomeContent a {
+  text-decoration: none;
+  padding: 10px 15px;
+  margin: 20px 10px;
+  /* background-color: #008080; */
+  border: 1px solid #ccc;
+  color: #ccc;
+  border-radius: 5px;
+}
+
+.HomeContent a:hover {
+  background-color: #008080;
+  color: #fff;
+  /* border: none; */
+  border: 1px solid #008080;
+}
+
+.HomeContent {
+  z-index: 2;
+}
+
+.BtnArea {
+  display: flex;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.HomeDarkOverlay {
+  height: 89.2vh;
+  width: 100vw;
+  position: absolute;
+  top: 72px;
+  left: 0;
+  background-color: #17072b;
+  opacity: 0.7;
+  z-index: 1;
+}

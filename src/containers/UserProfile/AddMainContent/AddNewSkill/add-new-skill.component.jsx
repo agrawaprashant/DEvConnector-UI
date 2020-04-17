@@ -11,33 +11,33 @@ class AddNewSkill extends React.Component {
       skills: buildFormControl(
         "input",
         { placeholder: "Enter skills", type: "text" },
-        { value: "" },
+        { value: this.props.skills ? this.props.skills : "" },
         { required: true }
-      )
-    }
+      ),
+    },
   };
 
-  inputChangedHandler = event => {
+  inputChangedHandler = (event) => {
     const updatedSkills = updateObject(this.state.addSkillForm.skills, {
       value: event.target.value,
       valid: checkValidity(
         event.target.value,
         this.state.addSkillForm.skills.validationRules
       ),
-      touched: true
+      touched: true,
     });
 
     const updatedForm = updateObject(this.state.addSkillForm, {
-      skills: updatedSkills
+      skills: updatedSkills,
     });
 
     this.setState({ addSkillForm: updatedForm });
   };
 
-  formSubmitHandler = event => {
+  formSubmitHandler = (event) => {
     event.preventDefault();
     const skillData = {
-      skills: this.state.addSkillForm.skills.value
+      skills: this.state.addSkillForm.skills.value,
     };
     this.props.onAddSkills(this.props.token, skillData);
   };
@@ -55,22 +55,28 @@ class AddNewSkill extends React.Component {
     );
     return (
       <form onSubmit={this.formSubmitHandler} className={classes.SkillForm}>
-        {formControl} <button>Save</button>
+        {formControl}
+        <div className={classes.BtnArea}>
+          <button className={classes.SaveBtn}>Save</button>
+          <button className={classes.CancelBtn} onClick={this.props.cancel}>
+            Cancel
+          </button>
+        </div>
       </form>
     );
   }
 }
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     onAddSkills: (token, skillData) =>
-      dispatch(actions.addSkills(token, skillData))
+      dispatch(actions.addSkills(token, skillData)),
   };
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    token: state.auth.token
+    token: state.auth.token,
   };
 };
 

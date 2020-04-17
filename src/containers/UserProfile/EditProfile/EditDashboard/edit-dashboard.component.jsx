@@ -15,7 +15,7 @@ class EditDashboard extends React.Component {
         {
           value: this.props.data.profileData
             ? this.props.data.profileData.company
-            : ""
+            : "",
         },
         {},
         { iconClass: "far fa-building" }
@@ -26,7 +26,7 @@ class EditDashboard extends React.Component {
         {
           value: this.props.data.profileData
             ? this.props.data.profileData.location
-            : ""
+            : "",
         },
         {},
         { iconClass: "fas fa-map-marker-alt" }
@@ -37,7 +37,7 @@ class EditDashboard extends React.Component {
         {
           value: this.props.data.profileData
             ? this.props.data.profileData.handle
-            : ""
+            : "",
         },
         { required: true },
         { iconClass: "fas fa-at" }
@@ -48,12 +48,12 @@ class EditDashboard extends React.Component {
         {
           value: this.props.data.profileData
             ? this.props.data.profileData.status
-            : ""
+            : "",
         },
         {},
         { iconClass: "far fa-id-badge" }
-      )
-    }
+      ),
+    },
   };
 
   inputChangedHandler = (event, controlName) => {
@@ -66,17 +66,17 @@ class EditDashboard extends React.Component {
       {
         value: event.target.value,
         valid: valid,
-        touched: true
+        touched: true,
       }
     );
     let updatedForm = updateObject(this.state.dashBoardForm, {
-      [controlName]: updatedFormControl
+      [controlName]: updatedFormControl,
     });
 
     this.setState({ dashBoardForm: updatedForm });
   };
 
-  onFormSubmit = event => {
+  onFormSubmit = (event) => {
     event.preventDefault();
     let userEnterdData = {};
     for (let key in this.state.dashBoardForm) {
@@ -86,7 +86,7 @@ class EditDashboard extends React.Component {
       }
     }
 
-    this.props.onEditProfile(userEnterdData, this.props.data.token);
+    this.props.onEditProfile(userEnterdData, this.props.token);
   };
 
   render() {
@@ -99,10 +99,10 @@ class EditDashboard extends React.Component {
         value: this.state.dashBoardForm[key].value,
         valid: this.state.dashBoardForm[key].valid,
         touched: this.state.dashBoardForm[key].touched,
-        styles: this.state.dashBoardForm[key].styles
+        styles: this.state.dashBoardForm[key].styles,
       });
     }
-    let formElements = formControls.map(control => {
+    let formElements = formControls.map((control) => {
       return (
         <InputWithIcon
           key={control.controlName}
@@ -112,7 +112,7 @@ class EditDashboard extends React.Component {
           valid={control.valid}
           value={control.value}
           touched={control.touched}
-          changed={event =>
+          changed={(event) =>
             this.inputChangedHandler(event, control.controlName)
           }
         />
@@ -143,11 +143,17 @@ class EditDashboard extends React.Component {
   }
 }
 
-const mapDispatchToProps = dispatch => {
+const mapStateToProps = (state) => {
   return {
-    onEditProfile: (profileData, token) =>
-      dispatch(actions.editProfile(profileData, token))
+    token: state.auth.token,
   };
 };
 
-export default connect(null, mapDispatchToProps)(EditDashboard);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onEditProfile: (profileData, token) =>
+      dispatch(actions.editProfile(profileData, token)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(EditDashboard);

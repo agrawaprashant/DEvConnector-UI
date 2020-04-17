@@ -9,35 +9,35 @@ class AddNewBio extends React.Component {
   state = {
     addBioForm: {
       bio: buildFormControl(
-        "input",
+        "textarea",
         { placeholder: "Enter Bio", type: "text" },
-        { value: "" },
+        { value: this.props.bio ? this.props.bio : "" },
         { required: true }
-      )
-    }
+      ),
+    },
   };
 
-  inputChangedHandler = event => {
+  inputChangedHandler = (event) => {
     const updatedBio = updateObject(this.state.addBioForm.bio, {
       value: event.target.value,
       valid: checkValidity(
         event.target.value,
         this.state.addBioForm.bio.validationRules
       ),
-      touched: true
+      touched: true,
     });
 
     const updatedForm = updateObject(this.state.addBioForm, {
-      bio: updatedBio
+      bio: updatedBio,
     });
 
     this.setState({ addBioForm: updatedForm });
   };
 
-  formSubmitHandler = event => {
+  formSubmitHandler = (event) => {
     event.preventDefault();
     const bioData = {
-      bio: this.state.addBioForm.bio.value
+      bio: this.state.addBioForm.bio.value,
     };
     this.props.onAddBio(this.props.token, bioData);
   };
@@ -55,21 +55,27 @@ class AddNewBio extends React.Component {
     );
     return (
       <form onSubmit={this.formSubmitHandler} className={classes.BioForm}>
-        {formControl} <button>Save</button>
+        {formControl}
+        <div className={classes.BtnArea}>
+          <button className={classes.SaveBtn}>Save</button>
+          <button className={classes.CancelBtn} onClick={this.props.cancel}>
+            Cancel
+          </button>
+        </div>
       </form>
     );
   }
 }
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    onAddBio: (token, bioData) => dispatch(actions.addBio(token, bioData))
+    onAddBio: (token, bioData) => dispatch(actions.addBio(token, bioData)),
   };
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    token: state.auth.token
+    token: state.auth.token,
   };
 };
 

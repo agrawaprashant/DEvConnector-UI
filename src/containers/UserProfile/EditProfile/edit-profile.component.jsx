@@ -22,7 +22,7 @@ class EditProfile extends React.Component {
 
     let dashboardData = {
       name: this.props.user.name,
-      avatar: this.props.user.avatar
+      avatar: this.props.user.avatar,
     };
 
     if (this.props.profileNotFound) {
@@ -51,14 +51,15 @@ class EditProfile extends React.Component {
         company: this.props.profile.company,
         status: this.props.profile.status,
         location: this.props.profile.location,
-        handle: this.props.profile.handle
+        handle: this.props.profile.handle,
+        social: this.props.profile.social,
       };
 
       let mainSectionData = {
         education: this.props.profile.education,
         skills: this.props.profile.skills,
         experience: this.props.profile.experience,
-        bio: this.props.profile.bio
+        bio: this.props.profile.bio,
       };
 
       editProfile = (
@@ -72,7 +73,7 @@ class EditProfile extends React.Component {
                 <Social
                   data={{
                     social: this.props.profile.social,
-                    github: this.props.profile.githubusername
+                    github: this.props.profile.githubusername,
                   }}
                 />
               ) : (
@@ -94,19 +95,19 @@ class EditProfile extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     token: state.auth.token,
     user: state.auth.user,
     profile: state.profile.profileData,
     error: state.profile.error,
-    profileNotFound: state.profile.profileNotFound
+    profileNotFound: state.profile.profileNotFound,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    onFetchProfile: token => dispatch(actions.fetchUserProfile(token))
+    onFetchProfile: (token) => dispatch(actions.fetchUserProfile(token)),
   };
 };
 

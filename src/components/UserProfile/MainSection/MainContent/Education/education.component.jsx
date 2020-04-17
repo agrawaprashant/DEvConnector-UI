@@ -1,19 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import AddEducationBox from "./AddEducationBox/add-education-box.component";
 import AddNewEducation from "../../../../../containers/UserProfile/AddMainContent/AddNewEducation/add-new-education.component";
 import classes from "./education.module.css";
 import EducationCard from "./EducationCard/education-card.component";
-import { Route, Switch, withRouter } from "react-router-dom";
 
-const education = (props) => {
-  let newEducation = (
-    <Switch>
-      <Route
-        path={props.match.url + "/add-new-education"}
-        component={AddNewEducation}
-      />
-      <Route path={props.match.url} component={AddEducationBox} />
-    </Switch>
+const Education = (props) => {
+  const [newEducationComponent, setNewEducationComponent] = useState(null);
+
+  const cancelClickedHandler = () => {
+    setNewEducationComponent(null);
+  };
+  const addEducationClickedHandler = () => {
+    setNewEducationComponent(<AddNewEducation cancel={cancelClickedHandler} />);
+  };
+  let newEducation = newEducationComponent ? (
+    newEducationComponent
+  ) : (
+    <AddEducationBox clicked={addEducationClickedHandler} />
   );
   let education = props.data.map((ed) => {
     return <EducationCard key={ed._id} data={ed} />;
@@ -29,4 +32,4 @@ const education = (props) => {
   );
 };
 
-export default withRouter(education);
+export default Education;

@@ -230,7 +230,7 @@ class AddNewEducation extends React.Component {
           <div className={classes.Buttons}>
             <button
               type="button"
-              onClick={() => this.props.history.push("/profile")}
+              onClick={this.props.cancel}
               className={classes.CancelButton}
             >
               Cancel

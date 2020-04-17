@@ -1,6 +1,7 @@
 .EducationCard {
   max-width: 90%;
   margin: auto;
+  margin-bottom: 20px;
   border: 1px solid #ccc;
   background-color: #f7f7f7;
   padding: 10px;
@@ -56,7 +57,7 @@
   background: none;
   cursor: pointer;
   display: inline-block;
-  color: #d9534f;
+  color: #ccc;
   outline: none;
   padding: 0 10px;
 }

@@ -1,0 +1,15 @@
+.AddMoreEducation {
+  border: none;
+  background-color: #428bca;
+  padding: 10px 20px;
+  color: #fff;
+  cursor: pointer;
+  display: block;
+  margin: auto;
+  margin-top: 30px;
+}
+
+.AddMoreEducation:hover {
+  background-color: #4199e6;
+  color: #eee;
+}

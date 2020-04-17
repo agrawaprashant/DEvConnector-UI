@@ -1,0 +1,14 @@
+.EditBioBtn {
+  display: block;
+  border: none;
+  background-color: #428bca;
+  outline: none;
+  cursor: pointer;
+  color: #fff;
+  padding: 8px 15px;
+  margin: 10px auto;
+}
+
+.EditBioBtn:hover {
+  background-color: #42a1f3;
+}

@@ -1,6 +1,7 @@
 .WorkExpCard {
   max-width: 90%;
   margin: auto;
+  margin-bottom: 20px;
   border: 1px solid #ccc;
   background-color: #f7f7f7;
   padding: 10px;
@@ -9,26 +10,26 @@
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-.EducationCard h3 {
+.WorkExpCard h3 {
   color: #252c33;
   font-size: 18px;
 }
 
-.EducationCard p {
+.WorkExpCard p {
   color: #46535e;
   font-size: 14px;
 }
 
-.EducationCard small {
+.WorkExpCard small {
   color: #9ca3a8;
   font-size: 12px;
 }
 
-.ExtraContent {
+.WorkExpCard {
   margin-top: 5px;
 }
 
-.ExtraContent p {
+.WorkExpCard p {
   font-size: 16px;
 }
 
@@ -56,7 +57,7 @@
   background: none;
   cursor: pointer;
   display: inline-block;
-  color: #d9534f;
+  color: #ccc;
   outline: none;
   padding: 0 10px;
 }

@@ -1,5 +1,6 @@
 import React from "react";
 import Post from "../../components/Post/post.component";
+import CreatePost from "./CreatePost/create-post.component";
 import * as actions from "../../store/actions/actions";
 import { connect } from "react-redux";
 
@@ -10,16 +11,16 @@ class Posts extends React.Component {
         text: "Hello World!",
         user: "agrawaprashant",
         name: "Prashant Agrawal",
-        id: "post1"
+        id: "post1",
       },
       {
         text:
           "Hello World! Hello World! Hello World! Hello World! Hello World! Hello World! Hello World! Hello World! Hello World! Hello World! Hello World! Hello World! Hello World!",
         user: "johndoe@test.com",
         name: "John Doe",
-        id: "post2"
-      }
-    ]
+        id: "post2",
+      },
+    ],
   };
 
   componentDidMount() {
@@ -31,31 +32,36 @@ class Posts extends React.Component {
   render() {
     let posts = null;
     if (this.props.posts.length === 0) {
-      posts = this.state.posts.map(post => {
+      posts = this.state.posts.map((post) => {
         return <Post key={post.id} postData={post} />;
       });
     } else {
-      posts = this.props.posts.map(post => {
+      posts = this.props.posts.map((post) => {
         return <Post key={post._id} postData={post} />;
       });
     }
-    return <div>{posts}</div>;
+    return (
+      <div>
+        <CreatePost />
+        {posts}
+      </div>
+    );
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     token: state.auth.token,
     posts: state.post.posts,
     loading: state.post.loading,
-    error: state.post.err
+    error: state.post.err,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    onFetchPosts: token => dispatch(actions.fetchPosts(token)),
-    onFetchUserAuthData: token => dispatch(actions.fetchUser(token))
+    onFetchPosts: (token) => dispatch(actions.fetchPosts(token)),
+    onFetchUserAuthData: (token) => dispatch(actions.fetchUser(token)),
   };
 };
 

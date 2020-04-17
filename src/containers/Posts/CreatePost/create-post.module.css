@@ -1,0 +1,79 @@
+.CreatePostBox {
+  width: 45%;
+  margin: auto;
+  margin-bottom: 50px;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  /* position: sticky;
+  top: 0; */
+  background-color: #faca76;
+}
+
+.CreatePostInput {
+  width: 90%;
+  display: inline-block;
+  padding: 30px 15px;
+  margin: auto;
+  border: 1px solid #ccc;
+  background-color: #f4f4f4;
+}
+
+.CreatePostTools {
+  padding: 10px;
+  width: 90%;
+  margin: auto;
+  display: flex;
+  justify-content: flex-start;
+  /* background-color: #003e51; */
+  background: #076585; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #fff,
+    #3096b8
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #fff,
+    #9fd1e0
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  opacity: 0.8;
+}
+
+.Btn {
+  display: inline-block;
+  padding: 10px 10px;
+  border: none;
+  margin: 0 5px;
+  cursor: pointer;
+  color: #fff;
+  outline: none;
+  border-radius: 5px;
+}
+
+.AddPostBtn {
+  background-color: #a9c23f;
+}
+
+.AddPostBtn:hover {
+  background-color: #cae260;
+}
+
+.AddPictureBtn {
+  background-color: #00c1e7;
+}
+
+.AddPictureBtn:hover {
+  background-color: #11d3fa;
+}
+
+.TagPeopleBtn {
+  background-color: #87189d;
+}
+
+.TagPeopleBtn:hover {
+  background-color: #b239ca;
+}

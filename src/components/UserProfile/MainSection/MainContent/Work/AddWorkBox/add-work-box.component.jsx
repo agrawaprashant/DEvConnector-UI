@@ -4,10 +4,7 @@ import { withRouter } from "react-router-dom";
 
 const workBox = (props) => {
   return (
-    <button
-      className={classes.AddBtn}
-      onClick={() => props.history.push(props.match.url + "/add-new-work")}
-    >
+    <button className={classes.AddBtn} onClick={props.clicked}>
       Add Work
     </button>
   );

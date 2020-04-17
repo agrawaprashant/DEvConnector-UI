@@ -1,18 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import AddSkillsBox from "./AddSkillsBox/add-skills-box.component";
 import AddNewSKill from "../../../../../containers/UserProfile/AddMainContent/AddNewSkill/add-new-skill.component";
 import classes from "./skills.module.css";
-import { Route, Switch, withRouter } from "react-router-dom";
-const skills = props => {
-  let newSkill = (
-    <Switch>
-      <Route
-        path={props.match.url + "/add-new-skill"}
-        component={AddNewSKill}
-      />
-      <Route path={props.match.url} component={AddSkillsBox} />
-    </Switch>
+
+const Skills = (props) => {
+  const [newSkillComponent, setNewSkillComponent] = useState(null);
+
+  const addSkillsClickedHandler = () => {
+    setNewSkillComponent(<AddNewSKill cancel={cancelClickedHandler} />);
+  };
+
+  const cancelClickedHandler = () => {
+    setNewSkillComponent(null);
+  };
+
+  let newSkill = newSkillComponent ? (
+    newSkillComponent
+  ) : (
+    <AddSkillsBox clicked={addSkillsClickedHandler} />
   );
+
   return (
     <div className={classes.Content}>
       {props.data.length !== 0 ? (
@@ -26,4 +33,4 @@ const skills = props => {
   );
 };
 
-export default withRouter(skills);
+export default Skills;

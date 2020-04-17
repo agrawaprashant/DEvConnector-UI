@@ -70,6 +70,8 @@ const editUserProfileFailed = (error) => {
 
 export const editProfile = (profileData, token) => {
   return async (dispatch) => {
+    console.log(profileData);
+    console.log(token);
     try {
       dispatch(editUserProfileStart());
       setAuthorizationToken(token);
@@ -79,6 +81,7 @@ export const editProfile = (profileData, token) => {
       );
       dispatch(editUserProfileSuccess(result.data));
     } catch (err) {
+      console.log(err);
       dispatch(editUserProfileFailed(err.response.data));
     }
   };
@@ -235,6 +238,81 @@ export const addExperience = (token, expData) => {
     } catch (err) {
       console.log(err);
       dispatch(addExperienceFailed(err.response.data));
+    }
+  };
+};
+
+const deleteEducationStart = () => {
+  return {
+    type: actions.DELETE_EDUCATION_START,
+  };
+};
+const deleteEducationSuccess = (profileData) => {
+  return {
+    type: actions.DELETE_EDUCATION_SUCCESS,
+    payload: {
+      profileData: profileData,
+    },
+  };
+};
+const deleteEducationFailed = (error) => {
+  return {
+    type: actions.DELETE_EDUCATION_FAILED,
+    payload: {
+      error: error,
+    },
+  };
+};
+
+export const deleteEducation = (token, educationId) => {
+  return async (dispatch) => {
+    try {
+      dispatch(deleteEducationStart());
+      setAuthorizationToken(token);
+      const result = await axios.put(
+        "http://localhost:5000/api/profile/education/" + educationId
+      );
+      dispatch(deleteEducationSuccess(result.data));
+    } catch (err) {
+      console.log(err);
+      dispatch(deleteEducationFailed(err.response.data));
+    }
+  };
+};
+const deleteExperienceStart = () => {
+  return {
+    type: actions.DELETE_EXPERIENCE_START,
+  };
+};
+const deleteExperienceSuccess = (profileData) => {
+  return {
+    type: actions.DELETE_EXPERIENCE_SUCCESS,
+    payload: {
+      profileData: profileData,
+    },
+  };
+};
+const deleteExperienceFailed = (error) => {
+  return {
+    type: actions.DELETE_EXPERIENCE_FAILED,
+    payload: {
+      error: error,
+    },
+  };
+};
+
+export const deleteExperience = (token, expId) => {
+  return async (dispatch) => {
+    try {
+      dispatch(deleteExperienceStart());
+      setAuthorizationToken(token);
+      const result = await axios.put(
+        "http://localhost:5000/api/profile/experience/" + expId
+      );
+      dispatch(deleteExperienceSuccess(result.data));
+    } catch (err) {
+      console.log(err);
+      dispatch(deleteExperienceFailed(err.response.data));
     }
   };
 };

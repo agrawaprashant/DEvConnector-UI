@@ -3,7 +3,7 @@ import React from "react";
 import { Switch, Route } from "react-router-dom";
 
 import Layout from "./hoc/Layout/layout";
-import Posts from "./containers/Posts/posts.component";
+import Home from "./containers/Home/home.component";
 import SignUp from "./containers/Auth/Signup/signup.component";
 import Profile from "./containers/UserProfile/user-profile.component";
 import Logout from "./containers/Auth/Logout/logout.component";
@@ -19,10 +19,11 @@ class App extends React.Component {
           <Route path="/profile" component={Profile} />
           <Route path="/edit-profile" component={EditProfile} />
           <Route path="/logout" component={Logout} />
-          <Route path="/" exact component={Posts} />
+          <Route path="/" exact component={Home} />
         </Layout>
       </Switch>
     );
   }
 }
+
 export default App;

@@ -1,0 +1,25 @@
+.EditSkills {
+  text-align: center;
+  padding: 15px;
+}
+
+.EditSkills p {
+  font-size: 16px;
+  color: #777;
+}
+
+.EditBtn {
+  border: none;
+  background-color: #428bca;
+  color: #fff;
+  outline: none;
+  display: block;
+  margin: auto;
+  cursor: pointer;
+  padding: 8px 15px;
+  margin-top: 15px;
+}
+
+.EditBtn:hover {
+  background-color: #58acf5;
+}
