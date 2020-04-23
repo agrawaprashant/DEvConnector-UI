@@ -1,0 +1,21 @@
+.LikeBtn {
+  background: none;
+  border: none;
+  padding: 5px 10px;
+  font-size: 20px;
+  cursor: pointer;
+  outline: none;
+  color: #ccc;
+}
+
+.LikeBtn:hover {
+  color: #172d67;
+}
+
+.LikeBtn small {
+  margin-left: 5px;
+}
+
+.Highlight {
+  color: #0069b3;
+}

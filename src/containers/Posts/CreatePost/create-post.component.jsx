@@ -53,7 +53,7 @@ class CreatePost extends React.Component {
           placeholder="Share Something..."
           onChange={(event) => this.inputChangedHandler(event, "postContent")}
         />
-        <hr />
+        <br />
         <div className={classes.CreatePostTools}>
           <button
             className={`${classes.AddPostBtn} ${classes.Btn}`}

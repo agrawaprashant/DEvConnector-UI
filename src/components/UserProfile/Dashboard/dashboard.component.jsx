@@ -50,7 +50,7 @@ const dashboard = (props) => {
             {props.data.profileData.skills.length !== 0 ? (
               <p>{props.data.profileData.skills}</p>
             ) : (
-              <a href="#">Add Skills</a>
+              <a href="/">Add Skills</a>
             )}
           </div>
           <div className={classes.Education}>
@@ -58,7 +58,7 @@ const dashboard = (props) => {
             {props.data.profileData.education.length !== 0 ? (
               <p>{props.data.profileData.education[0].school}</p>
             ) : (
-              <a href="#">Add Education</a>
+              <a href="/">Add Education</a>
             )}
           </div>
         </div>

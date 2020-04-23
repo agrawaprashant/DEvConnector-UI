@@ -1,9 +1,7 @@
 import React from "react";
 import classes from "./education-card.module.css";
-import {useDispatch} from 'react-redux'
-import * as actions from '../../../../../../store/actions/actions';
+
 const EducationCard = (props) => {
-  const dispatch = useDispatch();
   return (
     <div className={classes.EducationCard}>
       <h3>{props.data.school}</h3>

@@ -3,22 +3,24 @@ import Post from "../../components/Post/post.component";
 import CreatePost from "./CreatePost/create-post.component";
 import * as actions from "../../store/actions/actions";
 import { connect } from "react-redux";
-
+import Spinner from "../../components/UI/Spinner/spinner.component";
 class Posts extends React.Component {
   state = {
     posts: [
-      {
-        text: "Hello World!",
-        user: "agrawaprashant",
-        name: "Prashant Agrawal",
-        id: "post1",
-      },
+      // {
+      //   text: "Hello World!",
+      //   user: "agrawaprashant",
+      //   name: "Prashant Agrawal",
+      //   id: "post1",
+      //   likes: [],
+      // },
       {
         text:
           "Hello World! Hello World! Hello World! Hello World! Hello World! Hello World! Hello World! Hello World! Hello World! Hello World! Hello World! Hello World! Hello World!",
         user: "johndoe@test.com",
         name: "John Doe",
         id: "post2",
+        likes: [],
       },
     ],
   };
@@ -26,18 +28,21 @@ class Posts extends React.Component {
   componentDidMount() {
     if (this.props.token) {
       this.props.onFetchPosts(this.props.token);
-      this.props.onFetchUserAuthData(this.props.token);
     }
   }
   render() {
     let posts = null;
     if (this.props.posts.length === 0) {
-      posts = this.state.posts.map((post) => {
-        return <Post key={post.id} postData={post} />;
-      });
+      posts = <Spinner />;
     } else {
       posts = this.props.posts.map((post) => {
-        return <Post key={post._id} postData={post} />;
+        return (
+          <Post
+            key={post._id}
+            postData={post}
+            loggedInUserId={this.props.loggedInUserId}
+          />
+        );
       });
     }
     return (
@@ -55,13 +60,13 @@ const mapStateToProps = (state) => {
     posts: state.post.posts,
     loading: state.post.loading,
     error: state.post.err,
+    loggedInUserId: state.auth.user.id,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     onFetchPosts: (token) => dispatch(actions.fetchPosts(token)),
-    onFetchUserAuthData: (token) => dispatch(actions.fetchUser(token)),
   };
 };
 

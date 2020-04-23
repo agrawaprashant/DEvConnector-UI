@@ -1,6 +1,5 @@
 import React from "react";
 import classes from "./work-exp-card.module.css";
-import Modal from "../../../../../UI/Modal/confirm-modal.component";
 
 const workExpCard = (props) => {
   return (

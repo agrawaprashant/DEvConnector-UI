@@ -1,0 +1,44 @@
+.Comment {
+  margin-top: 15px;
+  padding: 20px;
+  box-sizing: border-box;
+  background-color: #fff9e6;
+  border-radius: 10px;
+}
+
+.CommentBody {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.CommentBody a {
+  text-decoration: none;
+  color: #005b96;
+}
+
+.CommentBody a:hover {
+  color: #002d4b;
+}
+
+.CommentBody img {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.CommentLikeBtn {
+  text-align: start;
+  margin-left: 40px;
+}
+
+.CommentBody p {
+  color: #333;
+  text-align: justify;
+}
+
+.ReadMore {
+  color: #005b96;
+  cursor: pointer;
+}

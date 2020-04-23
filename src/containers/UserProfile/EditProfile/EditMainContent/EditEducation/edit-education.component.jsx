@@ -23,7 +23,7 @@ class EditEducation extends React.Component {
 
   render() {
     let education = this.props.data.map((ed) => {
-      return <EducationCard data={ed} />;
+      return <EducationCard key={ed._id} data={ed} />;
     });
     return this.props.data && this.props.data.length !== 0 ? (
       <div>

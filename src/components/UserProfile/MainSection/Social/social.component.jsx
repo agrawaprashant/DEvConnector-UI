@@ -1,9 +1,8 @@
 import React from "react";
 import classes from "./social.module.css";
-import Aux from "../../../../hoc/Auxilliary/auxilliary";
 import AddSocial from "../../../../containers/UserProfile/AddSocial/add-social.component";
 
-const social = props => {
+const social = (props) => {
   let social = <AddSocial />;
   if (props.data) {
     let socialLinkArray = [];
@@ -13,7 +12,7 @@ const social = props => {
     social = (
       <div className={classes.Social}>
         <ul>
-          {socialLinkArray.map(social => {
+          {socialLinkArray.map((social) => {
             switch (social) {
               case "twitter":
                 return (

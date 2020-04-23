@@ -31,7 +31,6 @@ const profileNotFound = () => {
 };
 
 export const fetchUserProfile = (token) => {
-  console.log("fetching user proile....");
   return async (dispatch) => {
     try {
       dispatch(fetchUserProfileStart());
@@ -70,8 +69,6 @@ const editUserProfileFailed = (error) => {
 
 export const editProfile = (profileData, token) => {
   return async (dispatch) => {
-    console.log(profileData);
-    console.log(token);
     try {
       dispatch(editUserProfileStart());
       setAuthorizationToken(token);

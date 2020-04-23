@@ -4,7 +4,7 @@ import Social from "./Social/social.component";
 import MainContent from "./MainContent/main-content.component";
 import Github from "./GitHub/github-repo.component";
 
-const mainArea = props => {
+const mainArea = (props) => {
   console.log(props);
   return (
     <main className={classes.ProfileContent}>
@@ -12,10 +12,10 @@ const mainArea = props => {
         <div className={classes.Connections}>
           <ul>
             <li>
-              <a href="#">Followers (0)</a>
+              <a href="/">Followers (0)</a>
             </li>
             <li>
-              <a href="#">Following (0)</a>
+              <a href="/">Following (0)</a>
             </li>
           </ul>
         </div>

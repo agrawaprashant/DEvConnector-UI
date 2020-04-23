@@ -1,6 +1,6 @@
 .Header {
   display: flex;
-  justify-content: start;
+  justify-content: flex-start;
   align-items: flex-start;
   padding: 10px 15px;
 }
@@ -46,7 +46,7 @@
 .Skills,
 .Education {
   display: flex;
-  justify-content: start;
+  justify-content: flex-start;
   align-items: center;
   margin: 10px 0;
 }
