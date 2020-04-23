@@ -12,16 +12,16 @@ import EditProfile from "./containers/UserProfile/EditProfile/edit-profile.compo
 class App extends React.Component {
   render() {
     return (
-      <Switch>
-        <Layout>
+      <Layout>
+        <Switch>
           <Route path="/signup" component={SignUp} />
           <Route path="/login" component={Login} />
           <Route path="/profile" component={Profile} />
           <Route path="/edit-profile" component={EditProfile} />
           <Route path="/logout" component={Logout} />
-          <Route path="/" exact component={Home} />
-        </Layout>
-      </Switch>
+          <Route path="/" component={Home} />
+        </Switch>
+      </Layout>
     );
   }
 }

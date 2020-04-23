@@ -204,9 +204,12 @@ export const commentPost = (commentContent, postId, token) => {
   };
 };
 
-const commentsFetchStart = () => {
+const commentsFetchStart = (postId) => {
   return {
     type: actionTypes.COMMENTS_FETCH_START,
+    payload: {
+      postId: postId,
+    },
   };
 };
 const commentsFetchSuccess = (commentData, postId) => {

@@ -1,11 +1,11 @@
 import React from "react";
 import classes from "./post.module.css";
 import { connect } from "react-redux";
-import * as actions from "../../store/actions/actions";
+import * as actions from "../../../store/actions/actions";
 
-import LikeButton from "../UI/Button/LikeButton/like-button.component";
-import Spinner from "../UI/SmallSpinner/small-spinner.component";
-import Comment from "./Comment/comment.component";
+import LikeButton from "../../../components/UI/Button/LikeButton/like-button.component";
+import Spinner from "../../../components/UI/SmallSpinner/small-spinner.component";
+import CommentSection from "./CommentSection/comment-section.component";
 
 class Post extends React.Component {
   constructor(props) {
@@ -57,10 +57,6 @@ class Post extends React.Component {
   };
 
   render() {
-    const commentList = this.props.postData.comments;
-    const comments = commentList.map((comment) => {
-      return <Comment key={comment._id} commentData={comment} />;
-    });
     return (
       <div className={classes.Post}>
         <div className={classes.Author}>
@@ -73,7 +69,7 @@ class Post extends React.Component {
         <div className={classes.PostText}>
           <p>{this.props.postData.text}</p>
         </div>
-        <hr />
+
         <div className={classes.PostTools}>
           {this.state.isLikeBtnLoading ? (
             <Spinner />
@@ -93,13 +89,17 @@ class Post extends React.Component {
             <i className="far fa-comments"></i>
             <small>{this.props.postData.comments.length}</small>
           </div>
+
           <div className={classes.PostBtn}>
             <i className="fas fa-share"></i>
             <small>2</small>
           </div>
         </div>
         {this.state.loadComments ? (
-          <div className={classes.CommentsSection}>{comments}</div>
+          <CommentSection
+            postId={this.props.postData._id}
+            postOwner={this.props.postData.name}
+          />
         ) : null}
       </div>
     );

@@ -1,0 +1,43 @@
+.CommentSection {
+  padding: 10px;
+}
+
+.AddComment {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-top: 20px;
+  padding: 10px;
+  box-sizing: border-box;
+  background-color: #f4f4f4;
+  border-radius: 10px;
+}
+
+.AddComment img {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+}
+
+.AddComment input {
+  width: 60%;
+  padding: 10px;
+  box-sizing: border-box;
+  margin-left: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.CommentBtn {
+  border: none;
+  background-color: #5cb85c;
+  color: #fff;
+  padding: 10px 12px;
+  margin-left: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.CommentBtn:hover {
+  background-color: #52a552;
+}

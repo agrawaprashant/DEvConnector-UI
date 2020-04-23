@@ -1,9 +1,11 @@
 import * as actionTypes from "../actions/actionTypes";
 import { updateObject } from "../../shared/utility";
+
 const initialState = {
   posts: [],
   loading: false,
   error: null,
+  loadedComments: [],
 };
 
 const fetchPostsStart = (state, action) => {

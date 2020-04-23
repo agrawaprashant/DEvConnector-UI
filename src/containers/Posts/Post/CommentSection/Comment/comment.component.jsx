@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import classes from "./comment.module.css";
-import LikeButton from "../../UI/Button/LikeButton/like-button.component";
+import LikeButton from "../../../../../components/UI/Button/LikeButton/like-button.component";
 
 const Comment = (props) => {
   const [isReadMoreClicked, setReadMoreClick] = useState(false);
