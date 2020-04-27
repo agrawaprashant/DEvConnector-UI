@@ -1,16 +1,16 @@
 .CommentSection {
-  padding: 10px;
+  padding: 10px 0;
 }
 
 .AddComment {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
   margin-top: 20px;
   padding: 10px;
   box-sizing: border-box;
-  background-color: #f4f4f4;
-  border-radius: 10px;
+  background-color: #f7f7f7;
+  border-radius: 5px;
 }
 
 .AddComment img {
@@ -19,13 +19,14 @@
   border-radius: 50%;
 }
 
-.AddComment input {
+.AddComment textarea {
   width: 60%;
-  padding: 10px;
+  outline: none;
   box-sizing: border-box;
   margin-left: 10px;
   border-radius: 5px;
   border: 1px solid #ccc;
+  resize: none;
 }
 
 .CommentBtn {

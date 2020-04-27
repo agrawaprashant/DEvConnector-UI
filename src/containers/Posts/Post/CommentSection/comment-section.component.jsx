@@ -67,7 +67,7 @@ class CommentSection extends React.Component {
           </div>
           <div className={classes.AddComment}>
             <img src={this.props.user.avatar} alt="user-avatar" />
-            <input
+            <textarea
               type="text"
               onChange={this.inputChangedHandler}
               placeholder={

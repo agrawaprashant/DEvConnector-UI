@@ -1,0 +1,36 @@
+.Image {
+  padding: 10px;
+  overflow: hidden;
+  /* border: 2px solid #ccc; */
+  margin: 10px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+}
+
+.PortraitImage img {
+  max-height: 350px;
+  height: 100%;
+  width: auto;
+}
+
+.LandscapeImage img {
+  height: auto;
+  max-width: 350px;
+  width: 100%;
+}
+
+.ImageToggleBtn button {
+  z-index: 2;
+  border: none;
+  background: none;
+  cursor: pointer;
+  outline: none;
+  color: #333;
+  margin: 10px;
+}
+
+.ImageToggleBtn button:hover {
+  color: #ccc;
+}

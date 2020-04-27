@@ -1,7 +1,6 @@
 import React from "react";
 import classes from "./create-profile-box.module.css";
-
-const createProfileBox = props => {
+const createProfileBox = (props) => {
   return (
     <div className={classes.ProfileNotFound}>
       <div className={classes.ProfileNotFoundContent}>

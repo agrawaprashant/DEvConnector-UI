@@ -1,11 +1,13 @@
 .Post {
   padding: 0.75rem;
-  margin: 15px auto;
+  margin: 25px auto;
   text-align: center;
   box-sizing: border-box;
   width: 50%;
-  box-shadow: 0.2px 0.2px 2px 0.2px #ccc;
   background-color: #dfe3ee;
+  box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.1),
+    -1px -1px 5px 1px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
 }
 
 .Author {
@@ -23,7 +25,6 @@
 
 .Author img {
   height: 50px;
-  width: 50px;
   border-radius: 50%;
   padding: 0 10px;
 }
@@ -48,6 +49,12 @@
   cursor: pointer;
   color: #75818a;
 }
+
+.PostDate {
+  margin-left: auto;
+  color: #aaa;
+  font-size: 14px;
+}
 .PostText {
   padding: 10px;
   color: #333;
@@ -68,7 +75,7 @@
 }
 
 .PostBtn {
-  display: flex;
+  /* display: flex;
   align-items: center;
   background-color: #bfc0c0;
   padding: 10px 15px;
@@ -76,15 +83,23 @@
   border-radius: 5px;
   cursor: pointer;
   box-sizing: border-box;
-  color: #3b5998;
+  color: #3b5998; */
+
+  background: none;
+  border: none;
+  padding: 5px 10px;
+  font-size: 20px;
+  cursor: pointer;
+  outline: none;
+  color: #d2d2d2;
 }
 .PostBtn small {
-  color: #777;
+  color: #ccc;
   font-weight: bold;
   font-size: 12px;
   padding: 0 5px;
 }
 
 .PostBtn:hover {
-  background-color: #c5d2ec;
+  color: #c5d2ec;
 }

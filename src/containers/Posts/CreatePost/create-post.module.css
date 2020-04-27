@@ -1,46 +1,52 @@
 .CreatePostBox {
-  width: 45%;
-  margin: auto;
-  margin-bottom: 50px;
-  padding: 30px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  /* position: sticky;
-  top: 0; */
-  background-color: #faca76;
+  width: 50%;
+  margin: 20px auto;
+  /* border: 1px solid #ccc; */
+  border-radius: 10px;
+  box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.1),
+    -1px -1px 5px 1px rgba(0, 0, 0, 0.1);
 }
 
-.CreatePostInput {
-  width: 90%;
+.Header {
+  padding: 10px;
+  background-color: #f7f7f7;
+  width: 100%;
+  box-sizing: border-box;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  color: #333;
+}
+
+.InputBox {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-left: 10px;
+}
+
+.InputBox img {
+  height: 50px;
+  border-radius: 50%;
+}
+
+.InputBox textarea {
+  width: 100%;
+  height: 20%;
   display: inline-block;
   padding: 30px 15px;
   margin: auto;
-  border: 1px solid #ccc;
-  background-color: #f4f4f4;
+  border: none;
+  outline: none;
+  resize: none;
 }
 
 .CreatePostTools {
   padding: 10px;
-  width: 90%;
-  margin: auto;
   display: flex;
   justify-content: flex-start;
-  /* background-color: #003e51; */
-  background: #076585; /* fallback for old browsers */
-  background: -webkit-linear-gradient(
-    to right,
-    #fff,
-    #3096b8
-  ); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(
-    to right,
-    #fff,
-    #9fd1e0
-  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  opacity: 0.8;
+  background-color: #f7f7f7;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
 }
 
 .Btn {
@@ -51,7 +57,7 @@
   cursor: pointer;
   color: #fff;
   outline: none;
-  border-radius: 5px;
+  border-radius: 20px;
 }
 
 .AddPostBtn {
@@ -76,4 +82,31 @@
 
 .TagPeopleBtn:hover {
   background-color: #b239ca;
+}
+
+.ImagePreviewSeciton {
+  padding: 10px;
+  border: 1px solid #ccc;
+  width: 90%;
+  margin: 10px auto;
+  display: flex;
+  flex-wrap: wrap;
+  border-radius: 10px;
+}
+
+.AddMoreImageBtn {
+  display: inline-block;
+  margin-left: 5px;
+  border: 2px dashed #ccc;
+  background: none;
+  color: #333;
+  width: 100px;
+  height: 150px;
+  cursor: pointer;
+  outline: none;
+  border-radius: 10px;
+}
+
+.AddMoreImageBtn:hover {
+  background: #f4f4f4;
 }

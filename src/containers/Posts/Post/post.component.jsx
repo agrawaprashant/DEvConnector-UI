@@ -6,6 +6,8 @@ import * as actions from "../../../store/actions/actions";
 import LikeButton from "../../../components/UI/Button/LikeButton/like-button.component";
 import Spinner from "../../../components/UI/SmallSpinner/small-spinner.component";
 import CommentSection from "./CommentSection/comment-section.component";
+import Moment from "react-moment";
+import ImageContainer from "../../../components/Posts/ImageContainer/image-container.component";
 
 class Post extends React.Component {
   constructor(props) {
@@ -57,6 +59,10 @@ class Post extends React.Component {
   };
 
   render() {
+    let images = null;
+    if (this.props.postData.images.length !== 0) {
+      images = <ImageContainer images={this.props.postData.images} />;
+    }
     return (
       <div className={classes.Post}>
         <div className={classes.Author}>
@@ -65,11 +71,15 @@ class Post extends React.Component {
             <h3>{this.props.postData.name}</h3>
             <p>agrawaprashant</p>
           </div>
+          <div className={classes.PostDate}>
+            <Moment format="MMMM Do YYYY">{this.props.postData.date}</Moment> (
+            <Moment fromNow>{this.props.postData.date}</Moment>)
+          </div>
         </div>
         <div className={classes.PostText}>
           <p>{this.props.postData.text}</p>
         </div>
-
+        <div>{images}</div>
         <div className={classes.PostTools}>
           {this.state.isLikeBtnLoading ? (
             <Spinner />

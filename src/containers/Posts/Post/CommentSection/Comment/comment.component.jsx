@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import classes from "./comment.module.css";
 import LikeButton from "../../../../../components/UI/Button/LikeButton/like-button.component";
+import Moment from "react-moment";
 
 const Comment = (props) => {
   const [isReadMoreClicked, setReadMoreClick] = useState(false);
@@ -39,12 +40,18 @@ const Comment = (props) => {
             : shorterComment}
         </p>
       </div>
-      <div className={classes.CommentLikeBtn}>
-        <LikeButton
-          clicked={props.clickedLike}
-          totalLikes={0}
-          isLiked={false}
-        />
+      <div className={classes.commentFooter}>
+        <div className={classes.CommentLikeBtn}>
+          <LikeButton
+            clicked={props.clickedLike}
+            totalLikes={0}
+            isLiked={false}
+          />
+        </div>
+        <div className={classes.CommentDate}>
+          <Moment format="MMMM Do YYYY">{props.commentData.date}</Moment> (
+          <Moment fromNow>{props.commentData.date}</Moment>)
+        </div>
       </div>
     </div>
   );

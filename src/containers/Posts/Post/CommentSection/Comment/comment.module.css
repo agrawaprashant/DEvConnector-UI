@@ -42,3 +42,15 @@
   color: #005b96;
   cursor: pointer;
 }
+
+.commentFooter {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 5px;
+}
+
+.CommentDate {
+  margin-left: auto;
+  color: #aaa;
+  font-size: 13px;
+}
