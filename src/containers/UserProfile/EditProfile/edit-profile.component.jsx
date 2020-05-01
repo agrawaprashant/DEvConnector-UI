@@ -26,6 +26,7 @@ class EditProfile extends React.Component {
     };
 
     if (this.props.profileNotFound) {
+      console.log("asdfasdfd");
       editProfile = (
         <Aux>
           <header>

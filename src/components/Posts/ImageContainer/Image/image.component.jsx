@@ -35,7 +35,7 @@ class Image extends React.Component {
   }
 
   render() {
-    const { image } = this.props;
+    const { image, isLast, isFirst } = this.props;
     const { orientation } = this.state;
     const imageClasses = [classes.Image];
     orientation === "landscape"
@@ -43,8 +43,14 @@ class Image extends React.Component {
       : imageClasses.push(classes.PortraitImage);
     return (
       <div className={imageClasses.join(" ")}>
-        <div className={classes.ImageToggleBtn}>
-          <button onClick={this.props.clickNext}>
+        <div
+          className={
+            isFirst
+              ? `${classes.ImageToggleBtn} ${classes.DisableBtn}`
+              : classes.ImageToggleBtn
+          }
+        >
+          <button onClick={this.props.clickPrev} disabled={isFirst}>
             <i class="fas fa-chevron-left fa-2x"></i>
           </button>
         </div>
@@ -59,8 +65,14 @@ class Image extends React.Component {
             />
           </a>
         </div>
-        <div className={classes.ImageToggleBtn}>
-          <button onClick={this.props.clickPrev}>
+        <div
+          className={
+            isLast
+              ? `${classes.ImageToggleBtn} ${classes.DisableBtn}`
+              : classes.ImageToggleBtn
+          }
+        >
+          <button onClick={this.props.clickNext} disabled={isLast}>
             <i class="fas fa-chevron-right fa-2x"></i>
           </button>
         </div>

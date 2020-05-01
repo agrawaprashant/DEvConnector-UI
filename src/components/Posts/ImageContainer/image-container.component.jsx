@@ -26,15 +26,35 @@ export default class ImageContainer extends Component {
     });
   };
 
+  checkIsLast = (totalImages, currentIndex) => {
+    if (currentIndex >= totalImages - 1) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+  checkIsFirst = (currentIndex) => {
+    return currentIndex === 0;
+  };
+
   render() {
-    return (
-      <div>
+    const { images, selectedImgIndex } = this.state;
+    const numberOfImages = images.length;
+    const isFirst = this.checkIsFirst(selectedImgIndex);
+    const isLast = this.checkIsLast(numberOfImages, selectedImgIndex);
+    let image = null;
+    if (selectedImgIndex <= numberOfImages - 1) {
+      image = (
         <Image
-          image={this.state.images[this.state.selectedImgIndex]}
+          image={this.state.images[selectedImgIndex]}
           clickNext={this.nextClickHandler}
           clickPrev={this.prevClickHandler}
+          isLast={isLast}
+          isFirst={isFirst}
         />
-      </div>
-    );
+      );
+    }
+
+    return image;
   }
 }

@@ -4,7 +4,7 @@ import Social from "./Social/social.component";
 import MainContent from "./MainContent/main-content.component";
 import Github from "./GitHub/github-repo.component";
 
-const mainArea = (props) => {
+const MainSection = (props) => {
   console.log(props);
   return (
     <main className={classes.ProfileContent}>
@@ -37,4 +37,4 @@ const mainArea = (props) => {
   );
 };
 
-export default mainArea;
+export default MainSection;

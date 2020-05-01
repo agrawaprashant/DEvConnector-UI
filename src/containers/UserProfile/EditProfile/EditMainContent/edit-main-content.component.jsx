@@ -5,7 +5,7 @@ import EditEducation from "./EditEducation/edit-education.component";
 import EditSkills from "./EditSkills/edit-skills.component";
 import EditBio from "./EditBio/edit-bio.component";
 
-const editMainContent = props => {
+const editMainContent = (props) => {
   return (
     <div className={classes.UserDetails}>
       <div className={classes.Box}>
@@ -17,13 +17,15 @@ const editMainContent = props => {
       <div className={classes.Box}>
         <h4 className={classes.Heading}>Work Experience</h4>
         <div className={classes.BoxContent}>
-          <EditWork data={props.data.experience} />
+          <EditWork data={props.data.experience ? props.data.experience : []} />
         </div>
       </div>
       <div className={classes.Box}>
         <h4 className={classes.Heading}>Education</h4>
         <div className={classes.BoxContent}>
-          <EditEducation data={props.data.education} />
+          <EditEducation
+            data={props.data.education ? props.data.education : []}
+          />
         </div>
       </div>
       <div className={classes.Box}>

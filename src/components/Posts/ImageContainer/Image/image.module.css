@@ -12,11 +12,11 @@
 .PortraitImage img {
   max-height: 350px;
   height: 100%;
-  width: auto;
+  width: 200px;
 }
 
 .LandscapeImage img {
-  height: auto;
+  height: 200px;
   max-width: 350px;
   width: 100%;
 }
@@ -29,6 +29,11 @@
   outline: none;
   color: #333;
   margin: 10px;
+}
+
+.DisableBtn button {
+  color: #ccc;
+  cursor: auto;
 }
 
 .ImageToggleBtn button:hover {

@@ -4,6 +4,7 @@ import classes from "./login.module.css";
 import { updateObject } from "../../../shared/utility";
 import { checkValidity } from "../../../shared/checkInputValidity";
 import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
 import * as actions from "../../../store/actions/actions";
 
 class Login extends React.Component {
@@ -13,30 +14,30 @@ class Login extends React.Component {
         elementType: "input",
         elementConfig: {
           type: "email",
-          placeholder: "Enter your registered email"
+          placeholder: "Enter your registered email",
         },
         value: "",
         valid: false,
         validationRules: {
           required: true,
-          email: true
+          email: true,
         },
-        touched: false
+        touched: false,
       },
       password: {
         elementType: "input",
         elementConfig: {
           type: "password",
-          placeholder: "Enter your password"
+          placeholder: "Enter your password",
         },
         value: "",
         valid: false,
         validationRules: {
-          required: true
+          required: true,
         },
-        touched: false
-      }
-    }
+        touched: false,
+      },
+    },
   };
 
   inputChangedHandler = (event, control) => {
@@ -48,17 +49,17 @@ class Login extends React.Component {
     let updatedControl = updateObject(this.state.loginForm[control], {
       value: event.target.value,
       touched: true,
-      valid: valid
+      valid: valid,
     });
 
     let updatedForm = updateObject(this.state.loginForm, {
-      [control]: updatedControl
+      [control]: updatedControl,
     });
 
     this.setState({ loginForm: updatedForm });
   };
 
-  formSubmitHandler = event => {
+  formSubmitHandler = (event) => {
     event.preventDefault();
     this.props.onLogin(
       this.state.loginForm.email.value,
@@ -66,6 +67,8 @@ class Login extends React.Component {
     );
   };
   render() {
+    let redirect = null;
+    if (this.props.isAuthenticated) redirect = <Redirect to="/" />;
     const loginFormControls = [];
     for (let control in this.state.loginForm) {
       loginFormControls.push({
@@ -74,11 +77,11 @@ class Login extends React.Component {
         elementConfig: this.state.loginForm[control].elementConfig,
         value: this.state.loginForm[control].value,
         valid: this.state.loginForm[control].valid,
-        touched: this.state.loginForm[control].touched
+        touched: this.state.loginForm[control].touched,
       });
     }
 
-    let form = loginFormControls.map(control => {
+    let form = loginFormControls.map((control) => {
       return (
         <Input
           key={control.controlName}
@@ -87,7 +90,7 @@ class Login extends React.Component {
           value={control.value}
           valid={control.valid}
           touched={control.touched}
-          changed={event =>
+          changed={(event) =>
             this.inputChangedHandler(event, control.controlName)
           }
         />
@@ -102,14 +105,21 @@ class Login extends React.Component {
             Login
           </button>
         </form>
+        {redirect}
       </div>
     );
   }
 }
 
-const mapDispatchToProps = dispatch => {
+const mapStateToProps = (state) => {
   return {
-    onLogin: (email, password) => dispatch(actions.login(email, password))
+    isAuthenticated: state.auth.token !== null,
   };
 };
-export default connect(null, mapDispatchToProps)(Login);
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onLogin: (email, password) => dispatch(actions.login(email, password)),
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
