@@ -5,6 +5,8 @@ import { checkValidity } from "../../../shared/checkInputValidity";
 import { connect } from "react-redux";
 import ImagePreview from "../../../components/Posts/ImagePreview/image-preview.component";
 import * as actions from "../../../store/actions/actions";
+import Aux from "../../../hoc/Auxilliary/auxilliary";
+import AlertMessage from "../../../components/UI/AlertMessage/alert-message.component";
 
 class CreatePost extends React.Component {
   state = {
@@ -17,6 +19,26 @@ class CreatePost extends React.Component {
       ),
     },
     uplaodedImages: [],
+    showAlert: false,
+  };
+
+  postCreateCallback = () => {
+    console.log("Callback called");
+    const updatedFormControl = updateObject(
+      this.state.postCreationForm.postContent,
+      {
+        value: "",
+      }
+    );
+    const updatedForm = updateObject(this.state.postCreationForm, {
+      postContent: updatedFormControl,
+    });
+    console.log(updatedForm);
+    this.setState({
+      postCreationForm: updatedForm,
+      uplaodedImages: [],
+      showAlert: true,
+    });
   };
 
   inputChangedHandler = (event, control) => {
@@ -41,12 +63,14 @@ class CreatePost extends React.Component {
 
   onPostClicked = () => {
     const images = this.state.uplaodedImages.map((imageObj) => imageObj.file);
-
     const postFormData = new FormData();
     postFormData.append("text", this.state.postCreationForm.postContent.value);
     images.forEach((image) => postFormData.append("images", image));
-
-    this.props.onAddPost(postFormData, this.props.token);
+    this.props.onAddPost(
+      postFormData,
+      this.props.token,
+      this.postCreateCallback
+    );
   };
 
   fileInputChangedHandler = (event) => {
@@ -82,7 +106,18 @@ class CreatePost extends React.Component {
     this.setState({ uplaodedImages: updatedImageList });
   };
 
+  alertCloseHandler = () => {
+    console.log("closed");
+    this.setState({ showAlert: false });
+    clearTimeout();
+  };
+
   render() {
+    if (this.state.showAlert) {
+      setTimeout(() => {
+        this.alertCloseHandler();
+      }, 6000);
+    }
     const images = this.state.uplaodedImages.map((image) => {
       return (
         <ImagePreview
@@ -96,59 +131,72 @@ class CreatePost extends React.Component {
       );
     });
     return (
-      <div className={classes.CreatePostBox}>
-        <div className={classes.Header}>
-          <p>Create Post</p>
-        </div>
-        <div className={classes.InputBox}>
-          <img src={this.props.user.avatar} alt="avatar" />
-          <textarea
-            type="text"
-            placeholder="Share Something..."
-            onChange={(event) => this.inputChangedHandler(event, "postContent")}
-          />
-        </div>
+      <Aux>
+        {this.state.showAlert ? (
+          <div className={classes.AlertBox}>
+            <AlertMessage
+              message="Post has been created!"
+              closed={this.alertCloseHandler}
+            />
+          </div>
+        ) : null}
+        <div className={classes.CreatePostBox}>
+          <div className={classes.Header}>
+            <p>Create Post</p>
+          </div>
+          <div className={classes.InputBox}>
+            <img src={this.props.user.avatar} alt="avatar" />
+            <textarea
+              type="text"
+              value={this.state.postCreationForm.postContent.value}
+              placeholder="Share Something..."
+              onChange={(event) =>
+                this.inputChangedHandler(event, "postContent")
+              }
+            />
+          </div>
 
-        <div className={classes.CreatePostTools}>
-          <button
-            className={`${classes.AddPostBtn} ${classes.Btn}`}
-            onClick={() => this.onPostClicked()}
-          >
-            Post
-          </button>
-          <button
-            className={`${classes.AddPictureBtn} ${classes.Btn}`}
-            onClick={() => {
-              document.getElementById("imagepicker").click();
-            }}
-          >
-            Add Picture
-          </button>
-
-          <button className={`${classes.TagPeopleBtn} ${classes.Btn}`}>
-            Tag People
-          </button>
-          <input
-            type="file"
-            id="imagepicker"
-            style={{ display: "none" }}
-            onChange={(event) => this.fileInputChangedHandler(event)}
-          />
-        </div>
-        {this.state.uplaodedImages.length !== 0 ? (
-          <div className={classes.ImagePreviewSeciton}>
-            {images}
+          <div className={classes.CreatePostTools}>
             <button
-              className={classes.AddMoreImageBtn}
+              className={`${classes.AddPostBtn} ${classes.Btn}`}
+              onClick={() => this.onPostClicked()}
+            >
+              Post
+            </button>
+            <button
+              className={`${classes.AddPictureBtn} ${classes.Btn}`}
               onClick={() => {
                 document.getElementById("imagepicker").click();
               }}
             >
-              Add More
-            </button>{" "}
+              Add Picture
+            </button>
+
+            <button className={`${classes.TagPeopleBtn} ${classes.Btn}`}>
+              Tag People
+            </button>
+            <input
+              type="file"
+              id="imagepicker"
+              style={{ display: "none" }}
+              onChange={(event) => this.fileInputChangedHandler(event)}
+            />
           </div>
-        ) : null}
-      </div>
+          {this.state.uplaodedImages.length !== 0 ? (
+            <div className={classes.ImagePreviewSeciton}>
+              {images}
+              <button
+                className={classes.AddMoreImageBtn}
+                onClick={() => {
+                  document.getElementById("imagepicker").click();
+                }}
+              >
+                Add More
+              </button>{" "}
+            </div>
+          ) : null}
+        </div>
+      </Aux>
     );
   }
 }
@@ -162,8 +210,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onAddPost: (token, postData) =>
-      dispatch(actions.createPost(token, postData)),
+    onAddPost: (postData, token, postCreateCallback) =>
+      dispatch(actions.createPost(postData, token, postCreateCallback)),
   };
 };
 

@@ -51,7 +51,7 @@
 
 .Btn {
   display: inline-block;
-  padding: 10px 10px;
+  padding: 10px;
   border: none;
   margin: 0 5px;
   cursor: pointer;
@@ -109,4 +109,22 @@
 
 .AddMoreImageBtn:hover {
   background: #f4f4f4;
+}
+
+.AlertBox {
+  position: sticky;
+  top: 4rem;
+  left: 2rem;
+  margin-top: 10px;
+}
+
+@media screen and (max-width: 720px) {
+  .CreatePostBox {
+    width: 95%;
+  }
+
+  .Btn {
+    padding: 8px 10px;
+    border-radius: 5px;
+  }
 }

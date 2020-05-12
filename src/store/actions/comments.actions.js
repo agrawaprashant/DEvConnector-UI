@@ -35,7 +35,7 @@ export const fetchComments = (postId, token) => {
       dispatch(commentsFetchStart());
       setAuthorizationToken(token);
       const result = await axios.get(
-        "http://localhost:5000/api/posts/comment/" + postId
+        "http://192.168.1.3:5000/api/posts/comment/" + postId
       );
       dispatch(commentsFetchSuccess(result.data, postId));
     } catch (err) {
@@ -75,7 +75,7 @@ export const commentPost = (commentContent, postId, token) => {
       dispatch(commentPostStart());
       setAuthorizationToken(token);
       const result = await axios.put(
-        "http://localhost:5000/api/posts/comment/" + postId,
+        "http://192.168.1.3:5000/api/posts/comment/" + postId,
         commentContent
       );
       dispatch(commentPostSuccess(result.data, postId));

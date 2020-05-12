@@ -33,14 +33,14 @@ const dashboard = (props) => {
           <h3>{props.data.name}</h3>
           <div className={classes.CompanyLocation}>
             <div className={classes.Company}>
-              <i class="fas fa-briefcase"></i>
+              <i className="fas fa-briefcase"></i>
               <p>
                 {props.data.profileData.status} at{" "}
                 {props.data.profileData.company}
               </p>
             </div>
             <div className={classes.Location}>
-              <i class="fas fa-map-marker-alt"></i>
+              <i className="fas fa-map-marker-alt"></i>
               <p>{props.data.profileData.location}</p>
             </div>
           </div>

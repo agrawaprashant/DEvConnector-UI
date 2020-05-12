@@ -2,12 +2,11 @@
   max-width: 90%;
   margin: auto;
   margin-bottom: 20px;
-  border: 1px solid #ccc;
   background-color: #f7f7f7;
   padding: 10px;
   box-sizing: border-box;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 5px;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2), -1px -1px 3px rgba(0, 0, 0, 0.2);
 }
 
 .EducationCard h3 {

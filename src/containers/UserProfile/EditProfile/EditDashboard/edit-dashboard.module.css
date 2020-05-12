@@ -8,12 +8,13 @@
   width: 100%;
   margin: 0 10px;
   margin-top: 15px;
-  max-width: 50%;
+  width: 50%;
 }
 
 .DashbordFormElements {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  gap: 5px;
 }
 
 .SaveBtn {
@@ -46,12 +47,35 @@
   outline: none;
 }
 .ProfilePhoto {
-  border: 2px solid #ccc;
-  padding: 5px;
+  padding: 10px;
   box-sizing: border-box;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2), -1px -1px 3px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  display: flex;
 }
 
 .ProfilePhoto img {
   max-height: 150px;
   max-width: 150px;
+}
+
+@media screen and (max-width: 750px) {
+  .Dashboard {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .PhotoEdit {
+    margin-top: 10px;
+  }
+
+  .ProfilePhoto img {
+    max-height: 200px;
+    max-width: 200px;
+  }
+
+  .DashboardForm {
+    width: 100%;
+  }
 }

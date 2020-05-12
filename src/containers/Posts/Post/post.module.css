@@ -103,3 +103,21 @@
 .PostBtn:hover {
   color: #c5d2ec;
 }
+
+@media screen and (max-width: 500px) {
+  .Post {
+    width: 95%;
+  }
+
+  .AuthorDetails h3 {
+    font-size: 15px;
+  }
+
+  .AuthorDetails p {
+    font-size: 12px;
+  }
+
+  .PostDate {
+    font-size: 11px;
+  }
+}

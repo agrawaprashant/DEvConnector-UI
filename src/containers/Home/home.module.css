@@ -3,13 +3,10 @@
   height: 89.2vh;
   overflow: hidden;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
 }
 .HomeContent h1 {
-  margin: 0;
-  padding: 0;
   color: #fff;
   font-size: 40px;
 }
@@ -32,7 +29,7 @@
 }
 
 .HomeContent {
-  z-index: 2;
+  z-index: 1;
 }
 
 .BtnArea {
@@ -42,12 +39,17 @@
 }
 
 .HomeDarkOverlay {
-  height: 89.2vh;
+  height: 90.4vh;
   width: 100vw;
   position: absolute;
-  top: 72px;
+  top: 63px;
   left: 0;
   background-color: #17072b;
   opacity: 0.7;
-  z-index: 1;
+}
+
+@media screen and (max-width: 500px) {
+  .HomeAuth h1 {
+    font-size: 20px;
+  }
 }

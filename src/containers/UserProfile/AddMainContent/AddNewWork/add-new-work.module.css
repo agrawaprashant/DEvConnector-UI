@@ -1,6 +1,6 @@
 .AddWorkForm {
   padding: 15px;
-  max-width: 50%;
+  width: 50%;
   margin: auto;
   background-color: #6d4d0836;
   border-radius: 10px;
@@ -68,4 +68,10 @@
 
 .SaveButton:hover {
   background-color: #6cbf6c;
+}
+
+@media screen and (max-width: 750px) {
+  .AddWorkForm {
+    width: 90%;
+  }
 }

@@ -1,4 +1,4 @@
-.Header {
+.Header.Header {
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
@@ -7,9 +7,9 @@
 
 .ProfilePic {
   padding: 5px;
-  border: 2px solid #dfe3ee;
   margin: 10px 15px;
   border-radius: 5px;
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2), -1px -1px 2px rgba(0, 0, 0, 0.2);
 }
 
 .ProfilePic img {
@@ -89,4 +89,69 @@
 
 .EditBtn button:hover {
   background-color: #f5c431;
+}
+
+@media screen and (max-width: 750px) {
+  .Header {
+    flex-direction: column;
+    justify-content: center !important;
+    align-items: center !important;
+    color: #555;
+  }
+
+  .ProfilePic {
+    border: none;
+    margin: 5px 0;
+    border-radius: 5px;
+    display: flex;
+    border-radius: 10px;
+    padding: 10px;
+  }
+
+  .UserDetails {
+    text-align: center;
+  }
+
+  .UserDetails h3 {
+    font-size: 2rem;
+  }
+
+  .ProfilePic img {
+    max-width: 200px;
+    max-height: 200px;
+    border-radius: 5px;
+  }
+
+  .CompanyLocation {
+    flex-direction: column;
+  }
+
+  .Company,
+  .Location {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 2px 0;
+  }
+
+  .Company p,
+  .Location p {
+    font-size: 14px;
+    line-height: 2;
+    font-weight: bold;
+  }
+
+  .Skills,
+  .Education {
+    display: flex;
+    justify-content: flex-start;
+    align-items: baseline;
+    margin: 10px 0;
+    text-align: start;
+  }
+
+  .Skills label,
+  .Education label {
+    width: 6rem;
+  }
 }

@@ -17,3 +17,10 @@
 .BoxContent {
   padding: 25px 0;
 }
+
+@media screen and (max-width: 750px) {
+  .UserDetails {
+    margin-left: 0;
+    padding: 0;
+  }
+}

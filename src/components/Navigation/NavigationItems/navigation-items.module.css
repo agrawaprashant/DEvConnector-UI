@@ -1,3 +1,46 @@
 .NavigationItems {
-  list-style: none;
+  display: flex;
+  align-items: center;
+}
+
+.NavigationItems a {
+  margin-right: 10px;
+}
+
+.SearchBar {
+  background-color: #f4f4f4;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-radius: 30px;
+  margin-right: 10px;
+}
+
+.SearchBar input {
+  background: none;
+  outline: none;
+  border: none;
+}
+
+.SearchBar button {
+  background: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 0 5px;
+}
+
+.SearchBar button:hover {
+  color: #0057e7;
+}
+
+@media (max-width: 750px) {
+  .SearchBar {
+    margin-left: 10px;
+    padding: 10px 2px;
+  }
+
+  .SearchBar button {
+    padding: 0 2px;
+  }
 }

@@ -29,7 +29,7 @@ export const fetchPosts = (token) => {
     try {
       dispatch(fetchPostsStart());
       setAuthorizationToken(token);
-      const result = await axios.get("http://localhost:5000/api/posts");
+      const result = await axios.get("http://192.168.1.3:5000/api/posts");
       dispatch(fetchPostsSuccess(result.data));
     } catch (err) {
       console.log(err);
@@ -62,16 +62,17 @@ const createPostFailed = (error) => {
   };
 };
 
-export const createPost = (postData, token) => {
+export const createPost = (postData, token, callback) => {
   console.log(postData);
   return async (dispatch) => {
     try {
       dispatch(createPostStart());
       setAuthorizationToken(token);
       const result = await axios.post(
-        "http://localhost:5000/api/posts/",
+        "http://192.168.1.3:5000/api/posts/",
         postData
       );
+      callback();
       dispatch(createPostSuccess(result.data));
     } catch (err) {
       console.log(err);
@@ -111,7 +112,7 @@ export const likePost = (postId, token, buttonCallback) => {
       dispatch(likePostStart());
       setAuthorizationToken(token);
       const result = await axios.put(
-        "http://localhost:5000/api/posts/like/" + postId
+        "http://192.168.1.3:5000/api/posts/like/" + postId
       );
       buttonCallback();
       dispatch(likePostSuccess(result.data, postId));
@@ -153,7 +154,7 @@ export const unlikePost = (postId, token, buttonCallback) => {
       dispatch(unlikePostStart());
       setAuthorizationToken(token);
       const result = await axios.put(
-        "http://localhost:5000/api/posts/unlike/" + postId
+        "http://192.168.1.3:5000/api/posts/unlike/" + postId
       );
       buttonCallback();
       dispatch(unlikePostSuccess(result.data, postId));

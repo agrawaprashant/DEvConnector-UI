@@ -2,6 +2,7 @@
   display: grid;
   grid-template-columns: 1fr 3fr 1fr;
   padding: 20px 0;
+  gap: 10px;
 }
 
 .SideBar {
@@ -39,6 +40,39 @@
 }
 
 .MainContent {
-  margin-left: 2rem;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  /* box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2), -1px -1px 3px rgba(0, 0, 0, 0.2);
+}
+
+@media screen and (max-width: 750px) {
+  .ProfileContent {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 5px 10px;
+  }
+
+  .Connections {
+    margin: 10px 0;
+    /* border-bottom: 1px solid #ccc; */
+    background-color: #f7f7f7;
+  }
+
+  .Connections ul {
+    display: flex;
+    justify-content: space-evenly;
+  }
+
+  .Connections ul li {
+    border-bottom: none;
+    padding: 5px 0;
+  }
+  .MainContent {
+    margin-top: 1.5rem;
+  }
+
+  .Social {
+    margin-top: 1.3rem;
+  }
 }

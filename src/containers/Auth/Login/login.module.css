@@ -1,10 +1,26 @@
+.Container {
+  height: 89.2vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.Login {
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2), -1px -1px 3px rgba(0, 0, 0, 0.2);
+  width: 25%;
+  border-radius: 5px;
+  color: #555;
+}
+
 .LoginForm {
-  max-width: 50%;
-  max-height: 50%;
-  margin: auto;
-  border: 1px solid #ccc;
   text-align: center;
   padding: 15px;
+}
+
+.LoginForm h3 {
+  margin-top: 2rem;
+  color: #555;
 }
 
 .LoginBtn {
@@ -15,4 +31,57 @@
   color: #fff;
   border-radius: 5px;
   cursor: pointer;
+  margin-top: 1rem;
+}
+
+.OAuthLoginBox {
+  padding: 10px;
+  text-align: center;
+}
+
+.OAuthLoginBox p {
+  font-size: 1.2rem;
+}
+
+.AlternateLoginOptions {
+  display: flex;
+  justify-content: space-around;
+  margin: 1rem 0;
+}
+
+.AlternateLoginOptions button {
+  border: none;
+  padding: 1.5rem;
+  cursor: pointer;
+  outline: none;
+}
+
+.GoogleBtn {
+  background: url("../../../assets/img/google-logo.png") no-repeat center
+    center/cover;
+}
+
+.FacebookBtn {
+  background: url("../../../assets/img/facebook_log1.png") no-repeat center
+    center/cover;
+}
+.LinkedinBtn {
+  background: url("../../../assets/img/download.png") no-repeat center
+    center/cover;
+}
+
+@media screen and (min-width: 751px) {
+  .AlternateLoginOptions {
+    justify-content: center;
+  }
+  .AlternateLoginOptions button {
+    margin-right: 1rem;
+    margin-left: 1rem;
+  }
+}
+
+@media screen and (max-width: 750px) {
+  .Login {
+    width: 80%;
+  }
 }

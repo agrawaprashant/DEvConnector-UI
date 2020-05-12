@@ -2,25 +2,41 @@ import React from "react";
 import classes from "./navbar.module.css";
 import NavigationItems from "../NavigationItems/navigation-items";
 import { NavLink } from "react-router-dom";
-const Navbar = props => {
-  return (
-    <div className={classes.Navbar}>
-      <div className={classes.Container}>
-        <h1>
-          <NavLink to="/">DevConnector</NavLink>
-        </h1>
-        <div className={classes.Navigation}>
-          <div className={classes.SearchBar}>
-            <input type="search" placeholder="Search Developers" />
-            <button type="button">
-              <i className="fas fa-search"></i>
-            </button>
-          </div>
+import Hamburger from "./Hamburger/hamburger.component";
+// import HamburgerMenu from "./Hamburger/HamburgerMenu/hamburger-menu.component";
+
+class Navbar extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showHamburgerManu: false,
+    };
+  }
+
+  hamburgerOpenHandler = () => {
+    this.setState({ showHamburgerManu: true });
+  };
+
+  hamburgerClosedHandler = () => {
+    this.setState({ showHamburgerManu: false });
+  };
+
+  render() {
+    const { props } = this;
+
+    return (
+      <div className={classes.Navbar}>
+        <NavLink to="/">
+          <h3 className={classes.Logo}>{`</>DevConnector`}</h3>
+        </NavLink>
+        <Hamburger clicked={this.hamburgerOpenHandler} />
+
+        <div className={classes.NavItems}>
           <NavigationItems isAuth={props.isAuth} />
         </div>
       </div>
-    </div>
-  );
-};
+    );
+  }
+}
 
 export default Navbar;

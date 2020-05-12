@@ -1,63 +1,29 @@
 .Navbar {
-  background-color: #4aafcd;
-  color: #fff;
-}
-
-.Navbar a {
-  text-decoration: none;
-  color: #fff;
-}
-
-.Container {
-  max-width: 1100px;
-  margin: auto;
-  overflow: hidden;
+  background-color: #333;
+  height: 4.5rem;
+  border-bottom: 5px solid #17c723;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.Navigation {
-  margin: 0;
-  padding: 0;
-  display: flex;
-  align-items: center;
-}
-
-.Navbar li {
-  margin: 0 10px;
-}
-
-.Navbar input,
 .Navbar a {
-  padding: 10px;
+  color: #fff;
+  text-decoration: none;
 }
 
-.Navbar input {
-  border: none;
-  background: none;
+.Logo {
+  color: #fff;
+  margin-left: 10px;
 }
 
-.Navbar input:focus {
-  outline: none;
-}
-
-.SearchBar {
-  background-color: #f4f4f4;
+.HamburgerMenu {
   display: flex;
-  justify-content: space-around;
-  align-items: center;
-  border-radius: 30px;
-  box-sizing: border-box;
-  padding: 0 10px;
+  flex-direction: column;
 }
 
-.SearchBar button:hover {
-  color: #45d140;
-}
-.SearchBar button {
-  border: none;
-  outline: none;
-  background: none;
-  cursor: pointer;
+@media (max-width: 500px) {
+  .NavItems {
+    display: none;
+  }
 }

@@ -97,15 +97,35 @@ class Login extends React.Component {
       );
     });
     return (
-      <div className={classes.LoginForm}>
-        <p>Login to your account!</p>
-        <form onSubmit={this.formSubmitHandler}>
-          {form}
-          <button type="submit" className={classes.LoginBtn}>
-            Login
-          </button>
-        </form>
-        {redirect}
+      <div className={classes.Container}>
+        <div className={classes.Login}>
+          <div className={classes.LoginForm}>
+            <p>Login to your account!</p>
+            <form onSubmit={this.formSubmitHandler}>
+              {form}
+              <button type="submit" className={classes.LoginBtn}>
+                Login
+              </button>
+            </form>
+            {redirect}
+            <h3>Or</h3>
+          </div>
+
+          <div className={classes.OAuthLoginBox}>
+            <p>Login with</p>
+            <div className={classes.AlternateLoginOptions}>
+              <button className={classes.GoogleBtn}>
+                {/* <i className="fab fa-google"></i> */}
+              </button>
+              <button className={classes.FacebookBtn}>
+                {/* <i className="fab fa-facebook-f"></i> */}
+              </button>
+              <button className={classes.LinkedinBtn}>
+                {/* <i className="fab fa-linkedin-in"></i> */}
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
