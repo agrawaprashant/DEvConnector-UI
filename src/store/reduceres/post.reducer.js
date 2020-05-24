@@ -29,9 +29,7 @@ const createPostStart = (state, action) => {
 };
 
 const createPostSuccess = (state, action) => {
-  const posts = state.posts.concat({
-    ...action.payload.postData,
-  });
+  const posts = [action.payload.postData].concat(state.posts);
   return updateObject(state, {
     loading: false,
     posts: posts,

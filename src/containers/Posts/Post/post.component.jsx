@@ -1,6 +1,7 @@
 import React from "react";
 import classes from "./post.module.css";
 import { connect } from "react-redux";
+import { withRouter } from 'react-router-dom'
 import * as actions from "../../../store/actions/actions";
 
 import LikeButton from "../../../components/UI/Button/LikeButton/like-button.component";
@@ -69,7 +70,7 @@ class Post extends React.Component {
           <img src={this.props.postData.avatar} alt="avatar" />
           <div className={classes.AuthorDetails}>
             <h3>{this.props.postData.name}</h3>
-            <p>agrawaprashant</p>
+            <p onClick={() => this.props.history.push(`profile/${this.props.postData.user}`)}>agrawaprashant</p>
           </div>
           <div className={classes.PostDate}>
             <Moment format="MMMM Do YYYY">{this.props.postData.date}</Moment> (
@@ -84,12 +85,12 @@ class Post extends React.Component {
           {this.state.isLikeBtnLoading ? (
             <Spinner />
           ) : (
-            <LikeButton
-              isLiked={this.state.isPostLiked}
-              totalLikes={this.state.totalPostLikes}
-              clicked={this.postLikeBtnHandler}
-            />
-          )}
+              <LikeButton
+                isLiked={this.state.isPostLiked}
+                totalLikes={this.state.totalPostLikes}
+                clicked={this.postLikeBtnHandler}
+              />
+            )}
           <div
             className={classes.PostBtn}
             onClick={() => {
@@ -131,4 +132,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Post);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Post));

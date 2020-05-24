@@ -9,6 +9,7 @@ import Profile from "./containers/UserProfile/user-profile.component";
 import Logout from "./containers/Auth/Logout/logout.component";
 import Login from "./containers/Auth/Login/login.component";
 import EditProfile from "./containers/UserProfile/EditProfile/edit-profile.component";
+import OtherPersonProfile from "./components/OtherPersonProfile/other-person-profile.component";
 class App extends React.Component {
   render() {
     return (
@@ -16,6 +17,7 @@ class App extends React.Component {
         <Switch>
           <Route path="/signup" component={SignUp} />
           <Route path="/login" component={Login} />
+          <Route path="/profile/:id" component={OtherPersonProfile} />
           <Route path="/profile" component={Profile} />
           <Route path="/edit-profile" component={EditProfile} />
           <Route path="/logout" component={Logout} />

@@ -36,7 +36,7 @@ export const register = (name, email, password) => {
       };
 
       const result = await axios.post(
-        "http://192.168.1.3:5000/api/users",
+        "http://192.168.1.100/api/users",
         registrationdata
       );
       localStorage.setItem("jwtToken", result.data.token);
@@ -79,7 +79,7 @@ export const fetchUser = (token) => {
     try {
       dispatch(fetchUserDetailsStart());
       setAuthorizationToken(token);
-      const result = await axios.get("http://192.168.1.3:5000/api/auth");
+      const result = await axios.get("http://192.168.1.100:5000/api/auth");
       dispatch(fetchUserDetailsSuccess(result.data));
     } catch (err) {
       console.log(err);
@@ -120,7 +120,7 @@ export const login = (email, password) => {
         password: password,
       };
       const result = await axios.post(
-        "http://192.168.1.3:5000/api/auth",
+        "http://192.168.1.100:5000/api/auth",
         loginData
       );
       dispatch(authSuccess(result.data.token));

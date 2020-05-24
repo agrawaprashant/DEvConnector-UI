@@ -1,11 +1,14 @@
 import * as actionTypes from "../actions/actionTypes";
-import { updateObject } from "../../shared/utility";
+import {
+  updateObject
+} from "../../shared/utility";
 
 const initialState = {
   profileData: null,
   loading: false,
   error: null,
   profileNotFound: false,
+  otherPersonProfile: null
 };
 
 const fetchUserProfileStart = (state, action) => {
@@ -24,15 +27,45 @@ const fetchUserProfileSuccess = (state, action) => {
   });
 };
 const fetchUserProfileFailed = (state, action) => {
-  return updateObject(state, { loading: false, error: action.payload.error });
+  return updateObject(state, {
+    loading: false,
+    error: action.payload.error
+  });
+};
+const fetchOtherPersonProfileStart = (state, action) => {
+  return updateObject(state, {
+    loading: true,
+    error: null,
+    otherPersonProfile: null
+  });
+};
+
+const fetchOtherPersonProfileSuccess = (state, action) => {
+  return updateObject(state, {
+    laoding: false,
+    otherPersonProfile: action.payload.otherPersonProfile
+  });
+};
+const fetchOtherPersonProfileFailed = (state, action) => {
+  return updateObject(state, {
+    loading: false,
+    error: action.payload.error
+  });
 };
 
 const profileNotFound = (state, action) => {
-  return updateObject(state, { loading: false, profileNotFound: true });
+  return updateObject(state, {
+    loading: false,
+    profileNotFound: true
+  });
 };
 
 const addSkillsStart = (state, action) => {
-  return updateObject(state, { loading: true, error: null, profileData: null });
+  return updateObject(state, {
+    loading: true,
+    error: null,
+    profileData: null
+  });
 };
 const addSkillsSuccess = (state, action) => {
   return updateObject(state, {
@@ -95,6 +128,12 @@ const reducer = (state = initialState, action) => {
       return fetchUserProfileSuccess(state, action);
     case actionTypes.FETCH_USER_PROFILE_FAILED:
       return fetchUserProfileFailed(state, action);
+    case actionTypes.FETCH_OTHER_PERSON_PROFILE_START:
+      return fetchOtherPersonProfileStart(state, action);
+    case actionTypes.FETCH_OTHER_PERSON_PROFILE_SUCCESS:
+      return fetchOtherPersonProfileSuccess(state, action);
+    case actionTypes.FETCH_OTHER_PERSON_PROFILE_FAILED:
+      return fetchOtherPersonProfileFailed(state, action);
     case actionTypes.PROFILE_NOT_FOUND:
       return profileNotFound(state, action);
     case actionTypes.ADD_SKILLS_START:

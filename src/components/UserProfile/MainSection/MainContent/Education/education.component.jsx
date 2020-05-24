@@ -19,7 +19,7 @@ const Education = (props) => {
     <AddEducationBox clicked={addEducationClickedHandler} />
   );
   let education = props.data.map((ed) => {
-    return <EducationCard key={ed._id} data={ed} />;
+    return <EducationCard key={ed._id} data={ed} owner />;
   });
   return (
     <div className={classes.Content}>

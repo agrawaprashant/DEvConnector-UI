@@ -1,5 +1,17 @@
-export { register, fetchUser, logout, login } from "./auth.actions";
-export { fetchPosts, createPost, likePost, unlikePost } from "./post.actions";
+export {
+  register,
+  fetchUser,
+  logout,
+  login
+}
+from "./auth.actions";
+export {
+  fetchPosts,
+  createPost,
+  likePost,
+  unlikePost
+}
+from "./post.actions";
 export {
   fetchUserProfile,
   editProfile,
@@ -9,5 +21,11 @@ export {
   addEducation,
   deleteEducation,
   deleteExperience,
-} from "./profile.actions";
-export { fetchComments, commentPost } from "./comments.actions";
+  fetchOtherPersonProfile
+}
+from "./profile.actions";
+export {
+  fetchComments,
+  commentPost
+}
+from "./comments.actions";

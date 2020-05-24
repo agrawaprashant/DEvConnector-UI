@@ -1,0 +1,144 @@
+.OtherPersonProfile .Info p,
+.OtherPersonProfile .Info h2 {
+    margin: 0;
+    padding: 0
+}
+
+.OtherPersonProfile .Info p {
+    line-height: 0
+}
+
+.OtherPersonProfile {
+    width: 95%;
+    margin: 1rem auto;
+    box-shadow: -1px -1px 5px rgba(0, 0, 0, 0.2);
+    /* border-bottom: 2px solid #8b4f5f */
+}
+
+.ProfileData {
+    display: flex;
+    color: #555;
+}
+
+.Avatar {
+    padding: 10px;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2), -1px -1px 3px rgba(0, 0, 0, 0.2);
+    margin: 1rem;
+    border-radius: 5px;
+    margin-left: 2rem;
+    background: #f7f7f7;
+}
+
+.Avatar img {
+    width: 150px;
+    height: 150px;
+}
+
+.Info {
+    flex: 2;
+    margin-left: 1rem;
+    margin: 1.5rem 2rem
+}
+
+.NameHandle {
+    display: flex;
+    align-items: baseline;
+}
+
+.NameHandle h2 {
+    margin-right: 5px;
+    font-size: 2.3rem;
+}
+
+.NameHandle p {
+    margin-left: 2px;
+    font-size: 18px;
+    font-style: italic;
+    font-weight: bold
+}
+
+.Handle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Work,
+.Location,
+.Handle {
+    display: flex;
+    align-items: center;
+    padding: 10px 0
+}
+
+.Work p,
+.Location p {
+    margin-left: 10px;
+    font-size: 15px
+}
+
+.Buttons {
+    margin: 1rem 0
+}
+
+.MessageBtn,
+.FollowBtn {
+    border: none;
+    padding: 5px 8px;
+    background: #333;
+    color: #fff;
+    cursor: pointer;
+    margin: 0 10px;
+    border-radius: 3px
+}
+
+.MessageBtn:hover,
+.FollowBtn:hover {
+    background-color: #555
+}
+
+.Tabs {
+    border-top: 1px solid #ccc
+}
+
+.Tabs ul {
+    display: flex;
+    list-style: none;
+    justify-content: space-evenly;
+}
+
+.Tabs ul li {
+    background: #f2f2f2;
+    display: inline-block;
+    width: 100%;
+}
+
+.Tabs ul li:nth-child(2) {
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+}
+
+
+.TabButton {
+    border: none;
+    width: 100%;
+    background: none;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    color: #555;
+    padding: 10px;
+    transition: all 0.2s ease-in-out;
+    outline: none
+}
+
+.Active {
+    background: #ddd;
+    border-bottom: 2px solid #5ab75c;
+}
+
+.Tabs ul li button:hover {
+    background: #ddd;
+    border-bottom: 2px solid #016ecd;
+    color: #666
+}

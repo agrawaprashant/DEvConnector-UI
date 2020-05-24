@@ -4,14 +4,14 @@
   text-align: center;
   box-sizing: border-box;
   width: 50%;
-  background-color: #dfe3ee;
   box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.1),
     -1px -1px 5px 1px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
+  border-radius: 5px;
 }
 
 .Author {
-  background-color: #f7f7f7;
+  box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.1),
+  -1px -1px 5px 1px rgba(0, 0, 0, 0.1);
   text-align: center;
   margin: 5px;
   color: #4b545a;
@@ -67,10 +67,12 @@
 }
 
 .PostTools {
+  width:90%;
+  margin:auto;
+  border-top:1px solid #ccc;
   display: flex;
   justify-content: flex-start;
   padding: 10px;
-  background-color: #f7f7f7;
   border-radius: 5px;
 }
 

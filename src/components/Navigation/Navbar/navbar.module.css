@@ -1,10 +1,11 @@
 .Navbar {
   background-color: #333;
   height: 4.5rem;
-  border-bottom: 5px solid #17c723;
+  border-bottom: 3px solid #2072ee;
   display: flex;
   justify-content: space-between;
   align-items: center;
+
 }
 
 .Navbar a {

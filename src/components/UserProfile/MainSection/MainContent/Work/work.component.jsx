@@ -17,10 +17,10 @@ const Work = (props) => {
   let newWork = newWorkComponent ? (
     newWorkComponent
   ) : (
-    <AddWorkBox clicked={addWorkClickedHandler} />
-  );
+      <AddWorkBox clicked={addWorkClickedHandler} />
+    );
   let work = props.data.map((work) => {
-    return <WorkExpCard key={work._id} data={work} />;
+    return <WorkExpCard key={work._id} data={work} owner />;
   });
 
   return (

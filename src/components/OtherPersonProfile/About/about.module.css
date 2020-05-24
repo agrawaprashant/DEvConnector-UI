@@ -1,0 +1,93 @@
+.About {
+    display: flex
+}
+
+.SideBar {
+    padding: 4rem;
+    margin: 2rem;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2), -1px -1px 3px rgba(0, 0, 0, 0.2);
+    /* border-radius: 5px */
+}
+
+.Connections {
+    border-bottom: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 1rem
+}
+
+.Connections ul {
+    list-style: none
+}
+
+.Connections ul li {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center
+}
+
+.Connections ul li button {
+    border: none;
+    background: none;
+    padding: 8px 0;
+    font-size: 15px;
+    color: #555;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.Social {
+    text-align: center;
+    margin: 1rem 0;
+    font-size: 20px;
+    color: #555
+}
+
+.Social ul {
+    list-style: none;
+}
+
+.Social ul li {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1.5rem 0
+}
+
+.Social ul li a {
+    margin-left: 10px;
+    font-size: 16px;
+    color: #555
+}
+
+.Main {
+    width: 70%;
+    margin: auto;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2), -1px -1px 3px rgba(0, 0, 0, 0.2);
+    /* border-radius: 5px; */
+    padding: 1rem;
+    margin: 2rem;
+    /* border: 1px solid #ccc */
+}
+
+.Box {
+    padding: 10px;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2), -1px -1px 3px rgba(0, 0, 0, 0.2);
+    margin: 1rem 0;
+    border-radius: 5px
+}
+
+.Bio,
+.Skills {
+    text-align: center;
+    padding-bottom: 2rem;
+    font-size: 18px
+}
+
+
+.Heading {
+    background: #eee;
+    padding: 3px 10px;
+    font-size: 16px;
+    margin-bottom: 2rem;
+}
