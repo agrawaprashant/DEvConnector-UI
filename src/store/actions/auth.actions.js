@@ -1,5 +1,7 @@
 import * as actionTypes from "./actionTypes";
-import { setAuthorizationToken } from "../../shared/utility";
+import {
+  setAuthorizationToken
+} from "../../shared/utility";
 import axios from "axios";
 const registrationStart = () => {
   return {

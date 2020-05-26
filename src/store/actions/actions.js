@@ -9,7 +9,8 @@ export {
   fetchPosts,
   createPost,
   likePost,
-  unlikePost
+  unlikePost,
+  fetchUserPosts
 }
 from "./post.actions";
 export {
@@ -21,7 +22,7 @@ export {
   addEducation,
   deleteEducation,
   deleteExperience,
-  fetchOtherPersonProfile
+  fetchOtherPersonProfile,
 }
 from "./profile.actions";
 export {

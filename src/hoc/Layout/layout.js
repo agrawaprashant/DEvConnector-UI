@@ -8,8 +8,7 @@ import {
 
 class Layout extends React.Component {
   render() {
-    return ( <
-      Aux >
+    return ( < Aux >
       <
       nav style = {
         {
@@ -21,14 +20,11 @@ class Layout extends React.Component {
       Navbar isAuth = {
         this.props.isAuthenticated
       }
-      /> <
-      /nav> <
-      main className = {
+      /> </nav > < main className = {
         classes.Content
       } > {
         this.props.children
-      } < /main> <
-      /Aux>
+      } < /main> </Aux >
     );
   }
 }

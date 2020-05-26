@@ -1,15 +1,20 @@
 import * as actionTypes from "../actions/actionTypes";
-import { updateObject } from "../../shared/utility";
+import {
+  updateObject
+} from "../../shared/utility";
 
 const initialState = {
   posts: [],
   loading: false,
   error: null,
   loadedComments: [],
+  userPosts: null
 };
 
 const fetchPostsStart = (state, action) => {
-  return updateObject(state, { loading: true });
+  return updateObject(state, {
+    loading: true
+  });
 };
 const fetchPostsSuccess = (state, action) => {
   return updateObject(state, {
@@ -17,8 +22,33 @@ const fetchPostsSuccess = (state, action) => {
     loading: false,
   });
 };
+
 const fetchPostsFailed = (state, action) => {
-  return updateObject(state, { error: action.payload.error, loading: true });
+  return updateObject(state, {
+    error: action.payload.error,
+    loading: false
+  });
+};
+
+const fetchUserPostsStart = (state, action) => {
+  return updateObject(state, {
+    loading: true,
+    userPosts: null
+  });
+};
+
+const fetchUserPostsSuccess = (state, action) => {
+  return updateObject(state, {
+    userPosts: action.payload.postData,
+    loading: false,
+  });
+};
+
+const fetchUserPostsFailed = (state, action) => {
+  return updateObject(state, {
+    error: action.payload.error,
+    loading: false
+  });
 };
 
 const createPostStart = (state, action) => {
@@ -106,6 +136,12 @@ const reducer = (state = initialState, action) => {
       return fetchPostsSuccess(state, action);
     case actionTypes.FETCH_POSTS_FAILED:
       return fetchPostsFailed(state, action);
+    case actionTypes.FETCH_USER_POSTS_START:
+      return fetchUserPostsStart(state, action);
+    case actionTypes.FETCH_USER_POSTS_SUCCESS:
+      return fetchUserPostsSuccess(state, action);
+    case actionTypes.FETCH_USER_POSTS_FAILED:
+      return fetchUserPostsFailed(state, action);
     case actionTypes.CREATE_POST_START:
       return createPostStart(state, action);
     case actionTypes.CREATE_POST_SUCCESS:

@@ -15,7 +15,7 @@ class CommentSection extends React.Component {
         "input",
         {
           type: "text",
-          placeholder: `Comment on ${this.props.postOwner}'s post..`,
+          placeholder: `Comment..`,
         },
         { value: "" },
         { required: true }

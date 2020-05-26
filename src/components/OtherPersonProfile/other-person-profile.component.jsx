@@ -4,12 +4,14 @@ import About from './About/about.component';
 import { withRouter } from 'react-router-dom';
 import * as actions from '../../store/actions/actions'
 import { connect } from 'react-redux';
+import OtherPersonPosts from '../../containers/OtherPersonProfile/Posts/other-person-posts.component';
 
 class OtherPersonProfile extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            showAbout: true
+            showAbout: true,
+            showPosts: false
         }
     }
 
@@ -64,12 +66,12 @@ class OtherPersonProfile extends React.Component {
 
                 <div className={classes.Tabs}>
                     <ul>
-                        <li ><button className={`${classes.Active} ${classes.TabButton}`} onClick={() => this.setState({ showAbout: true })}>About</button></li>
-                        <li><button className={classes.TabButton} >Posts</button></li>
+                        <li ><button className={`${this.state.showAbout ? classes.Active : null} ${classes.TabButton}`} onClick={() => this.setState({ showAbout: true, showPosts: false })}>About</button></li>
+                        <li><button className={`${this.state.showPosts ? classes.Active : null} ${classes.TabButton}`} onClick={() => this.setState({ showPosts: true, showAbout: false })} >Posts</button></li>
                         <li><button className={classes.TabButton}>Github</button></li>
                     </ul>
                 </div>
-                {this.props.profileData ? <About {...this.props.profileData} /> : <div className="ph-item">
+                {this.state.showAbout ? this.props.profileData ? <About {...this.props.profileData} /> : <div className="ph-item">
                     <div className="ph-col-12">
                         <div className="ph-picture"></div>
                         <div className="ph-row">
@@ -83,7 +85,8 @@ class OtherPersonProfile extends React.Component {
                             <div className="ph-col-12"></div>
                         </div>
                     </div>
-                </div>}
+                </div> : null}
+                {this.state.showPosts ? <OtherPersonPosts userId={this.props.match.params.id} /> : null}
             </div>
         )
     }

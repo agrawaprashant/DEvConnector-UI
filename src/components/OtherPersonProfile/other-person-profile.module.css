@@ -18,6 +18,8 @@
 .ProfileData {
     display: flex;
     color: #555;
+    justify-content: flex-start;
+    align-items: center
 }
 
 .Avatar {
@@ -141,4 +143,35 @@
     background: #ddd;
     border-bottom: 2px solid #016ecd;
     color: #666
+}
+
+@media screen and (max-width: 500px) {
+    .OtherPersonProfile {
+        box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2), -1px -1px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .ProfileData {
+        flex-direction: column;
+        justify-content: center
+    }
+
+    .Avatar img {
+        width: 200px;
+        height: 200px;
+    }
+
+    .Info {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin: 10px
+    }
+
+    .NameHandle {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+    }
 }

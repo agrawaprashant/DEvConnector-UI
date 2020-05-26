@@ -1,5 +1,8 @@
 .About {
-    display: flex
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    box-sizing: border-box
 }
 
 .SideBar {
@@ -74,7 +77,8 @@
     padding: 10px;
     box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2), -1px -1px 3px rgba(0, 0, 0, 0.2);
     margin: 1rem 0;
-    border-radius: 5px
+    border-radius: 5px;
+    background-color: #fff
 }
 
 .Bio,
@@ -90,4 +94,28 @@
     padding: 3px 10px;
     font-size: 16px;
     margin-bottom: 2rem;
+}
+
+@media screen and (max-width:500px) {
+    .About {
+        flex-direction: column;
+        align-items: center
+    }
+
+    .Box {
+        background-color: #f4f4f4
+    }
+
+    .SideBar {
+        width: 90%;
+        margin: 2rem auto;
+        padding: 1rem;
+        background-color: #709e965e;
+    }
+
+    .Main {
+        width: 90%;
+        margin: 0 auto;
+        background-color: #c6bdf1be;
+    }
 }

@@ -1,6 +1,8 @@
 import * as actionTypes from "./actionTypes";
 import axios from "axios";
-import { setAuthorizationToken } from "../../shared/utility";
+import {
+  setAuthorizationToken
+} from "../../shared/utility";
 
 const fetchPostsStart = () => {
   return {
@@ -34,6 +36,40 @@ export const fetchPosts = (token) => {
     } catch (err) {
       console.log(err);
       dispatch(fetchPostsFailed(err));
+    }
+  };
+};
+const fetchUserPostsStart = () => {
+  return {
+    type: actionTypes.FETCH_USER_POSTS_START,
+  };
+};
+const fetchUserPostsSuccess = (postData) => {
+  return {
+    type: actionTypes.FETCH_USER_POSTS_SUCCESS,
+    payload: {
+      postData: postData,
+    },
+  };
+};
+const fetchUserPostsFailed = (error) => {
+  return {
+    type: actionTypes.FETCH_USER_POSTS_FAILED,
+    payload: {
+      error: error,
+    },
+  };
+};
+
+export const fetchUserPosts = (userId) => {
+  return async (dispatch) => {
+    try {
+      dispatch(fetchUserPostsStart());
+      const result = await axios.get(`http://192.168.1.100:5000/api/posts/user/${userId}`);
+      dispatch(fetchUserPostsSuccess(result.data));
+    } catch (err) {
+      console.log(err);
+      dispatch(fetchUserPostsFailed(err));
     }
   };
 };

@@ -41,3 +41,10 @@
 .ImageToggleBtn button:hover {
   color: #ccc;
 }
+
+.ImageZoomBtn {
+  border: #fff;
+  background: none;
+  cursor: pointer;
+  outline: none
+}
