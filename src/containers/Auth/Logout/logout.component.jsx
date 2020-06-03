@@ -10,12 +10,22 @@ class Logout extends React.Component {
   render() {
     return <Redirect to="/" />;
   }
+
+  componentWillUnmount() {
+    this.props.socket.disconnect();
+  }
 }
 
-const mapDispatchToProps = dispatch => {
+const mapStateToProps = (state) => {
   return {
-    onLogout: () => dispatch(actions.logout())
+    socket: state.auth.socket,
   };
 };
 
-export default connect(null, mapDispatchToProps)(Logout);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onLogout: () => dispatch(actions.logout()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Logout);

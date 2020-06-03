@@ -38,6 +38,7 @@ class Login extends React.Component {
         touched: false,
       },
     },
+    error: null,
   };
 
   inputChangedHandler = (event, control) => {
@@ -56,16 +57,22 @@ class Login extends React.Component {
       [control]: updatedControl,
     });
 
-    this.setState({ loginForm: updatedForm });
+    this.setState({ loginForm: updatedForm, error: null });
   };
 
   formSubmitHandler = (event) => {
     event.preventDefault();
     this.props.onLogin(
       this.state.loginForm.email.value,
-      this.state.loginForm.password.value
+      this.state.loginForm.password.value,
+      this.setError
     );
   };
+
+  setError = (error) => {
+    this.setState({ error: error });
+  };
+
   render() {
     let redirect = null;
     if (this.props.isAuthenticated) redirect = <Redirect to="/" />;
@@ -125,6 +132,9 @@ class Login extends React.Component {
               </button>
             </div>
           </div>
+          {this.state.error ? (
+            <p className={classes.ErrorMessage}>{this.state.error}</p>
+          ) : null}
         </div>
       </div>
     );
@@ -139,7 +149,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onLogin: (email, password) => dispatch(actions.login(email, password)),
+    onLogin: (email, password, callback) =>
+      dispatch(actions.login(email, password, callback)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

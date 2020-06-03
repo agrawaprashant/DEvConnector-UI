@@ -11,7 +11,7 @@
 
 .Author {
   box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.1),
-  -1px -1px 5px 1px rgba(0, 0, 0, 0.1);
+    -1px -1px 5px 1px rgba(0, 0, 0, 0.1);
   text-align: center;
   margin: 5px;
   color: #4b545a;
@@ -57,7 +57,13 @@
 }
 .PostText {
   padding: 10px;
-  color: #333;
+  color: #555;
+  white-space: pre-wrap;
+  /* white-space: pre-line;  */
+  font-weight: bold;
+  font-size: 20px;
+  text-align: start;
+  overflow-wrap: break-word;
 }
 
 .PostTools a {
@@ -67,13 +73,17 @@
 }
 
 .PostTools {
-  width:90%;
-  margin:auto;
-  border-top:1px solid #ccc;
+  width: 90%;
+  margin: auto;
+  border-top: 1px solid #ff9900;
+  border-bottom: 1px solid #ff9900;
   display: flex;
   justify-content: flex-start;
   padding: 10px;
+  margin-top: 2rem;
   border-radius: 5px;
+  box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.1),
+    -1px -1px 5px 1px rgba(0, 0, 0, 0.1);
 }
 
 .PostBtn {

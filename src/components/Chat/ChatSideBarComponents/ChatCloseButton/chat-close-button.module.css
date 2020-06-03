@@ -1,0 +1,14 @@
+.ChatCloseBtn button {
+  border: none;
+  color: #fff;
+  padding: 10px;
+  cursor: pointer;
+  background-color: #333;
+  border-radius: 5px;
+  outline: none;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2), -2px -2px 5px rgba(0, 0, 0, 0.2);
+  transition: all 0.2s ease-in-out;
+}
+.ChatCloseBtn button:hover {
+  transform: scale(1.1);
+}

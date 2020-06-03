@@ -1,8 +1,6 @@
 import * as actions from "./actionTypes";
 import axios from "axios";
-import {
-  setAuthorizationToken
-} from "../../shared/utility";
+import { setAuthorizationToken } from "../../shared/utility";
 
 const fetchUserProfileStart = () => {
   return {
@@ -37,7 +35,7 @@ export const fetchUserProfile = (token) => {
     try {
       dispatch(fetchUserProfileStart());
       setAuthorizationToken(token);
-      const result = await axios.get("http://192.168.1.100:5000/api/profile/me");
+      const result = await axios.get("http://192.168.1.5:5000/api/profile/me");
       dispatch(fetchUserProfileSuccess(result.data));
     } catch (err) {
       if (err.response.status === 400) {
@@ -51,37 +49,39 @@ export const fetchUserProfile = (token) => {
 
 const fetchOtherPersonProfileStart = () => {
   return {
-    type: actions.FETCH_OTHER_PERSON_PROFILE_START
-  }
-}
+    type: actions.FETCH_OTHER_PERSON_PROFILE_START,
+  };
+};
 const fetchOtherPersonProfileFailed = (error) => {
   return {
     type: actions.FETCH_OTHER_PERSON_PROFILE_FAILED,
     payload: {
-      error: error
-    }
-  }
-}
+      error: error,
+    },
+  };
+};
 const fetchOtherPersonProfileSuccess = (profileData) => {
   return {
     type: actions.FETCH_OTHER_PERSON_PROFILE_SUCCESS,
     payload: {
-      otherPersonProfile: profileData
-    }
-  }
-}
+      otherPersonProfile: profileData,
+    },
+  };
+};
 
 export const fetchOtherPersonProfile = (userId) => {
-  return async dispatch => {
+  return async (dispatch) => {
     try {
-      dispatch(fetchOtherPersonProfileStart())
-      const response = await axios.get(`http://192.168.1.100:5000/api/profile/user/${userId}`);
-      dispatch(fetchOtherPersonProfileSuccess(response.data))
+      dispatch(fetchOtherPersonProfileStart());
+      const response = await axios.get(
+        `http://192.168.1.5:5000/api/profile/user/${userId}`
+      );
+      dispatch(fetchOtherPersonProfileSuccess(response.data));
     } catch (err) {
-      dispatch(fetchOtherPersonProfileFailed(err.response.data))
+      dispatch(fetchOtherPersonProfileFailed(err.response.data));
     }
-  }
-}
+  };
+};
 
 const editUserProfileStart = () => {
   return {
@@ -109,7 +109,7 @@ export const editProfile = (profileData, token) => {
       dispatch(editUserProfileStart());
       setAuthorizationToken(token);
       const result = await axios.post(
-        "http://192.168.1.100:5000/api/profile/",
+        "http://192.168.1.5:5000/api/profile/",
         profileData
       );
       dispatch(editUserProfileSuccess(result.data));
@@ -148,7 +148,7 @@ export const addSkills = (token, skillData) => {
       dispatch(addSkillsStart());
       setAuthorizationToken(token);
       const result = await axios.put(
-        "http://192.168.1.100:5000/api/profile/skills/",
+        "http://192.168.1.5:5000/api/profile/skills/",
         skillData
       );
       dispatch(addSkillsSuccess(result.data));
@@ -187,7 +187,7 @@ export const addBio = (token, bioData) => {
       dispatch(addBioStart());
       setAuthorizationToken(token);
       const result = await axios.put(
-        "http://192.168.1.100:5000/api/profile/bio/",
+        "http://192.168.1.5:5000/api/profile/bio/",
         bioData
       );
       dispatch(addBioSuccess(result.data));
@@ -226,7 +226,7 @@ export const addEducation = (token, educationData) => {
       dispatch(addEducationStart());
       setAuthorizationToken(token);
       const result = await axios.put(
-        "http://192.168.1.100:5000/api/profile/education/",
+        "http://192.168.1.5:5000/api/profile/education/",
         educationData
       );
       dispatch(addEducationSuccess(result.data));
@@ -264,7 +264,7 @@ export const addExperience = (token, expData) => {
       dispatch(addExperienceStart());
       setAuthorizationToken(token);
       const result = await axios.put(
-        "http://192.168.1.100:5000/api/profile/experience/",
+        "http://192.168.1.5:5000/api/profile/experience/",
         expData
       );
       dispatch(addExperienceSuccess(result.data));
@@ -303,7 +303,7 @@ export const deleteEducation = (token, educationId) => {
       dispatch(deleteEducationStart());
       setAuthorizationToken(token);
       const result = await axios.put(
-        "http://192.168.1.100:5000/api/profile/education/" + educationId
+        "http://192.168.1.5:5000/api/profile/education/" + educationId
       );
       dispatch(deleteEducationSuccess(result.data));
     } catch (err) {
@@ -340,7 +340,7 @@ export const deleteExperience = (token, expId) => {
       dispatch(deleteExperienceStart());
       setAuthorizationToken(token);
       const result = await axios.put(
-        "http://192.168.1.100:5000/api/profile/experience/" + expId
+        "http://192.168.1.5:5000/api/profile/experience/" + expId
       );
       dispatch(deleteExperienceSuccess(result.data));
     } catch (err) {

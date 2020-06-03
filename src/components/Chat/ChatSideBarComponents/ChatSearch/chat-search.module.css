@@ -1,0 +1,24 @@
+.ChatSearch {
+  background-color: #f7f7f7;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+.ChatSearchInput {
+  padding: 10px 20px;
+  border-radius: 30px;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  color: #aaa;
+}
+
+.ChatSearchInput input {
+  border: none;
+  background: none;
+  margin-left: 10px;
+  width: 100%;
+  padding: 2px;
+  outline: none;
+}

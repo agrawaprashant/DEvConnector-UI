@@ -1,0 +1,17 @@
+.ChatCotainerWrapper {
+  position: relative;
+}
+
+.ChatCotainerWrapper button {
+  position: absolute;
+  top: 10px;
+  left: 53vw;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.ChatCotainerWrapper img {
+  height: 80vh;
+  width: 55vw;
+}

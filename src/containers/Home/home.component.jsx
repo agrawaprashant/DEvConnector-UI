@@ -3,6 +3,8 @@ import classes from "./home.module.css";
 import Posts from "../Posts/posts.component";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import Aux from "../../hoc/Auxilliary/auxilliary";
+import Chat from "../../components/Chat/chat.component";
 
 class Home extends React.Component {
   render() {
@@ -23,7 +25,14 @@ class Home extends React.Component {
       </div>
     );
     if (this.props.isAuthenticated) {
-      homePage = <Posts />;
+      homePage = (
+        <Aux>
+          <Posts />;
+          <div className={classes.Chat}>
+            <Chat />
+          </div>
+        </Aux>
+      );
     }
     return homePage;
   }

@@ -2,8 +2,8 @@
   margin-top: 15px;
   padding: 20px;
   box-sizing: border-box;
-  background-color: #fff9e6;
-  border-radius: 10px;
+  border-top: 1px solid #ccc;
+  /* border-radius: 10px; */
 }
 
 .CommentBody {
@@ -12,8 +12,11 @@
   justify-content: flex-start;
 }
 
-.CommentBody a {
-  text-decoration: none;
+.CommentBody button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  outline: none;
   color: #005b96;
 }
 
@@ -34,8 +37,9 @@
 }
 
 .CommentBody p {
-  color: #333;
+  color: #555;
   text-align: justify;
+  font-size: 16px;
 }
 
 .ReadMore {

@@ -1,0 +1,35 @@
+.ChatListItem {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+.ChatListItem:hover {
+  background-color: #f4f4f4;
+}
+
+.Avatar img {
+  width: 50px;
+  height: auto;
+  border-radius: 50%;
+}
+
+.Content {
+  margin-left: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.Content h4,
+.Content p {
+  line-height: 0.5;
+}
+
+.Date {
+  margin-left: auto;
+}

@@ -70,6 +70,13 @@
     center/cover;
 }
 
+.ErrorMessage {
+  text-align: center;
+  padding-bottom: 1rem;
+  color: #d9534f;
+  font-size: 18px;
+}
+
 @media screen and (min-width: 751px) {
   .AlternateLoginOptions {
     justify-content: center;

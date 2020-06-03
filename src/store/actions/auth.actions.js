@@ -1,7 +1,6 @@
 import * as actionTypes from "./actionTypes";
-import {
-  setAuthorizationToken
-} from "../../shared/utility";
+import { setAuthorizationToken } from "../../shared/utility";
+import io from "socket.io-client";
 import axios from "axios";
 const registrationStart = () => {
   return {
@@ -38,15 +37,15 @@ export const register = (name, email, password) => {
       };
 
       const result = await axios.post(
-        "http://192.168.1.100/api/users",
+        "http://192.168.1.5/api/users",
         registrationdata
       );
       localStorage.setItem("jwtToken", result.data.token);
       dispatch(registrationSuccess(result.data.token));
       dispatch(fetchUser(result.data.token));
     } catch (err) {
-      console.log(err);
-      dispatch(registrationFailed(err));
+      console.log(err.response.data.errors[0].msg);
+      dispatch(registrationFailed(err.response.data.errors[0].msg));
     }
   };
 };
@@ -56,7 +55,8 @@ const fetchUserDetailsStart = () => {
     type: actionTypes.FETCH_USER_DETAILS_START,
   };
 };
-const fetchUserDetailsSuccess = (userData) => {
+const fetchUserDetailsSuccess = (userData, socket) => {
+  socket.emit("CONNECTED_USER", userData._id);
   return {
     type: actionTypes.FETCH_USER_DETAILS_SUCCESS,
     payload: {
@@ -76,16 +76,16 @@ const fetchUserDetailsFailed = (error) => {
   };
 };
 
-export const fetchUser = (token) => {
+export const fetchUser = (token, socket) => {
   return async (dispatch) => {
     try {
       dispatch(fetchUserDetailsStart());
       setAuthorizationToken(token);
-      const result = await axios.get("http://192.168.1.100:5000/api/auth");
-      dispatch(fetchUserDetailsSuccess(result.data));
+      const result = await axios.get("http://192.168.1.5:5000/api/auth");
+      dispatch(fetchUserDetailsSuccess(result.data, socket));
     } catch (err) {
-      console.log(err);
-      dispatch(fetchUserDetailsFailed(err));
+      console.log(err.response.data.errors[0].msg);
+      dispatch(fetchUserDetailsFailed(err.response.data.errors[0].msg));
     }
   };
 };
@@ -95,11 +95,12 @@ const authStart = () => {
     type: actionTypes.AUTH_START,
   };
 };
-const authSuccess = (token) => {
+const authSuccess = (token, socket) => {
   return {
     type: actionTypes.AUTH_SUCCESS,
     payload: {
       token: token,
+      socket: socket,
     },
   };
 };
@@ -112,7 +113,7 @@ const authFailed = (error) => {
   };
 };
 
-export const login = (email, password) => {
+export const login = (email, password, setError) => {
   return async (dispatch) => {
     try {
       dispatch(authStart());
@@ -122,14 +123,19 @@ export const login = (email, password) => {
         password: password,
       };
       const result = await axios.post(
-        "http://192.168.1.100:5000/api/auth",
+        "http://192.168.1.5:5000/api/auth",
         loginData
       );
-      dispatch(authSuccess(result.data.token));
-      dispatch(fetchUser(result.data.token));
+      const socket = io("http://192.168.1.5:5000/", {
+        transports: ["websocket"],
+      });
+      dispatch(authSuccess(result.data.token, socket));
+      dispatch(fetchUser(result.data.token, socket));
+      setError(null);
     } catch (err) {
-      console.log(err);
-      dispatch(authFailed(err));
+      console.log(err.response.data.errors[0].msg);
+      dispatch(authFailed(err.response.data.errors[0].msg));
+      setError(err.response.data.errors[0].msg);
     }
   };
 };

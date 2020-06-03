@@ -1,8 +1,6 @@
 import * as actionTypes from "./actionTypes";
 import axios from "axios";
-import {
-  setAuthorizationToken
-} from "../../shared/utility";
+import { setAuthorizationToken } from "../../shared/utility";
 
 const fetchPostsStart = () => {
   return {
@@ -31,7 +29,7 @@ export const fetchPosts = (token) => {
     try {
       dispatch(fetchPostsStart());
       setAuthorizationToken(token);
-      const result = await axios.get("http://192.168.1.100:5000/api/posts");
+      const result = await axios.get("http://192.168.1.5:5000/api/posts");
       dispatch(fetchPostsSuccess(result.data));
     } catch (err) {
       console.log(err);
@@ -65,7 +63,9 @@ export const fetchUserPosts = (userId) => {
   return async (dispatch) => {
     try {
       dispatch(fetchUserPostsStart());
-      const result = await axios.get(`http://192.168.1.100:5000/api/posts/user/${userId}`);
+      const result = await axios.get(
+        `http://192.168.1.5:5000/api/posts/user/${userId}`
+      );
       dispatch(fetchUserPostsSuccess(result.data));
     } catch (err) {
       console.log(err);
@@ -105,7 +105,7 @@ export const createPost = (postData, token, callback) => {
       dispatch(createPostStart());
       setAuthorizationToken(token);
       const result = await axios.post(
-        "http://192.168.1.100:5000/api/posts/",
+        "http://192.168.1.5:5000/api/posts/",
         postData
       );
       callback();
@@ -148,7 +148,7 @@ export const likePost = (postId, token, buttonCallback) => {
       dispatch(likePostStart());
       setAuthorizationToken(token);
       const result = await axios.put(
-        "http://192.168.1.100:5000/api/posts/like/" + postId
+        "http://192.168.1.5:5000/api/posts/like/" + postId
       );
       buttonCallback();
       dispatch(likePostSuccess(result.data, postId));
@@ -190,7 +190,7 @@ export const unlikePost = (postId, token, buttonCallback) => {
       dispatch(unlikePostStart());
       setAuthorizationToken(token);
       const result = await axios.put(
-        "http://192.168.1.100:5000/api/posts/unlike/" + postId
+        "http://192.168.1.5:5000/api/posts/unlike/" + postId
       );
       buttonCallback();
       dispatch(unlikePostSuccess(result.data, postId));

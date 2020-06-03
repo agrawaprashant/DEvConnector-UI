@@ -9,8 +9,9 @@ const initialState = {
     id: null,
     name: null,
     email: null,
-    avatar: null
-  }
+    avatar: null,
+  },
+  socket: null,
 };
 
 const registrationStart = (state, action) => {
@@ -21,7 +22,7 @@ const registrationSuccess = (state, action) => {
   return updateObject(state, {
     token: action.payload.token,
     loading: false,
-    error: null
+    error: null,
   });
 };
 
@@ -39,37 +40,38 @@ const fetchUserDetailsSuccess = (state, action) => {
       name: action.payload.name,
       id: action.payload.id,
       email: action.payload.email,
-      avatar: action.payload.avatar
+      avatar: action.payload.avatar,
     },
     loading: false,
-    error: null
+    error: null,
   });
 };
 
 const fetchUserDetailsFailed = (state, action) => {
   return updateObject(state, {
     error: action.payload.error,
-    loading: false
+    loading: false,
   });
 };
 
 const authStart = (state, action) => {
   return updateObject(state, {
-    loading: true
+    loading: true,
   });
 };
 
 const authSuccess = (state, action) => {
   return updateObject(state, {
     token: action.payload.token,
-    loading: false
+    socket: action.payload.socket,
+    loading: false,
   });
 };
 
 const authFailed = (state, action) => {
   return updateObject(state, {
     loading: false,
-    error: action.payload.error
+    error: action.payload.error,
   });
 };
 
@@ -80,8 +82,9 @@ const authLogout = (state, action) => {
       name: null,
       email: null,
       avatar: null,
-      id: null
-    }
+      id: null,
+    },
+    socket: null,
   });
 };
 const reducer = (state = initialState, action) => {

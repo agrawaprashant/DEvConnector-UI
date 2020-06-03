@@ -61,9 +61,15 @@ class CommentSection extends React.Component {
       comments = (
         <div className={classes.CommentSection}>
           <div className={classes.Comments}>
-            {this.props.comments[this.props.postId].map((comment) => {
-              return <Comment commentData={comment} key={comment._id} />;
-            })}
+            {this.props.comments[this.props.postId].length !== 0 ? (
+              this.props.comments[this.props.postId].map((comment) => {
+                return <Comment commentData={comment} key={comment._id} />;
+              })
+            ) : (
+              <p>
+                {`No comments. Be the first person to comment on ${this.props.postOwner}'s post!`}
+              </p>
+            )}
           </div>
           <div className={classes.AddComment}>
             <img src={this.props.user.avatar} alt="user-avatar" />
