@@ -9,6 +9,7 @@ class Chat extends React.Component {
     this.state = {
       isChatOpen: false,
       isChatSelected: false,
+      selectedChatId: null,
     };
   }
 
@@ -16,13 +17,12 @@ class Chat extends React.Component {
     this.setState({ isChatOpen: false, isChatSelected: false });
   };
 
-  selectChatHandler = () => {
-    this.setState({ isChatSelected: true });
+  selectChatHandler = (chatId) => {
+    this.setState({ isChatSelected: true, selectedChatId: chatId });
   };
 
   render() {
-    const { props } = this;
-    const { isChatOpen, isChatSelected } = this.state;
+    const { isChatOpen, isChatSelected, selectedChatId } = this.state;
     let chat;
     isChatOpen
       ? (chat = (
@@ -36,7 +36,10 @@ class Chat extends React.Component {
               closed={this.chatConsoleClosedHandler}
             />
             {isChatSelected ? (
-              <ChatCotainerWrapper closed={this.chatConsoleClosedHandler} />
+              <ChatCotainerWrapper
+                selectedChat={selectedChatId}
+                closed={this.chatConsoleClosedHandler}
+              />
             ) : null}
           </div>
         ))

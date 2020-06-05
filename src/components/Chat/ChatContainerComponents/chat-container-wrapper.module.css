@@ -1,14 +1,23 @@
 .ChatCotainerWrapper {
   position: relative;
+  width: 70%;
+  height: 100%;
+  /* overflow-y: scroll; */
 }
 
-.ChatCotainerWrapper button {
+.CloseBtn {
   position: absolute;
-  top: 10px;
-  left: 53vw;
+  top: 25px;
+  left: 53.3vw;
   background: none;
   border: none;
   cursor: pointer;
+  color: #aaa;
+  outline: none;
+}
+
+.CloseBtn:hover {
+  color: #333;
 }
 
 .ChatCotainerWrapper img {

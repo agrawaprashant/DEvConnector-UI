@@ -1,16 +1,27 @@
 .ChatSideBar {
   border-right: 1px solid #ccc;
   height: 100%;
-  background-color: #555;
-  overflow-y: scroll;
+  /* background-color: #555; */
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
-.ChatSideBar::-webkit-scrollbar-track {
+/* .ChatSideBar::-webkit-scrollbar-track {
   background: #f1f1f1;
-}
+} */
 
 .CloseBtn {
   position: absolute;
-  bottom: 2rem;
+  bottom: 1rem;
   right: 2rem;
+  /* display: inline-block; */
+}
+
+.SidebarDashboard {
+}
+
+.ChatList {
+  overflow-y: scroll;
 }

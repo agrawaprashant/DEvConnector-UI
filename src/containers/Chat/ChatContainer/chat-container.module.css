@@ -1,0 +1,34 @@
+.Message {
+  display: flex;
+}
+
+.ChatContainer {
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.ContactHeader {
+  /* position: sticky;
+  top: 0; */
+  /* overflow: hidden; */
+  /* width: 100%;
+  z-index: 1000; */
+}
+
+.MessageInput {
+  /* position: sticky;
+  bottom: 0;
+  right: 0; */
+  width: 100%;
+}
+
+.MessageContainer {
+  flex-grow: 1;
+  /* background-color: rgba(153, 153, 153, 0.397); */
+  background: url("../../../assets/img/white-painted-wall-1939485.jpg")
+    no-repeat center center/cover;
+  overflow-y: scroll;
+}

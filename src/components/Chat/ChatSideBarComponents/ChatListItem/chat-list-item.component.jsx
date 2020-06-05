@@ -2,9 +2,9 @@ import React from "react";
 import classes from "./chat-list-item.module.css";
 import Moment from "react-moment";
 
-const ChatListItem = ({ name, avatar, lastMessage, date, selectChat }) => {
+const ChatListItem = ({ name, avatar, lastMessage, date, selectChat, id }) => {
   return (
-    <div onClick={() => selectChat()} className={classes.ChatListItem}>
+    <div onClick={() => selectChat(id)} className={classes.ChatListItem}>
       <div className={classes.Avatar}>
         <img src={avatar} alt="avatar" />
       </div>

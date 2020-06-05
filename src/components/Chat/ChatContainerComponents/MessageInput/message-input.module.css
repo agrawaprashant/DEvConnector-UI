@@ -1,0 +1,30 @@
+.MessageInput {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ededed;
+  padding: 1rem;
+}
+
+.MessageInput input {
+  width: 100%;
+  background: #fff;
+  border: none;
+  padding: 10px;
+  border-radius: 30px;
+  outline: none;
+  margin: 0 10px;
+}
+
+.MessageInput button {
+  background: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-size: 20px;
+  color: #555;
+}
+
+.MessageInput button:hover {
+  color: #333;
+}

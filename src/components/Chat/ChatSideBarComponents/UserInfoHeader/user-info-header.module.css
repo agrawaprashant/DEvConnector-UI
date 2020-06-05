@@ -4,6 +4,9 @@
   align-items: center;
   padding: 5px;
   background-color: #ededed;
+  height: 60px;
+  border-bottom: 1px solid #ccc;
+  /* border-top-left-radius: 10px; */
 }
 
 .UserInfoHeader img {

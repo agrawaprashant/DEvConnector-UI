@@ -1,12 +1,11 @@
 import React from "react";
 import classes from "./chat-container-wrapper.module.css";
+import ChatContainer from "../../../containers/Chat/ChatContainer/chat-container.component";
 
 const ChatCotainerWrapper = (props) => {
   return (
     <div className={classes.ChatCotainerWrapper}>
-      <button onClick={() => props.closed()}>
-        <i className="fas fa-times fa-lg"></i>
-      </button>
+      <ChatContainer closed={props.closed} />
     </div>
   );
 };
