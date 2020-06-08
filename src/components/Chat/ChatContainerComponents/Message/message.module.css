@@ -11,9 +11,7 @@
   white-space: pre-line;
   padding: 8px 10px;
   min-width: 15%;
-}
-
-.MessageContent {
+  word-wrap: break-word;
 }
 
 .MessageContent p {

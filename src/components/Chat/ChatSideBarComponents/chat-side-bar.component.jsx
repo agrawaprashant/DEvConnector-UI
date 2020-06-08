@@ -9,7 +9,12 @@ export default class ChatSideBar extends Component {
   render() {
     return (
       <div
-        style={{ width: this.props.isChatSelected ? "30%" : "100%" }}
+        style={{
+          width:
+            this.props.isChatSelected || this.props.isContactSelected
+              ? "30%"
+              : "100%",
+        }}
         className={classes.ChatSideBar}
       >
         <div className={classes.SidebarDashboard}>
@@ -20,7 +25,7 @@ export default class ChatSideBar extends Component {
           <ChatList selectChat={this.props.clickChat} />
         </div>
         <div className={classes.CloseBtn}>
-          {this.props.isChatSelected ? null : (
+          {this.props.isChatSelected || this.props.isContactSelected ? null : (
             <ChatCloseButton closed={this.props.closed} />
           )}
         </div>

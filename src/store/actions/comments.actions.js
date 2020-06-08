@@ -1,6 +1,7 @@
 import * as actionTypes from "./actionTypes";
 import axios from "axios";
 import { setAuthorizationToken } from "../../shared/utility";
+import config from "../../config/app-config.json";
 
 const commentsFetchStart = (postId) => {
   return {
@@ -35,7 +36,7 @@ export const fetchComments = (postId, token) => {
       dispatch(commentsFetchStart());
       setAuthorizationToken(token);
       const result = await axios.get(
-        "http://192.168.1.5:5000/api/posts/comment/" + postId
+        `${config.api.baseURL}/${config.api.endPoints.posts}/comment/${postId}`
       );
       dispatch(commentsFetchSuccess(result.data, postId));
     } catch (err) {
@@ -75,7 +76,7 @@ export const commentPost = (commentContent, postId, token) => {
       dispatch(commentPostStart());
       setAuthorizationToken(token);
       const result = await axios.put(
-        "http://192.168.1.5:5000/api/posts/comment/" + postId,
+        `${config.api.baseURL}/${config.api.endPoints.posts}/comment/${postId}`,
         commentContent
       );
       dispatch(commentPostSuccess(result.data, postId));

@@ -11,6 +11,9 @@ const initialState = {
     email: null,
     avatar: null,
   },
+  chats: null,
+  following: null,
+  followers: null,
   socket: null,
 };
 
@@ -42,6 +45,9 @@ const fetchUserDetailsSuccess = (state, action) => {
       email: action.payload.email,
       avatar: action.payload.avatar,
     },
+    chats: action.payload.chats,
+    followers: action.payload.followers,
+    following: action.payload.following,
     loading: false,
     error: null,
   });
@@ -85,6 +91,9 @@ const authLogout = (state, action) => {
       id: null,
     },
     socket: null,
+    followers: null,
+    following: null,
+    chats: null,
   });
 };
 const reducer = (state = initialState, action) => {

@@ -19,6 +19,7 @@ const Message = ({ messageText, date, isOwner, seen, sent, deliverd }) => {
               {seen ? (
                 <i
                   style={{ color: "#4fc3f7" }}
+                  
                   className="fas fa-check-double"
                 ></i>
               ) : (

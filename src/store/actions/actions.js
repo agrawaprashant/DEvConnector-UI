@@ -1,18 +1,11 @@
-export {
-  register,
-  fetchUser,
-  logout,
-  login
-}
-from "./auth.actions";
+export { register, fetchUser, logout, login } from "./auth.actions";
 export {
   fetchPosts,
   createPost,
   likePost,
   unlikePost,
-  fetchUserPosts
-}
-from "./post.actions";
+  fetchUserPosts,
+} from "./post.actions";
 export {
   fetchUserProfile,
   editProfile,
@@ -23,10 +16,11 @@ export {
   deleteEducation,
   deleteExperience,
   fetchOtherPersonProfile,
-}
-from "./profile.actions";
+} from "./profile.actions";
+export { fetchComments, commentPost } from "./comments.actions";
 export {
-  fetchComments,
-  commentPost
-}
-from "./comments.actions";
+  fetchChatList,
+  fetchChatMessages,
+  chatMessageReceived,
+  chatMessageSent,
+} from "./chat.actions";

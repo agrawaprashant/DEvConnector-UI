@@ -1,121 +1,91 @@
 import React, { Component } from "react";
 import classes from "./chat-list.module.css";
 import ChatListItem from "../../../components/Chat/ChatSideBarComponents/ChatListItem/chat-list-item.component";
+import { connect } from "react-redux";
+import * as actions from "../../../store/actions/actions";
+import Spinner from "../../../components/UI/Spinner/spinner.component";
 
 class ChatList extends Component {
-  state = {
-    connections: [
-      {
-        id: "1",
-        name: "John Doe",
-        lastMessage: "Hi there!",
-        date: new Date(),
-        avatar:
-          "//www.gravatar.com/avatar/5634ff13f953ebcb374ac8c349bcfcfe?s=200&r=pg&d=mm",
-      },
-      {
-        id: "2",
-        name: "Mike Kennedy",
-        lastMessage: "Hi there!",
-        date: new Date(),
-        avatar:
-          "//www.gravatar.com/avatar/5634ff13f953ebcb374ac8c349bcfcfe?s=200&r=pg&d=mm",
-      },
-      {
-        id: "3",
-        name: "Mike Kennedy",
-        lastMessage: "Hi there!",
-        date: new Date(),
-        avatar:
-          "//www.gravatar.com/avatar/5634ff13f953ebcb374ac8c349bcfcfe?s=200&r=pg&d=mm",
-      },
-      {
-        id: "4",
-        name: "Mike Kennedy",
-        lastMessage: "Hi there!",
-        date: new Date(),
-        avatar:
-          "//www.gravatar.com/avatar/5634ff13f953ebcb374ac8c349bcfcfe?s=200&r=pg&d=mm",
-      },
-      {
-        id: "5",
-        name: "Mike Kennedy",
-        lastMessage: "Hi there!",
-        date: new Date(),
-        avatar:
-          "//www.gravatar.com/avatar/5634ff13f953ebcb374ac8c349bcfcfe?s=200&r=pg&d=mm",
-      },
-      {
-        id: "6",
-        name: "Mike Kennedy",
-        lastMessage: "Hi there!",
-        date: new Date(),
-        avatar:
-          "//www.gravatar.com/avatar/5634ff13f953ebcb374ac8c349bcfcfe?s=200&r=pg&d=mm",
-      },
-      {
-        id: "7",
-        name: "Mike Kennedy",
-        lastMessage: "Hi there!",
-        date: new Date(),
-        avatar:
-          "//www.gravatar.com/avatar/5634ff13f953ebcb374ac8c349bcfcfe?s=200&r=pg&d=mm",
-      },
-      {
-        id: "8",
-        name: "Mike Kennedy",
-        lastMessage: "Hi there!",
-        date: new Date(),
-        avatar:
-          "//www.gravatar.com/avatar/5634ff13f953ebcb374ac8c349bcfcfe?s=200&r=pg&d=mm",
-      },
-      {
-        id: "9",
-        name: "Mike Kennedy",
-        lastMessage: "Hi there!",
-        date: new Date(),
-        avatar:
-          "//www.gravatar.com/avatar/5634ff13f953ebcb374ac8c349bcfcfe?s=200&r=pg&d=mm",
-      },
-      {
-        id: "10",
-        name: "Mike Kennedy",
-        lastMessage: "Hi there!",
-        date: new Date(),
-        avatar:
-          "//www.gravatar.com/avatar/5634ff13f953ebcb374ac8c349bcfcfe?s=200&r=pg&d=mm",
-      },
-      {
-        id: "11",
-        name: "Mike Kennedy",
-        lastMessage: "Hi there!",
-        date: new Date(),
-        avatar:
-          "//www.gravatar.com/avatar/5634ff13f953ebcb374ac8c349bcfcfe?s=200&r=pg&d=mm",
-      },
-      {
-        id: "12",
-        name: "Mike Kennedy",
-        lastMessage: "Hi there!",
-        date: new Date(),
-        avatar:
-          "//www.gravatar.com/avatar/5634ff13f953ebcb374ac8c349bcfcfe?s=200&r=pg&d=mm",
-      },
-    ],
-  };
+  componentDidMount() {
+    const { onFetchChatList, token } = this.props;
+    onFetchChatList(token);
+  }
+
   render() {
-    console.log(this.props);
-    let chatList = this.state.connections.map((conn) => {
-      return (
-        <ChatListItem
-          selectChat={this.props.selectChat}
-          key={conn.id}
-          {...conn}
-        />
+    const { recentChats, followers, following } = this.props;
+    console.log(recentChats);
+    let chatList = <Spinner />;
+    if (recentChats) {
+      chatList = recentChats.map((chat) => {
+        return (
+          <ChatListItem
+            selectChat={this.props.selectChat}
+            key={chat._id}
+            name={chat.receiver.name}
+            lastMessage={chat.lastMessage}
+            avatar={chat.receiver.avatar}
+            id={chat._id}
+            contactId={chat.receiver._id}
+          />
+        );
+      });
+    }
+    if (recentChats && recentChats.length === 0) {
+      console.log("asdfasfasfasd");
+      let followingList = following.map((following) => {
+        return (
+          <ChatListItem
+            connectionItem
+            {...following.user}
+            key={following._id}
+            selectChat={this.props.selectChat}
+          />
+        );
+      });
+      let followersList = followers.map((follower) => {
+        return (
+          <ChatListItem
+            selectChat={this.props.selectChat}
+            connectionItem
+            {...follower.user}
+            key={follower._id}
+          />
+        );
+      });
+      chatList = (
+        <div className={classes.ConnectionsContainer}>
+          {followingList.length !== 0 ? (
+            <div className={classes.FollowingList}>
+              <h3>Following</h3>
+              {followingList}
+            </div>
+          ) : null}
+          {followersList.length !== 0 ? (
+            <div className={classes.FollowersList}>
+              <h3>Followers</h3>
+              {followersList}
+            </div>
+          ) : null}
+        </div>
       );
-    });
+    }
     return <div className={classes.ChatList}>{chatList}</div>;
   }
 }
 
-export default ChatList;
+const mapStateToProps = (state) => {
+  return {
+    followers: state.auth.followers,
+    following: state.auth.following,
+    recentChats: state.chat.chatList,
+    token: state.auth.token,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onFetchChatList: (token) => dispatch(actions.fetchChatList(token)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ChatList);

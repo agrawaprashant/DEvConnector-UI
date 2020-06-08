@@ -2,6 +2,8 @@ import * as actionTypes from "./actionTypes";
 import { setAuthorizationToken } from "../../shared/utility";
 import io from "socket.io-client";
 import axios from "axios";
+import config from "../../config/app-config.json";
+
 const registrationStart = () => {
   return {
     type: actionTypes.REGISTRATION_START,
@@ -37,7 +39,7 @@ export const register = (name, email, password) => {
       };
 
       const result = await axios.post(
-        "http://192.168.1.5/api/users",
+        `${config.api.baseURL}/${config.api.endPoints.users}`,
         registrationdata
       );
       localStorage.setItem("jwtToken", result.data.token);
@@ -64,6 +66,9 @@ const fetchUserDetailsSuccess = (userData, socket) => {
       id: userData._id,
       email: userData.email,
       avatar: userData.avatar,
+      following: userData.following,
+      followers: userData.followers,
+      chats: userData.chats,
     },
   };
 };
@@ -81,7 +86,9 @@ export const fetchUser = (token, socket) => {
     try {
       dispatch(fetchUserDetailsStart());
       setAuthorizationToken(token);
-      const result = await axios.get("http://192.168.1.5:5000/api/auth");
+      const result = await axios.get(
+        `${config.api.baseURL}/${config.api.endPoints.auth}`
+      );
       dispatch(fetchUserDetailsSuccess(result.data, socket));
     } catch (err) {
       console.log(err.response.data.errors[0].msg);
@@ -123,10 +130,10 @@ export const login = (email, password, setError) => {
         password: password,
       };
       const result = await axios.post(
-        "http://192.168.1.5:5000/api/auth",
+        `${config.api.baseURL}/${config.api.endPoints.auth}/`,
         loginData
       );
-      const socket = io("http://192.168.1.5:5000/", {
+      const socket = io(`${config.socket}`, {
         transports: ["websocket"],
       });
       dispatch(authSuccess(result.data.token, socket));

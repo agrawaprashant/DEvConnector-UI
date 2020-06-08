@@ -10,34 +10,58 @@ class Chat extends React.Component {
       isChatOpen: false,
       isChatSelected: false,
       selectedChatId: null,
+      isContactSelected: false,
+      selectedContactId: null,
     };
   }
 
   chatConsoleClosedHandler = () => {
-    this.setState({ isChatOpen: false, isChatSelected: false });
+    this.setState({
+      isChatOpen: false,
+      isChatSelected: false,
+      isContactSelected: false,
+    });
   };
 
-  selectChatHandler = (chatId) => {
-    this.setState({ isChatSelected: true, selectedChatId: chatId });
+  selectChatHandler = (id, contactId, isContactSelected) => {
+    if (isContactSelected) {
+      this.setState({ isContactSelected: true, selectedContactId: id });
+    } else {
+      this.setState({
+        isChatSelected: true,
+        selectedChatId: id,
+        selectedContactId: contactId,
+      });
+    }
   };
 
   render() {
-    const { isChatOpen, isChatSelected, selectedChatId } = this.state;
+    const {
+      isChatOpen,
+      isChatSelected,
+      selectedChatId,
+      selectedContactId,
+      isContactSelected,
+    } = this.state;
     let chat;
     isChatOpen
       ? (chat = (
           <div
-            style={{ width: isChatSelected ? "80%" : "30%" }}
+            style={{
+              width: isChatSelected || isContactSelected ? "80%" : "30%",
+            }}
             className={classes.ChatConsole}
           >
             <ChatSideBar
               isChatSelected={isChatSelected}
+              isContactSelected={isContactSelected}
               clickChat={this.selectChatHandler}
               closed={this.chatConsoleClosedHandler}
             />
-            {isChatSelected ? (
+            {isChatSelected || isContactSelected ? (
               <ChatCotainerWrapper
                 selectedChat={selectedChatId}
+                selectedContact={selectedContactId}
                 closed={this.chatConsoleClosedHandler}
               />
             ) : null}

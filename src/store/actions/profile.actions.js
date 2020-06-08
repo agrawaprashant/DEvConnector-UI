@@ -1,6 +1,7 @@
 import * as actions from "./actionTypes";
 import axios from "axios";
 import { setAuthorizationToken } from "../../shared/utility";
+import config from "../../config/app-config.json";
 
 const fetchUserProfileStart = () => {
   return {
@@ -35,7 +36,9 @@ export const fetchUserProfile = (token) => {
     try {
       dispatch(fetchUserProfileStart());
       setAuthorizationToken(token);
-      const result = await axios.get("http://192.168.1.5:5000/api/profile/me");
+      const result = await axios.get(
+        `${config.api.baseURL}/${config.api.endPoints.profile}/me`
+      );
       dispatch(fetchUserProfileSuccess(result.data));
     } catch (err) {
       if (err.response.status === 400) {
@@ -74,7 +77,7 @@ export const fetchOtherPersonProfile = (userId) => {
     try {
       dispatch(fetchOtherPersonProfileStart());
       const response = await axios.get(
-        `http://192.168.1.5:5000/api/profile/user/${userId}`
+        `${config.api.baseURL}/${config.api.endPoints.profile}/${userId}`
       );
       dispatch(fetchOtherPersonProfileSuccess(response.data));
     } catch (err) {
@@ -109,7 +112,7 @@ export const editProfile = (profileData, token) => {
       dispatch(editUserProfileStart());
       setAuthorizationToken(token);
       const result = await axios.post(
-        "http://192.168.1.5:5000/api/profile/",
+        `${config.api.baseURL}/${config.api.endPoints.profile}/`,
         profileData
       );
       dispatch(editUserProfileSuccess(result.data));
@@ -148,7 +151,7 @@ export const addSkills = (token, skillData) => {
       dispatch(addSkillsStart());
       setAuthorizationToken(token);
       const result = await axios.put(
-        "http://192.168.1.5:5000/api/profile/skills/",
+        `${config.api.baseURL}/${config.api.endPoints.profile}/skills`,
         skillData
       );
       dispatch(addSkillsSuccess(result.data));
@@ -187,7 +190,7 @@ export const addBio = (token, bioData) => {
       dispatch(addBioStart());
       setAuthorizationToken(token);
       const result = await axios.put(
-        "http://192.168.1.5:5000/api/profile/bio/",
+        `${config.api.baseURL}/${config.api.endPoints.profile}/bio`,
         bioData
       );
       dispatch(addBioSuccess(result.data));
@@ -226,7 +229,7 @@ export const addEducation = (token, educationData) => {
       dispatch(addEducationStart());
       setAuthorizationToken(token);
       const result = await axios.put(
-        "http://192.168.1.5:5000/api/profile/education/",
+        `${config.api.baseURL}/${config.api.endPoints.profile}/education`,
         educationData
       );
       dispatch(addEducationSuccess(result.data));
@@ -264,7 +267,7 @@ export const addExperience = (token, expData) => {
       dispatch(addExperienceStart());
       setAuthorizationToken(token);
       const result = await axios.put(
-        "http://192.168.1.5:5000/api/profile/experience/",
+        `${config.api.baseURL}/${config.api.endPoints.profile}/experience`,
         expData
       );
       dispatch(addExperienceSuccess(result.data));
@@ -303,7 +306,7 @@ export const deleteEducation = (token, educationId) => {
       dispatch(deleteEducationStart());
       setAuthorizationToken(token);
       const result = await axios.put(
-        "http://192.168.1.5:5000/api/profile/education/" + educationId
+        `${config.api.baseURL}/${config.api.endPoints.profile}/education/${educationId}`
       );
       dispatch(deleteEducationSuccess(result.data));
     } catch (err) {
@@ -340,7 +343,7 @@ export const deleteExperience = (token, expId) => {
       dispatch(deleteExperienceStart());
       setAuthorizationToken(token);
       const result = await axios.put(
-        "http://192.168.1.5:5000/api/profile/experience/" + expId
+        `${config.api.baseURL}/${config.api.endPoints.profile}/experience/${expId}`
       );
       dispatch(deleteExperienceSuccess(result.data));
     } catch (err) {

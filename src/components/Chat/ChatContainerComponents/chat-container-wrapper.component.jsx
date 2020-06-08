@@ -5,7 +5,11 @@ import ChatContainer from "../../../containers/Chat/ChatContainer/chat-container
 const ChatCotainerWrapper = (props) => {
   return (
     <div className={classes.ChatCotainerWrapper}>
-      <ChatContainer closed={props.closed} />
+      <ChatContainer
+        closed={props.closed}
+        chatId={props.selectedChat}
+        contactId={props.selectedContact}
+      />
     </div>
   );
 };
