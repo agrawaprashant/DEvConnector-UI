@@ -6,6 +6,7 @@ const initialState = {
   loadedChats: {},
   loading: false,
   error: null,
+  lastActiveMap: {},
 };
 
 const fetchChatListStart = (state, action) => {
@@ -57,6 +58,63 @@ const chatMessageSent = (state, action) => {
   return updateObject(state, { loadedChats: updatedLoadedChats });
 };
 
+const newChatMessageReceived = (state, action) => {
+  const { sender, messageText, chatId } = action.payload;
+  let updatedChatList;
+  if (state.chatList) {
+    updatedChatList = [...state.chatList];
+  } else {
+    updatedChatList = [];
+  }
+  updatedChatList = [
+    {
+      _id: chatId,
+      lastMessage: messageText,
+      lastMessageDate: new Date(),
+      receiver: { _id: sender.id, name: sender.name, avatar: sender.avatar },
+    },
+  ].concat(updatedChatList);
+  return updateObject(state, { chatList: updatedChatList });
+};
+const newChatMessageSent = (state, action) => {
+  const { receiver, messageText, chatId } = action.payload;
+  let updatedChatList;
+  if (state.chatList) {
+    updatedChatList = [...state.chatList];
+  } else {
+    updatedChatList = [];
+  }
+  updatedChatList = [
+    {
+      _id: chatId,
+      lastMessage: messageText,
+      lastMessageDate: new Date(),
+      receiver: {
+        _id: receiver.id,
+        name: receiver.name,
+        avatar: receiver.avatar,
+      },
+    },
+  ].concat(updatedChatList);
+
+  return updateObject(state, { chatList: updatedChatList });
+};
+
+const fetchLastActiveStart = (state, action) => {
+  return updateObject(state, { error: null });
+};
+
+const fetchLastActiveSuccess = (state, action) => {
+  const updatedLastActiveMap = { ...state.lastActiveMap };
+  const { lastActive, userId } = action.payload;
+  updatedLastActiveMap[userId] = lastActive;
+  return updateObject(state, { lastActiveMap: updatedLastActiveMap });
+};
+
+const fetchLastActiveFailed = (state, action) => {
+  return updateObject(state, { error: action.payload.error });
+};
+
 const chatReducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.FETCH_CHAT_LIST_START:
@@ -75,6 +133,16 @@ const chatReducer = (state = initialState, action) => {
       return chatMessageReceived(state, action);
     case actionTypes.CHAT_MESSAGE_SENT:
       return chatMessageSent(state, action);
+    case actionTypes.NEW_CHAT_MESSAGE_RECEIVED:
+      return newChatMessageReceived(state, action);
+    case actionTypes.NEW_CHAT_MESSAGE_SENT:
+      return newChatMessageSent(state, action);
+    case actionTypes.FETCH_LAST_ACTIVE_START:
+      return fetchLastActiveStart(state, action);
+    case actionTypes.FETCH_LAST_ACTIVE_SUCCESS:
+      return fetchLastActiveSuccess(state, action);
+    case actionTypes.FETCH_LAST_ACTIVE_FAILED:
+      return fetchLastActiveFailed(state, action);
     default:
       return state;
   }

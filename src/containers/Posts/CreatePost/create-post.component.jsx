@@ -23,7 +23,6 @@ class CreatePost extends React.Component {
   };
 
   postCreateCallback = () => {
-    console.log("Callback called");
     const updatedFormControl = updateObject(
       this.state.postCreationForm.postContent,
       {
@@ -33,7 +32,6 @@ class CreatePost extends React.Component {
     const updatedForm = updateObject(this.state.postCreationForm, {
       postContent: updatedFormControl,
     });
-    console.log(updatedForm);
     this.setState({
       postCreationForm: updatedForm,
       uplaodedImages: [],
@@ -107,7 +105,6 @@ class CreatePost extends React.Component {
   };
 
   alertCloseHandler = () => {
-    console.log("closed");
     this.setState({ showAlert: false });
     clearTimeout();
   };

@@ -15,6 +15,7 @@ const initialState = {
   following: null,
   followers: null,
   socket: null,
+  session: null,
 };
 
 const registrationStart = (state, action) => {
@@ -48,6 +49,7 @@ const fetchUserDetailsSuccess = (state, action) => {
     chats: action.payload.chats,
     followers: action.payload.followers,
     following: action.payload.following,
+    session: action.payload.session,
     loading: false,
     error: null,
   });

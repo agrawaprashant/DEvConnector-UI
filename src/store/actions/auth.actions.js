@@ -69,6 +69,7 @@ const fetchUserDetailsSuccess = (userData, socket) => {
       following: userData.following,
       followers: userData.followers,
       chats: userData.chats,
+      session: userData.session,
     },
   };
 };

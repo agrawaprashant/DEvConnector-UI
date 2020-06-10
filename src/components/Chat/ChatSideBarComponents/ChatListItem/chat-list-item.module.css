@@ -11,6 +11,9 @@
 .ChatListItem:hover {
   background-color: #f4f4f4;
 }
+.Active {
+  background-color: #f4f4f4;
+}
 
 .Avatar img {
   width: 50px;
@@ -32,4 +35,17 @@
 
 .Date {
   margin-left: auto;
+}
+
+.UnreadCount {
+  font-weight: bold;
+  font-size: 12px;
+  color: #fff;
+  background-color: #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  height: 20px;
+  width: 20px;
 }

@@ -2,7 +2,14 @@ import React from "react";
 import classes from "./message.module.css";
 import Moment from "react-moment";
 
-const Message = ({ messageText, date, isOwner, seen, sent, deliverd }) => {
+const Message = ({
+  messageText,
+  date,
+  isOwner,
+  isMessageSeen,
+  sent,
+  deliverd,
+}) => {
   return (
     <div
       style={{ background: isOwner ? "#dcf8c6" : "#fff" }}
@@ -16,10 +23,9 @@ const Message = ({ messageText, date, isOwner, seen, sent, deliverd }) => {
           </span>
           {isOwner ? (
             <span>
-              {seen ? (
+              {isMessageSeen ? (
                 <i
                   style={{ color: "#4fc3f7" }}
-                  
                   className="fas fa-check-double"
                 ></i>
               ) : (

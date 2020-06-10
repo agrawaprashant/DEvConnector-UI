@@ -67,7 +67,7 @@ export const fetchUserPosts = (userId) => {
     try {
       dispatch(fetchUserPostsStart());
       const result = await axios.get(
-        `${config.api.baseURL}/${config.api.endPoints.posts}/${userId}`
+        `${config.api.baseURL}/${config.api.endPoints.posts}/user/${userId}`
       );
       dispatch(fetchUserPostsSuccess(result.data));
     } catch (err) {

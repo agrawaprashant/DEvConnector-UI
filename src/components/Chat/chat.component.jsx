@@ -25,7 +25,11 @@ class Chat extends React.Component {
 
   selectChatHandler = (id, contactId, isContactSelected) => {
     if (isContactSelected) {
-      this.setState({ isContactSelected: true, selectedContactId: id });
+      this.setState({
+        isContactSelected: true,
+        selectedContactId: id,
+        selectedChatId: null,
+      });
     } else {
       this.setState({
         isChatSelected: true,
@@ -57,6 +61,8 @@ class Chat extends React.Component {
               isContactSelected={isContactSelected}
               clickChat={this.selectChatHandler}
               closed={this.chatConsoleClosedHandler}
+              selectedChat={selectedChatId}
+              selectedContact={selectedContactId}
             />
             {isChatSelected || isContactSelected ? (
               <ChatCotainerWrapper

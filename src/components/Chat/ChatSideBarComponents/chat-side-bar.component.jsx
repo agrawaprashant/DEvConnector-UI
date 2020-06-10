@@ -6,6 +6,12 @@ import ChatList from "../../../containers/Chat/ChatList/chat-list.component";
 import ChatCloseButton from "./ChatCloseButton/chat-close-button.component";
 
 export default class ChatSideBar extends Component {
+  state = {
+    searchString: null,
+  };
+  getSearchString = (e) => {
+    this.setState({ searchString: e.target.value });
+  };
   render() {
     return (
       <div
@@ -19,10 +25,15 @@ export default class ChatSideBar extends Component {
       >
         <div className={classes.SidebarDashboard}>
           <UserInfoHeader />
-          <ChatSearch />
+          <ChatSearch sendSearchString={this.getSearchString} />
         </div>
         <div className={classes.ChatList}>
-          <ChatList selectChat={this.props.clickChat} />
+          <ChatList
+            searchString={this.state.searchString}
+            selectChat={this.props.clickChat}
+            selectedChat={this.props.selectedChat}
+            selectedContact={this.props.selectedContact}
+          />
         </div>
         <div className={classes.CloseBtn}>
           {this.props.isChatSelected || this.props.isContactSelected ? null : (

@@ -42,7 +42,7 @@ const fetchChatListFailed = (error) => {
     },
   };
 };
-export const fetchChatMessages = (token, chatId) => {
+export const fetchChatMessages = (token, chatId, callback) => {
   return async (dispatch) => {
     try {
       dispatch(fetchChatMessagesStart());
@@ -50,6 +50,7 @@ export const fetchChatMessages = (token, chatId) => {
       const response = await axios.get(
         `${config.api.baseURL}/${config.api.endPoints.chat}/messages/${chatId}`
       );
+      callback();
       dispatch(fetchChatMessagesSuccess(response.data, chatId));
     } catch (err) {
       console.log(err);
@@ -82,6 +83,46 @@ const fetchChatMessagesFailed = (error) => {
     },
   };
 };
+export const fetchLastActive = (token, userId) => {
+  return async (dispatch) => {
+    try {
+      dispatch(fetchLastActiveStart());
+      setAuthorizationToken(token);
+      const response = await axios.get(
+        `${config.api.baseURL}/${config.api.endPoints.chat}/last-active/${userId}`
+      );
+      dispatch(fetchLastActiveSuccess(response.data, userId));
+    } catch (err) {
+      console.log(err);
+      dispatch(fetchLastActiveFailed(err.response.data));
+    }
+  };
+};
+
+const fetchLastActiveStart = () => {
+  return {
+    type: actionTypes.FETCH_LAST_ACTIVE_START,
+  };
+};
+
+const fetchLastActiveSuccess = (lastActive, userId) => {
+  return {
+    type: actionTypes.FETCH_LAST_ACTIVE_SUCCESS,
+    payload: {
+      lastActive,
+      userId,
+    },
+  };
+};
+
+const fetchLastActiveFailed = (error) => {
+  return {
+    type: actionTypes.FETCH_LAST_ACTIVE_FAILED,
+    payload: {
+      error,
+    },
+  };
+};
 
 export const chatMessageReceived = (chatId, messageObject) => {
   return {
@@ -98,6 +139,28 @@ export const chatMessageSent = (chatId, messageObject) => {
     payload: {
       chatId,
       messageObject,
+    },
+  };
+};
+
+export const newChatMessageReceived = (chatId, messageText, sender) => {
+  return {
+    type: actionTypes.NEW_CHAT_MESSAGE_RECEIVED,
+    payload: {
+      chatId,
+      messageText,
+      sender,
+    },
+  };
+};
+
+export const newChatMessageSent = (chatId, messageText, receiver) => {
+  return {
+    type: actionTypes.NEW_CHAT_MESSAGE_SENT,
+    payload: {
+      chatId,
+      messageText,
+      receiver,
     },
   };
 };

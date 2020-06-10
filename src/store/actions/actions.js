@@ -23,4 +23,7 @@ export {
   fetchChatMessages,
   chatMessageReceived,
   chatMessageSent,
+  newChatMessageReceived,
+  fetchLastActive,
+  newChatMessageSent,
 } from "./chat.actions";
