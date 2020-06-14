@@ -2,88 +2,76 @@ import React from "react";
 import classes from "./chat.module.css";
 import ChatSideBar from "./ChatSideBarComponents/chat-side-bar.component";
 import ChatCotainerWrapper from "./ChatContainerComponents/chat-container-wrapper.component";
+import { connect } from "react-redux";
+import * as actions from "../../store/actions/actions";
 
 class Chat extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       isChatOpen: false,
-      isChatSelected: false,
-      selectedChatId: null,
-      isContactSelected: false,
-      selectedContactId: null,
+      isChatOrContactSelected: false,
     };
   }
 
   chatConsoleClosedHandler = () => {
     this.setState({
       isChatOpen: false,
-      isChatSelected: false,
-      isContactSelected: false,
+      isChatOrContactSelected: false,
     });
   };
 
-  selectChatHandler = (id, contactId, isContactSelected) => {
-    if (isContactSelected) {
-      this.setState({
-        isContactSelected: true,
-        selectedContactId: id,
-        selectedChatId: null,
-      });
-    } else {
-      this.setState({
-        isChatSelected: true,
-        selectedChatId: id,
-        selectedContactId: contactId,
-      });
-    }
+  chatListClickHandler = () => {
+    this.setState({ isChatOrContactSelected: true });
+  };
+
+  backBtnClickHandler = () => {
+    this.setState({ isChatOrContactSelected: false });
   };
 
   render() {
-    const {
-      isChatOpen,
-      isChatSelected,
-      selectedChatId,
-      selectedContactId,
-      isContactSelected,
-    } = this.state;
+    const { isChatOpen, isChatOrContactSelected } = this.state;
     let chat;
     isChatOpen
       ? (chat = (
           <div
-            style={{
-              width: isChatSelected || isContactSelected ? "80%" : "30%",
-            }}
+            // style={{
+            //   width: isChatSelected || isContactSelected ? "80%" : "30%",
+            // }}
             className={classes.ChatConsole}
           >
             <ChatSideBar
-              isChatSelected={isChatSelected}
-              isContactSelected={isContactSelected}
-              clickChat={this.selectChatHandler}
+              clicked={this.chatListClickHandler}
               closed={this.chatConsoleClosedHandler}
-              selectedChat={selectedChatId}
-              selectedContact={selectedContactId}
+              isChatOrContactSelected={isChatOrContactSelected}
             />
-            {isChatSelected || isContactSelected ? (
+            {isChatOrContactSelected ? (
               <ChatCotainerWrapper
-                selectedChat={selectedChatId}
-                selectedContact={selectedContactId}
                 closed={this.chatConsoleClosedHandler}
+                backBtnClicked={this.backBtnClickHandler}
               />
             ) : null}
           </div>
         ))
       : (chat = (
           <div className={classes.Chat}>
-            <div className={classes.ChatBtn}>
-              <button onClick={() => this.setState({ isChatOpen: true })}>
-                Messaging
-              </button>
-            </div>
+            <button
+              className={classes.ChatBtn}
+              onClick={() => this.setState({ isChatOpen: true })}
+            >
+              <i className="fas fa-comments"></i>
+            </button>
           </div>
         ));
     return chat;
   }
 }
 
-export default Chat;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onContactUnselect: () => dispatch(actions.unSelectContact()),
+    onChatUnselect: () => dispatch(actions.unSelectChat()),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(Chat);

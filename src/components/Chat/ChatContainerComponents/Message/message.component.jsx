@@ -2,14 +2,7 @@ import React from "react";
 import classes from "./message.module.css";
 import Moment from "react-moment";
 
-const Message = ({
-  messageText,
-  date,
-  isOwner,
-  isMessageSeen,
-  sent,
-  deliverd,
-}) => {
+const Message = ({ messageText, date, isOwner, isMessageSeen }) => {
   return (
     <div
       style={{ background: isOwner ? "#dcf8c6" : "#fff" }}
@@ -22,7 +15,7 @@ const Message = ({
             <Moment format="h:mm A">{date}</Moment>
           </span>
           {isOwner ? (
-            <span>
+            <span key={Math.random()}>
               {isMessageSeen ? (
                 <i
                   style={{ color: "#4fc3f7" }}

@@ -13,30 +13,32 @@ export default class ChatSideBar extends Component {
     this.setState({ searchString: e.target.value });
   };
   render() {
+    const chatSideBarClasses = [classes.ChatSideBar];
+    const { isChatOrContactSelected } = this.props;
+    if (isChatOrContactSelected)
+      chatSideBarClasses.push(classes.ChatSideBarMobile);
     return (
       <div
-        style={{
-          width:
-            this.props.isChatSelected || this.props.isContactSelected
-              ? "30%"
-              : "100%",
-        }}
-        className={classes.ChatSideBar}
+        // style={{
+        //   width:
+        //     this.props.isChatSelected || this.props.isContactSelected
+        //       ? "30%"
+        //       : "100%",
+        // }}
+        className={chatSideBarClasses.join(" ")}
       >
-        <div className={classes.SidebarDashboard}>
+        <div>
           <UserInfoHeader />
           <ChatSearch sendSearchString={this.getSearchString} />
         </div>
         <div className={classes.ChatList}>
           <ChatList
             searchString={this.state.searchString}
-            selectChat={this.props.clickChat}
-            selectedChat={this.props.selectedChat}
-            selectedContact={this.props.selectedContact}
+            clicked={this.props.clicked}
           />
         </div>
         <div className={classes.CloseBtn}>
-          {this.props.isChatSelected || this.props.isContactSelected ? null : (
+          {this.props.isChatOrContactSelected ? null : (
             <ChatCloseButton closed={this.props.closed} />
           )}
         </div>

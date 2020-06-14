@@ -2,6 +2,7 @@ import * as actionTypes from "./actionTypes";
 import axios from "axios";
 import { setAuthorizationToken } from "../../shared/utility";
 import config from "../../config/app-config.json";
+import store from "../store";
 
 export const fetchChatList = (token) => {
   return async (dispatch) => {
@@ -125,42 +126,88 @@ const fetchLastActiveFailed = (error) => {
 };
 
 export const chatMessageReceived = (chatId, messageObject) => {
+  const sender = [
+    ...store.getState().auth.followers,
+    ...store.getState().auth.following,
+  ].find((user) => user.user.id === messageObject.sender).user;
   return {
     type: actionTypes.CHAT_MESSAGE_RECEIVED,
     payload: {
       chatId,
       messageObject,
+      sender: {
+        _id: sender.id,
+        name: sender.name,
+        avatar: sender.avatar,
+      },
     },
   };
 };
 export const chatMessageSent = (chatId, messageObject) => {
+  const receiver = [
+    ...store.getState().auth.followers,
+    ...store.getState().auth.following,
+  ].find((user) => user.user.id === messageObject.receiver).user;
   return {
     type: actionTypes.CHAT_MESSAGE_SENT,
     payload: {
       chatId,
       messageObject,
+      receiver: {
+        _id: receiver.id,
+        name: receiver.name,
+        avatar: receiver.avatar,
+      },
     },
   };
 };
 
-export const newChatMessageReceived = (chatId, messageText, sender) => {
+export const chatMessageSeenSent = (chatId, seenSender, seenReceiver) => {
   return {
-    type: actionTypes.NEW_CHAT_MESSAGE_RECEIVED,
+    type: actionTypes.CHAT_MESSAGE_SEEN_SENT,
     payload: {
       chatId,
-      messageText,
-      sender,
+      seenSender,
+      seenReceiver,
+    },
+  };
+};
+export const chatMessageSeenReceived = (chatId, seenSender, seenReceiver) => {
+  console.log(seenReceiver);
+  return {
+    type: actionTypes.CHAT_MESSAGE_SEEN_RECEIVED,
+    payload: {
+      chatId,
+      seenSender,
+      seenReceiver,
     },
   };
 };
 
-export const newChatMessageSent = (chatId, messageText, receiver) => {
+export const selectContact = (contactId) => {
   return {
-    type: actionTypes.NEW_CHAT_MESSAGE_SENT,
+    type: actionTypes.SELECT_CONTACT,
     payload: {
-      chatId,
-      messageText,
-      receiver,
+      contactId,
     },
+  };
+};
+export const selectChat = (chatId, contactId) => {
+  return {
+    type: actionTypes.SELECT_CHAT,
+    payload: {
+      contactId,
+      chatId,
+    },
+  };
+};
+export const unSelectContact = () => {
+  return {
+    type: actionTypes.UNSELECT_CONTACT,
+  };
+};
+export const unSelectChat = () => {
+  return {
+    type: actionTypes.UNSELECT_CHAT,
   };
 };

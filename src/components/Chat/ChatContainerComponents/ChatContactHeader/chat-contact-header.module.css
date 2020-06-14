@@ -46,3 +46,46 @@
 .Icons button:hover {
   color: #333;
 }
+
+.BackBtn {
+  border: none;
+  background: none;
+  margin-left: -1rem;
+  margin-right: 10px;
+  font-size: 1.7rem;
+  cursor: pointer;
+  color: #fff;
+  outline: none;
+}
+
+.BackBtn:hover {
+  color: #eee;
+  transform: scale(1.1);
+}
+
+@media screen and (max-width: 500px) {
+  .ChatContactHeader {
+    height: 100%;
+    background-color: #004752;
+    color: #fff;
+    border-bottom: 3px solid #ff9158;
+  }
+
+  .ContactInfo h3 {
+    font-size: 1.2rem;
+  }
+  .LastSeen {
+    font-size: 10px;
+  }
+
+  .Icons {
+    margin-right: -10px;
+  }
+  .Icons button {
+    color: #fff;
+    font-size: 1.2rem;
+  }
+  .Icons button:hover {
+    color: #eee;
+  }
+}

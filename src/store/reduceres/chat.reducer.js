@@ -1,5 +1,6 @@
 import * as actionTypes from "../actions/actionTypes";
 import { updateObject } from "../../shared/utility";
+import { createChat } from "../../shared/chat.utilities";
 
 const initialState = {
   chatList: null,
@@ -7,6 +8,35 @@ const initialState = {
   loading: false,
   error: null,
   lastActiveMap: {},
+  selectedChat: null,
+  selectedContact: null,
+};
+
+const selectChat = (state, action) => {
+  const { chatId, contactId } = action.payload;
+  return updateObject(state, {
+    selectedChat: chatId,
+    selectedContact: contactId,
+  });
+};
+const selectContact = (state, action) => {
+  const { contactId } = action.payload;
+  return updateObject(state, {
+    selectedChat: null,
+    selectedContact: contactId,
+  });
+};
+const unSelectChat = (state, action) => {
+  return updateObject(state, {
+    selectedChat: null,
+    selectedContact: null,
+  });
+};
+const unSelectContact = (state, action) => {
+  return updateObject(state, {
+    selectedChat: null,
+    selectedContact: null,
+  });
 };
 
 const fetchChatListStart = (state, action) => {
@@ -38,66 +68,86 @@ const fetchChatMessagesFailed = (state, action) => {
 };
 
 const chatMessageReceived = (state, action) => {
-  const { chatId, messageObject } = action.payload;
+  const { chatId, messageObject, sender } = action.payload;
   const updatedLoadedChats = { ...state.loadedChats };
+  let updatedChatList = [...state.chatList];
   if (updatedLoadedChats[chatId]) {
     updatedLoadedChats[chatId].push(messageObject);
-  } else {
-    updatedLoadedChats[chatId] = [messageObject];
   }
-  return updateObject(state, { loadedChats: updatedLoadedChats });
+  let updatedChat = updatedChatList.find((chat) => {
+    return chat._id === chatId;
+  });
+  if (updatedChat) {
+    const updatedChatIndex = updatedChatList.indexOf(updatedChat);
+    updatedChat.lastMessage = messageObject.messageText;
+    updatedChat.unreadMessageCount = updatedChat.unreadMessageCount + 1;
+    updatedChat.lastMessageDate = new Date();
+
+    updatedChatList[updatedChatIndex] = updatedChat;
+  } else {
+    updatedChat = createChat(chatId, messageObject.messageText, sender);
+    updatedChat.unreadMessageCount = 1;
+    updatedChatList = [updatedChat].concat(updatedChatList);
+  }
+  return updateObject(state, {
+    loadedChats: updatedLoadedChats,
+    chatList: updatedChatList,
+  });
 };
 const chatMessageSent = (state, action) => {
-  const { chatId, messageObject } = action.payload;
+  const { chatId, messageObject, receiver } = action.payload;
   const updatedLoadedChats = { ...state.loadedChats };
+  let updatedChatList = [...state.chatList];
   if (updatedLoadedChats[chatId]) {
     updatedLoadedChats[chatId].push(messageObject);
   } else {
     updatedLoadedChats[chatId] = [messageObject];
   }
-  return updateObject(state, { loadedChats: updatedLoadedChats });
+  let updatedChat = updatedChatList.find((chat) => {
+    return chat._id === chatId;
+  });
+  if (updatedChat) {
+    const updatedChatIndex = updatedChatList.indexOf(updatedChat);
+    updatedChat.lastMessage = messageObject.messageText;
+    updatedChat.lastMessageDate = new Date();
+    updatedChatList[updatedChatIndex] = updatedChat;
+  } else {
+    updatedChat = createChat(chatId, messageObject.messageText, receiver);
+    updatedChatList = [updatedChat].concat(updatedChatList);
+  }
+  return updateObject(state, {
+    loadedChats: updatedLoadedChats,
+    chatList: updatedChatList,
+  });
 };
 
-const newChatMessageReceived = (state, action) => {
-  const { sender, messageText, chatId } = action.payload;
-  let updatedChatList;
-  if (state.chatList) {
-    updatedChatList = [...state.chatList];
-  } else {
-    updatedChatList = [];
-  }
-  updatedChatList = [
-    {
-      _id: chatId,
-      lastMessage: messageText,
-      lastMessageDate: new Date(),
-      receiver: { _id: sender.id, name: sender.name, avatar: sender.avatar },
-    },
-  ].concat(updatedChatList);
-  return updateObject(state, { chatList: updatedChatList });
+const chatMessageSeenSent = (state, action) => {
+  const { chatId } = action.payload;
+  const updatedChatList = [...state.chatList];
+  const updatedChat = updatedChatList.find((chat) => chat._id === chatId);
+  updatedChat.unreadMessageCount = 0;
+  const updatedChatIndex = updatedChatList.indexOf(updatedChat);
+  updatedChatList[updatedChatIndex] = updatedChat;
+  return updateObject(state, {
+    chatList: updatedChatList,
+  });
 };
-const newChatMessageSent = (state, action) => {
-  const { receiver, messageText, chatId } = action.payload;
-  let updatedChatList;
-  if (state.chatList) {
-    updatedChatList = [...state.chatList];
-  } else {
-    updatedChatList = [];
-  }
-  updatedChatList = [
-    {
-      _id: chatId,
-      lastMessage: messageText,
-      lastMessageDate: new Date(),
-      receiver: {
-        _id: receiver.id,
-        name: receiver.name,
-        avatar: receiver.avatar,
-      },
-    },
-  ].concat(updatedChatList);
 
-  return updateObject(state, { chatList: updatedChatList });
+const chatMessageSeenReceived = (state, action) => {
+  const { chatId, seenReceiver } = action.payload;
+  console.log(seenReceiver);
+  const updatedLoadedChats = { ...state.loadedChats };
+  if (updatedLoadedChats[chatId]) {
+    updatedLoadedChats[chatId].forEach((message) => {
+      if (message.sender === seenReceiver) {
+        message.isMessageSeen = true;
+      }
+    });
+    return updateObject(state, {
+      loadedChats: updatedLoadedChats,
+    });
+  }
+  return state;
 };
 
 const fetchLastActiveStart = (state, action) => {
@@ -117,6 +167,14 @@ const fetchLastActiveFailed = (state, action) => {
 
 const chatReducer = (state = initialState, action) => {
   switch (action.type) {
+    case actionTypes.SELECT_CHAT:
+      return selectChat(state, action);
+    case actionTypes.SELECT_CONTACT:
+      return selectContact(state, action);
+    case actionTypes.UNSELECT_CHAT:
+      return unSelectChat(state, action);
+    case actionTypes.UNSELECT_CONTACT:
+      return unSelectContact(state, action);
     case actionTypes.FETCH_CHAT_LIST_START:
       return fetchChatListStart(state, action);
     case actionTypes.FETCH_CHAT_LIST_SUCCESS:
@@ -133,16 +191,19 @@ const chatReducer = (state = initialState, action) => {
       return chatMessageReceived(state, action);
     case actionTypes.CHAT_MESSAGE_SENT:
       return chatMessageSent(state, action);
-    case actionTypes.NEW_CHAT_MESSAGE_RECEIVED:
-      return newChatMessageReceived(state, action);
-    case actionTypes.NEW_CHAT_MESSAGE_SENT:
-      return newChatMessageSent(state, action);
     case actionTypes.FETCH_LAST_ACTIVE_START:
       return fetchLastActiveStart(state, action);
     case actionTypes.FETCH_LAST_ACTIVE_SUCCESS:
       return fetchLastActiveSuccess(state, action);
     case actionTypes.FETCH_LAST_ACTIVE_FAILED:
       return fetchLastActiveFailed(state, action);
+    case actionTypes.CHAT_MESSAGE_SEEN_SENT:
+      return chatMessageSeenSent(state, action);
+    case actionTypes.CHAT_MESSAGE_SEEN_RECEIVED:
+      return chatMessageSeenReceived(state, action);
+    case actionTypes.AUTH_LOGOUT:
+      return initialState;
+
     default:
       return state;
   }

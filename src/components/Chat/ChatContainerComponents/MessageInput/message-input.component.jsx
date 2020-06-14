@@ -44,21 +44,26 @@ class MessageInput extends React.Component {
 
   render() {
     return (
-      <form onSubmit={this.submitFormHandler} className={classes.MessageInput}>
-        <button>
-          <i className="far fa-laugh"></i>
-        </button>
-        <input
-          type="text"
-          placeholder="Type a message"
-          value={this.state.messageText}
-          onChange={this.inputChangeHandler}
-          onKeyUp={this.keyupHandler}
-        />
-        <button type="submit">
-          <i className="fas fa-paper-plane"></i>
-        </button>
-      </form>
+      <div className={classes.Container}>
+        <form
+          onSubmit={this.submitFormHandler}
+          className={classes.MessageInput}
+        >
+          <button>
+            <i className="far fa-laugh"></i>
+          </button>
+          <input
+            type="text"
+            placeholder="Type a message"
+            value={this.state.messageText}
+            onChange={this.inputChangeHandler}
+            onKeyUp={this.keyupHandler}
+          />
+          <button type="submit">
+            <i className="fas fa-paper-plane"></i>
+          </button>
+        </form>
+      </div>
     );
   }
 }

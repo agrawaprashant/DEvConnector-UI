@@ -4,15 +4,15 @@ export const createChatMessage = (messageText, sender, receiver) => {
     sender,
     receiver,
     date: new Date(),
+    isMessageSeen: false,
   };
 };
 
-export const createChat = (chatId, messageText, sender, receiver) => {
+export const createChat = (chatId, messageText, receiver) => {
   return {
     _id: chatId,
     lastMessage: messageText,
-    users: [sender, receiver],
-    messages: [],
-    date: new Date(),
+    lastMessageDate: new Date(),
+    receiver,
   };
 };

@@ -67,6 +67,8 @@ const reducer = (state = initialState, action) => {
       return commentPostSuccess(state, action);
     case actionTypes.COMMENT_POST_FAILED:
       return commentPostFailed(state, action);
+    case actionTypes.AUTH_LOGOUT:
+      return initialState;
     default:
       return state;
   }

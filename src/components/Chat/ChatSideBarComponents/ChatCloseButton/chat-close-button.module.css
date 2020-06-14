@@ -2,13 +2,21 @@
   border: none;
   color: #fff;
   padding: 10px;
+  font-size: 1rem;
   cursor: pointer;
-  background-color: #333;
-  border-radius: 5px;
+  background-color: #004752;
+  border-radius: 10px;
   outline: none;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2), -2px -2px 5px rgba(0, 0, 0, 0.2);
   transition: all 0.2s ease-in-out;
 }
 .ChatCloseBtn button:hover {
   transform: scale(1.1);
+}
+
+@media screen and (max-width: 500px) {
+  .ChatCloseBtn button {
+    padding: 0.6rem 1rem;
+    font-size: 2rem;
+  }
 }

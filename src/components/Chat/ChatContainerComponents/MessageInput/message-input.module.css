@@ -28,3 +28,17 @@
 .MessageInput button:hover {
   color: #333;
 }
+
+@media screen and (max-width: 500px) {
+  .MessageInput {
+    height: 70px;
+  }
+
+  .MessageInput input {
+    padding: 15px;
+  }
+
+  .MessageInput button {
+    font-size: 25px;
+  }
+}

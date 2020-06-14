@@ -4,6 +4,8 @@ import CreatePost from "./CreatePost/create-post.component";
 import * as actions from "../../store/actions/actions";
 import { connect } from "react-redux";
 import Spinner from "../../components/UI/Spinner/spinner.component";
+import { PRIVATE_CHAT_MESSAGE, MESSAGE_SEEN } from "../../socket/Events";
+import { createChatMessage } from "../../shared/chat.utilities";
 class Posts extends React.Component {
   state = {
     posts: [
@@ -28,7 +30,39 @@ class Posts extends React.Component {
   componentDidMount() {
     if (this.props.token) {
       this.props.onFetchPosts(this.props.token);
+      this.props.onFetchChatList(this.props.token);
+      this.props.socket.on(PRIVATE_CHAT_MESSAGE, (data) => {
+        console.log("MESSAGE RECEIVED!!", data);
+        const { chatId, sender, receiver, messageText } = data;
+        this.props.onMessageReceived(
+          chatId,
+          createChatMessage(messageText, sender, receiver)
+        );
+      });
+      this.props.socket.on(MESSAGE_SEEN, (chatId, seenReceiver, seenSender) => {
+        console.log(
+          "CHATID:",
+          chatId,
+          "SEEN_RECEIVER:",
+          seenReceiver,
+          "SEEN_SENDER:",
+          seenSender
+        );
+        this.props.onMessageSeen(chatId, seenSender, seenReceiver);
+      });
     }
+  }
+
+  componentDidUpdate() {
+    console.log("component updated!");
+    // this.props.socket.on(PRIVATE_CHAT_MESSAGE, (data) => {
+    //   console.log("MESSAGE RECEIVED!!", data);
+    //   const { chatId, sender, receiver, messageText } = data;
+    //   this.props.onMessageReceived(
+    //     chatId,
+    //     createChatMessage(messageText, sender, receiver)
+    //   );
+    // });
   }
   render() {
     let posts = null;
@@ -52,6 +86,10 @@ class Posts extends React.Component {
       </div>
     );
   }
+  componentWillUnmount() {
+    console.log("component will unmount called");
+    this.props.socket.removeAllListeners();
+  }
 }
 
 const mapStateToProps = (state) => {
@@ -61,12 +99,20 @@ const mapStateToProps = (state) => {
     loading: state.post.loading,
     error: state.post.err,
     loggedInUserId: state.auth.user.id,
+    socket: state.auth.socket,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     onFetchPosts: (token) => dispatch(actions.fetchPosts(token)),
+    onFetchChatList: (token) => dispatch(actions.fetchChatList(token)),
+    onMessageReceived: (chatId, messageObj) =>
+      dispatch(actions.chatMessageReceived(chatId, messageObj)),
+    onMessageSeen: (chatId, seenSender, seenReceiver) =>
+      dispatch(
+        actions.chatMessageSeenReceived(chatId, seenSender, seenReceiver)
+      ),
   };
 };
 

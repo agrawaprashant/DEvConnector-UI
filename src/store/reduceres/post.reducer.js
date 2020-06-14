@@ -1,19 +1,17 @@
 import * as actionTypes from "../actions/actionTypes";
-import {
-  updateObject
-} from "../../shared/utility";
+import { updateObject } from "../../shared/utility";
 
 const initialState = {
   posts: [],
   loading: false,
   error: null,
   loadedComments: [],
-  userPosts: null
+  userPosts: null,
 };
 
 const fetchPostsStart = (state, action) => {
   return updateObject(state, {
-    loading: true
+    loading: true,
   });
 };
 const fetchPostsSuccess = (state, action) => {
@@ -26,14 +24,14 @@ const fetchPostsSuccess = (state, action) => {
 const fetchPostsFailed = (state, action) => {
   return updateObject(state, {
     error: action.payload.error,
-    loading: false
+    loading: false,
   });
 };
 
 const fetchUserPostsStart = (state, action) => {
   return updateObject(state, {
     loading: true,
-    userPosts: null
+    userPosts: null,
   });
 };
 
@@ -47,7 +45,7 @@ const fetchUserPostsSuccess = (state, action) => {
 const fetchUserPostsFailed = (state, action) => {
   return updateObject(state, {
     error: action.payload.error,
-    loading: false
+    loading: false,
   });
 };
 
@@ -160,6 +158,8 @@ const reducer = (state = initialState, action) => {
       return unlikePostSuccess(state, action);
     case actionTypes.UNLIKE_POST_FAILED:
       return unlikePostFailed(state, action);
+    case actionTypes.AUTH_LOGOUT:
+      return initialState;
     default:
       return state;
   }

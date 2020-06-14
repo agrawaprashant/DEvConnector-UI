@@ -1,18 +1,31 @@
 .Chat {
   position: fixed;
   z-index: 1000;
-  bottom: 0;
-  right: 0;
+  bottom: 3rem;
+  right: 2rem;
 }
 
-.ChatBtn button {
-  display: inline-block;
-  padding: 10px 20px;
-  width: 300px;
+.ChatBtn {
+  /* display: inline-block; */
+  /* padding: 10px 20px; */
+  /* width: 300px; */
   color: #fff;
-  background-color: rgb(0, 66, 97);
+  display: block;
+  /* background-color: rgb(0, 66, 97); */
   border: none;
+  background: none;
   cursor: pointer;
+  font-size: 2rem;
+  background-color: #004752;
+  padding: 1rem;
+  border-radius: 10px;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.ChatBtn:hover {
+  background-color: #01373f;
+  /* transform: scale(1.1); */
 }
 
 .ChatConsole {
@@ -28,4 +41,16 @@
   border-top: 1px solid #ccc;
   border-left: 1px solid #ccc;
   /* border-top-left-radius: 10px; */
+}
+
+@media screen and (max-width: 500px) {
+  .ChatBtn {
+    padding: 0.8rem;
+  }
+
+  .ChatConsole {
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
 }

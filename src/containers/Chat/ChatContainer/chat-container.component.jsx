@@ -1,196 +1,188 @@
 import React, { Component } from "react";
-import classes from "./chat-container.module.css";
-import Message from "../../../components/Chat/ChatContainerComponents/Message/message.component";
-// import Aux from "../../../hoc/Auxilliary/auxilliary";
-import ChatContactHeader from "../../../components/Chat/ChatContainerComponents/ChatContactHeader/chat-contact-header.component";
-import MessageInput from "../../../components/Chat/ChatContainerComponents/MessageInput/message-input.component";
 import { connect } from "react-redux";
-import * as actions from "../../../store/actions/actions";
-import { createChatMessage } from "../../../shared/chat.utilities";
-import Spinner from "../../../components/UI/ChatSpinner/chat-spinner.component";
-import equel from "fast-deep-equal";
 import { v4 as uuid } from "uuid";
 
+import * as actions from "../../../store/actions/actions";
+import { createChatMessage } from "../../../shared/chat.utilities";
+import ChatContactHeader from "../../../components/Chat/ChatContainerComponents/ChatContactHeader/chat-contact-header.component";
+import Message from "../../../components/Chat/ChatContainerComponents/Message/message.component";
+import MessageInput from "../../../components/Chat/ChatContainerComponents/MessageInput/message-input.component";
+import Spinner from "../../../components/UI/ChatSpinner/chat-spinner.component";
+import classes from "./chat-container.module.css";
+
 import {
+  CHAT_CREATED,
+  MESSAGE_SEEN,
   PRIVATE_CHAT_MESSAGE,
   SEND_TYPING,
-  CHAT_CREATED,
   USER_ONLINE,
-  MESSAGE_SEEN,
 } from "../../../socket/Events";
 
 class ChatContainer extends Component {
-  constructor(props) {
-    super(props);
-    const { chatId, contactId, socket } = this.props;
-    this.state = {
-      newChatId: null,
-      newChatFirstMessage: null,
-      isTyping: false,
-      isContactOnline: false,
-      isChatLodaing: false,
-      isMessageSeen: false,
-      selectedChatId: null,
-    };
+  state = {
+    isChatLoading: false,
+    isContactOnline: false,
+    isContactTyping: false,
+  };
+
+  chatLoadingCallback = () => {
+    this.setState({ isChatLoading: false });
+  };
+
+  componentDidMount() {
+    const {
+      selectedChatId,
+      selectedContact,
+      token,
+      loadedChats,
+      onFetchChatMessages,
+      socket,
+      onMessageSend,
+      onSetSelectedChat,
+      user,
+      onMessageSeen,
+      chatList,
+    } = this.props;
+    if (selectedChatId && !loadedChats[selectedChatId]) {
+      onFetchChatMessages(token, selectedChatId, this.chatLoadingCallback);
+      this.setState({ isChatLoading: true });
+    }
+    socket.emit(USER_ONLINE, selectedContact._id, this.getIsUserOnline);
+    const chatObject = chatList.find((chat) => chat._id === selectedChatId);
+
+    if (chatObject && chatObject.unreadMessageCount !== 0) {
+      socket.emit(MESSAGE_SEEN, selectedChatId, user.id, selectedContact._id);
+      onMessageSeen(selectedChatId, user.id, selectedContact._id);
+    }
+    socket.on(USER_ONLINE, (userId, isOnline) => {
+      if (userId === selectedContact._id)
+        this.setState({ isUserOnline: isOnline });
+    });
+    socket.on(CHAT_CREATED, (data) => {
+      const { chatId, messageText } = data;
+      onSetSelectedChat(chatId, selectedContact);
+      onMessageSend(
+        chatId,
+        createChatMessage(messageText, user.id, selectedContact._id)
+      );
+    });
+    socket.on(SEND_TYPING, ({ sender, isTyping }) => {
+      if (sender === selectedContact._id) {
+        this.setState({ isContactTyping: isTyping });
+      }
+    });
+    this.scrollDown();
   }
+
+  getIsUserOnline = (isUserOnline) => {
+    const {
+      onFetchLastActive,
+      selectedContact,
+      token,
+      lastActiveMap,
+    } = this.props;
+    if (!isUserOnline && !lastActiveMap[selectedContact._id]) {
+      onFetchLastActive(token, selectedContact._id);
+    }
+    this.setState({ isContactOnline: isUserOnline });
+  };
+
+  messageSendHandler = (messageText) => {
+    const {
+      selectedChatId,
+      selectedContact,
+      socket,
+      user,
+      onMessageSend,
+    } = this.props;
+    if (selectedChatId) {
+      socket.emit(PRIVATE_CHAT_MESSAGE, {
+        sender: user.id,
+        receiver: selectedContact._id,
+        messageText,
+        chatId: selectedChatId,
+      });
+      onMessageSend(
+        selectedChatId,
+        createChatMessage(messageText, user.id, selectedContact._id)
+      );
+    } else {
+      socket.emit(CHAT_CREATED, {
+        sender: user.id,
+        receiver: selectedContact._id,
+        messageText,
+      });
+    }
+
+    this.setState({ isMessageSeen: false });
+  };
+
+  getIsTyping = (isTyping) => {
+    const { user, selectedContact, socket } = this.props;
+    socket.emit(SEND_TYPING, {
+      sender: user.id,
+      receiver: selectedContact._id,
+      isTyping,
+    });
+  };
 
   scrollDown = () => {
     const { MessageContainer } = this.refs;
     MessageContainer.scrollTop = MessageContainer.scrollHeight;
   };
 
-  chatLoadingCallback = () => {
-    this.setState({ isChatLodaing: false });
-  };
-
-  componentDidMount() {
-    const {
-      chatId,
-      onFetchChatMessages,
-      token,
-      socket,
-      onMessageReceive,
-      contactId,
-      onMessageSend,
-      onFetchLastActive,
-      onNewChatMessageSent,
-      contacts,
-    } = this.props;
-    if (chatId) {
-      onFetchChatMessages(token, chatId, this.chatLoadingCallback);
-      this.setState({ isChatLodaing: true, selectedChatId: chatId });
-    }
-    socket.on(CHAT_CREATED, (chatId, messageText, receiver) => {
-      const receiverUser = contacts.find((conn) => conn.user.id === receiver)
-        .user;
-      onNewChatMessageSent(chatId, messageText, receiverUser);
-      onMessageSend(chatId, this.state.newChatFirstMessage);
-      this.setState({ newChatId: chatId, newChatFirstMessage: null });
-    });
-    socket.on(PRIVATE_CHAT_MESSAGE, (data) => {
-      const { messageText, sender, receiver } = data;
-      onMessageReceive(
-        data.chatId,
-        createChatMessage(messageText, sender, receiver)
-      );
-      if (!chatId) {
-        this.setState({ newChatId: data.chatId });
-      } else {
-        socket.emit(MESSAGE_SEEN, chatId, receiver, sender);
-      }
-    });
-
-    socket.emit(USER_ONLINE, contactId, this.getIsUserOnline);
-    socket.on(USER_ONLINE, (userId, isOnline) => {
-      if (contactId === userId) {
-        this.setState({ isContactOnline: isOnline });
-        if (!isOnline) onFetchLastActive(token, contactId);
-      }
-    });
-
-    socket.on(SEND_TYPING, (data) => {
-      const { isTyping, chatId } = data;
-      if (chatId === this.state.selectedChatId) {
-        this.setState({ isTyping });
-      }
-    });
-    this.scrollDown();
-  }
-
-  // shouldComponentUpdate(prevProps) {
-  //   return prevProps !== this.props;
-  // }
-
   componentDidUpdate(prevProps) {
     const {
       onFetchChatMessages,
-      onFetchLastActive,
       token,
-      chatId,
-      contactId,
+      selectedChatId,
+      selectedContact,
       socket,
+      loadedChats,
+      user,
+      onMessageSeen,
+      chatList,
     } = this.props;
-    if (!equel(prevProps, this.props)) {
-      if (chatId) {
-        onFetchChatMessages(token, chatId, this.chatLoadingCallback);
-        this.setState({ isChatLodaing: true, selectedChatId: chatId });
+    if (prevProps.selectedContact._id !== selectedContact._id) {
+      if (selectedChatId && !loadedChats[selectedChatId]) {
+        onFetchChatMessages(token, selectedChatId, this.chatLoadingCallback);
+        this.setState({ isChatLodaing: true });
       }
-      socket.emit(USER_ONLINE, contactId, this.getIsUserOnline);
+      socket.emit(USER_ONLINE, selectedContact._id, this.getIsUserOnline);
     }
 
+    const chatObject = chatList.find((chat) => chat._id === selectedChatId);
+    if (chatObject && chatObject.unreadMessageCount !== 0) {
+      socket.emit(MESSAGE_SEEN, selectedChatId, user.id, selectedContact._id);
+      onMessageSeen(selectedChatId, user.id, selectedContact._id);
+    }
     socket.on(USER_ONLINE, (userId, isOnline) => {
-      if (contactId === userId) {
+      if (selectedContact._id === userId) {
         this.setState({ isContactOnline: isOnline });
-        if (!isOnline) onFetchLastActive(token, contactId);
       }
     });
 
     this.scrollDown();
   }
 
-  getIsUserOnline = (isUserOnline) => {
-    const { onFetchLastActive, contactId, token } = this.props;
-    if (!isUserOnline) {
-      onFetchLastActive(token, contactId);
-    }
-    this.setState({ isContactOnline: isUserOnline });
-  };
-
-  getMessageText = (messageText) => {
-    const { chatId, contactId, socket, user, onMessageSend } = this.props;
-    const { newChatId } = this.state;
-    if (chatId) {
-      socket.emit(PRIVATE_CHAT_MESSAGE, {
-        sender: user.id,
-        receiver: contactId,
-        messageText,
-        chatId,
-      });
-      onMessageSend(chatId, createChatMessage(messageText, user.id, contactId));
-    } else if (newChatId) {
-      socket.emit(PRIVATE_CHAT_MESSAGE, {
-        sender: user.id,
-        receiver: contactId,
-        messageText,
-        chatId: newChatId,
-      });
-      onMessageSend(
-        newChatId,
-        createChatMessage(messageText, user.id, contactId)
-      );
-    } else {
-      socket.emit(PRIVATE_CHAT_MESSAGE, {
-        sender: user.id,
-        receiver: contactId,
-        messageText,
-      });
-      this.setState({
-        newChatFirstMessage: createChatMessage(messageText, user.id, contactId),
-      });
-    }
-  };
-
-  getIsTyping = (isTyping) => {
-    const { chatId, user, contactId, socket } = this.props;
-    console.log("contactId  ", contactId, "chatId  ", chatId);
-    socket.emit(SEND_TYPING, {
-      sender: user.id,
-      chatId,
-      receiver: contactId,
-      isTyping,
-    });
-  };
-
   render() {
-    const { chatId, chats, user, contactId, lastActiveMap } = this.props;
-    const { newChatId, newChatFirstMessage, isChatLodaing } = this.state;
-    let chatMessages = <Spinner />;
-    if (chatId && chats[chatId]) {
-      chatMessages = chats[chatId].map((message) => {
+    const {
+      selectedChatId,
+      loadedChats,
+      user,
+      selectedContact,
+      lastActiveMap,
+      backBtnClicked,
+      closed,
+    } = this.props;
+    const { isChatLoading, isContactTyping, isContactOnline } = this.state;
+    let chatMessages = null;
+    if (selectedChatId && loadedChats[selectedChatId]) {
+      chatMessages = loadedChats[selectedChatId].map((message) => {
         return (
           <div
             className={classes.Message}
-            key={message._id}
+            key={uuid()}
             style={{
               justifyContent:
                 message.sender === user.id ? "flex-end" : "flex-start",
@@ -201,98 +193,48 @@ class ChatContainer extends Component {
           </div>
         );
       });
-    } else if (newChatId && chats[newChatId]) {
-      chatMessages = chats[newChatId].map((message) => {
-        return (
-          <div
-            className={classes.Message}
-            style={{
-              justifyContent:
-                message.sender === user.id ? "flex-end" : "flex-start",
-              margin: message.sender === user.id ? "0 0 0 50px" : "0 50px 0 0",
-            }}
-          >
-            <Message
-              {...message}
-              key={uuid()}
-              isOwner={message.sender === user.id}
-            />
-          </div>
-        );
-      });
-    } else {
-      chatMessages = null;
     }
-    let contact;
-    if (contactId) {
-      contact = this.props.contacts.find((c) => c.user.id === contactId);
-    } else {
-      contact = this.props.contacts.find(
-        (c) => c.user.id === chats[chatId].receiver._id
-      );
-    }
+
     return (
       <div className={classes.ChatContainer}>
         <div className={classes.ContactHeader}>
           <ChatContactHeader
-            isTyping={this.state.isTyping}
-            isOnline={this.state.isContactOnline}
-            {...contact.user}
-            closed={this.props.closed}
+            isTyping={isContactTyping}
+            isOnline={isContactOnline}
+            {...selectedContact}
+            closed={closed}
             lastActive={
-              lastActiveMap[contactId] ? lastActiveMap[contactId] : null
+              lastActiveMap[selectedContact._id]
+                ? lastActiveMap[selectedContact._id]
+                : null
             }
+            backBtnClicked={backBtnClicked}
           />
         </div>
         <div ref="MessageContainer" className={classes.MessageContainer}>
-          {this.state.newChatFirstMessage ? (
-            <div
-              style={{
-                justifyContent:
-                  newChatFirstMessage.sender === user.id
-                    ? "flex-end"
-                    : "flex-start",
-                margin:
-                  newChatFirstMessage.sender === user.id
-                    ? "0 0 0 50px"
-                    : "0 50px 0 0",
-              }}
-              className={classes.Message}
-            >
-              <Message
-                isOwner={newChatFirstMessage.sender === user.id}
-                {...newChatFirstMessage}
-              />
-            </div>
-          ) : isChatLodaing ? (
-            <Spinner />
-          ) : (
-            chatMessages
-          )}
+          {isChatLoading ? <Spinner /> : chatMessages}
         </div>
         <div className={classes.MessageInput}>
           <MessageInput
             sendIsTyping={this.getIsTyping}
-            sendMessageText={this.getMessageText}
+            sendMessageText={this.messageSendHandler}
           />
         </div>
       </div>
     );
   }
-  componentWillUnmount() {
-    const { socket } = this.props;
-    socket.removeAllListeners();
-  }
 }
 
 const mapStateToProps = (state) => {
   return {
-    socket: state.auth.socket,
-    contacts: [...state.auth.followers, ...state.auth.following],
-    user: state.auth.user,
-    token: state.auth.token,
-    chats: state.chat.loadedChats,
+    selectedChatId: state.chat.selectedChat,
+    selectedContact: state.chat.selectedContact,
+    loadedChats: state.chat.loadedChats,
+    chatList: state.chat.chatList,
     lastActiveMap: state.chat.lastActiveMap,
+    token: state.auth.token,
+    user: state.auth.user,
+    socket: state.auth.socket,
   };
 };
 
@@ -300,14 +242,14 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onFetchChatMessages: (token, chatId, callback) =>
       dispatch(actions.fetchChatMessages(token, chatId, callback)),
+    onFetchLastActive: (token, contactId) =>
+      dispatch(actions.fetchLastActive(token, contactId)),
     onMessageSend: (chatId, messageObj) =>
       dispatch(actions.chatMessageSent(chatId, messageObj)),
-    onMessageReceive: (chatId, messageObj) =>
-      dispatch(actions.chatMessageReceived(chatId, messageObj)),
-    onFetchLastActive: (token, userId) =>
-      dispatch(actions.fetchLastActive(token, userId)),
-    onNewChatMessageSent: (chatId, messageText, receiver) =>
-      dispatch(actions.newChatMessageSent(chatId, messageText, receiver)),
+    onSetSelectedChat: (chatId, contactId) =>
+      dispatch(actions.selectChat(chatId, contactId)),
+    onMessageSeen: (chatId, seenSender, seenReceiver) =>
+      dispatch(actions.chatMessageSeenSent(chatId, seenSender, seenReceiver)),
   };
 };
 

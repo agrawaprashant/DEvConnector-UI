@@ -32,3 +32,24 @@
   cursor: pointer;
   color: #aaa;
 }
+
+@media screen and (max-width: 500px) {
+  .UserInfoHeader {
+    height: 75px;
+    background-color: #004752;
+    color: #fff;
+    border-bottom: 5px solid #ff9158;
+  }
+
+  .UserInfoHeader h3 {
+    color: #fff;
+  }
+
+  .Icon button {
+    color: #fff;
+  }
+
+  .UserInfoHeader img {
+    margin-left: 8px;
+  }
+}

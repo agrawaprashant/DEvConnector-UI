@@ -9,6 +9,7 @@ const ChatCotainerWrapper = (props) => {
         closed={props.closed}
         chatId={props.selectedChat}
         contactId={props.selectedContact}
+        backBtnClicked={props.backBtnClicked}
       />
     </div>
   );
