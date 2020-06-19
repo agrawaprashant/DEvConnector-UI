@@ -29,3 +29,12 @@
 .MessageContainer::-webkit-scrollbar-track {
   background: #eee;
 }
+
+.ChatDate {
+  font-weight: bold;
+  background-color: #a9dc76;
+  margin-left: 43%;
+  padding: 5px;
+  color: #fff;
+  border-radius: 5px;
+}

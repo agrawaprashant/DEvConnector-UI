@@ -31,6 +31,13 @@ class Chat extends React.Component {
 
   render() {
     const { isChatOpen, isChatOrContactSelected } = this.state;
+    const { chatList } = this.props;
+    let unreadMessageCount = 0;
+    if (chatList && chatList.length !== 0) {
+      chatList.forEach((chat) => {
+        unreadMessageCount += chat.unreadMessageCount;
+      });
+    }
     let chat;
     isChatOpen
       ? (chat = (
@@ -59,7 +66,14 @@ class Chat extends React.Component {
               className={classes.ChatBtn}
               onClick={() => this.setState({ isChatOpen: true })}
             >
-              <i className="fas fa-comments"></i>
+              <div>
+                <i className="fas fa-comments"></i>
+                {unreadMessageCount !== 0 ? (
+                  <div className={classes.UnreadMessageCount}>
+                    <p>{unreadMessageCount}</p>
+                  </div>
+                ) : null}
+              </div>
             </button>
           </div>
         ));
@@ -67,6 +81,11 @@ class Chat extends React.Component {
   }
 }
 
+const mapStateToProps = (state) => {
+  return {
+    chatList: state.chat.chatList,
+  };
+};
 const mapDispatchToProps = (dispatch) => {
   return {
     onContactUnselect: () => dispatch(actions.unSelectContact()),
@@ -74,4 +93,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(Chat);
+export default connect(mapStateToProps, mapDispatchToProps)(Chat);

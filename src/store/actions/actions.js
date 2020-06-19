@@ -1,4 +1,10 @@
-export { register, fetchUser, logout, login } from "./auth.actions";
+export {
+  register,
+  fetchUser,
+  logout,
+  login,
+  changeProfilePicture,
+} from "./auth.actions";
 export {
   fetchPosts,
   createPost,

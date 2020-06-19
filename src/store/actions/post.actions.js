@@ -102,7 +102,6 @@ const createPostFailed = (error) => {
 };
 
 export const createPost = (postData, token, callback) => {
-  console.log(postData);
   return async (dispatch) => {
     try {
       dispatch(createPostStart());

@@ -160,3 +160,44 @@ export const logout = () => {
     dispatch(authLogout());
   };
 };
+
+const changeProfilePictureStart = () => {
+  return {
+    type: actionTypes.CHANGE_PROFILE_PICTURE_START,
+  };
+};
+const changeProfilePictureSuccess = (avatar) => {
+  return {
+    type: actionTypes.CHANGE_PROFILE_PICTURE_SUCCESS,
+    payload: {
+      avatar,
+    },
+  };
+};
+const changeProfilePictureFailed = (error) => {
+  return {
+    type: actionTypes.CHANGE_PROFILE_PICTURE_FAILED,
+    payload: {
+      error: error,
+    },
+  };
+};
+
+export const changeProfilePicture = (token, profilePicData, callback) => {
+  console.log(profilePicData);
+  return async (dispatch) => {
+    try {
+      dispatch(changeProfilePictureStart());
+      setAuthorizationToken(token);
+      const response = await axios.post(
+        `${config.api.baseURL}/${config.api.endPoints.users}/change-profile-pic/`,
+        profilePicData
+      );
+      if (callback) callback();
+      dispatch(changeProfilePictureSuccess(response.data));
+    } catch (err) {
+      console.log(err);
+      dispatch(changeProfilePictureFailed(err.response.data));
+    }
+  };
+};

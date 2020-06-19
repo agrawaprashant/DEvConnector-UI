@@ -9,6 +9,8 @@ import Message from "../../../components/Chat/ChatContainerComponents/Message/me
 import MessageInput from "../../../components/Chat/ChatContainerComponents/MessageInput/message-input.component";
 import Spinner from "../../../components/UI/ChatSpinner/chat-spinner.component";
 import classes from "./chat-container.module.css";
+import moment from "moment";
+import ReactMoment from "react-moment";
 
 import {
   CHAT_CREATED,
@@ -51,8 +53,10 @@ class ChatContainer extends Component {
     const chatObject = chatList.find((chat) => chat._id === selectedChatId);
 
     if (chatObject && chatObject.unreadMessageCount !== 0) {
-      socket.emit(MESSAGE_SEEN, selectedChatId, user.id, selectedContact._id);
-      onMessageSeen(selectedChatId, user.id, selectedContact._id);
+      setTimeout(() => {
+        socket.emit(MESSAGE_SEEN, selectedChatId, user.id, selectedContact._id);
+        onMessageSeen(selectedChatId, user.id, selectedContact._id);
+      }, 4000);
     }
     socket.on(USER_ONLINE, (userId, isOnline) => {
       if (userId === selectedContact._id)
@@ -153,8 +157,10 @@ class ChatContainer extends Component {
 
     const chatObject = chatList.find((chat) => chat._id === selectedChatId);
     if (chatObject && chatObject.unreadMessageCount !== 0) {
-      socket.emit(MESSAGE_SEEN, selectedChatId, user.id, selectedContact._id);
-      onMessageSeen(selectedChatId, user.id, selectedContact._id);
+      setTimeout(() => {
+        socket.emit(MESSAGE_SEEN, selectedChatId, user.id, selectedContact._id);
+        onMessageSeen(selectedChatId, user.id, selectedContact._id);
+      }, 4000);
     }
     socket.on(USER_ONLINE, (userId, isOnline) => {
       if (selectedContact._id === userId) {
@@ -178,18 +184,44 @@ class ChatContainer extends Component {
     const { isChatLoading, isContactTyping, isContactOnline } = this.state;
     let chatMessages = null;
     if (selectedChatId && loadedChats[selectedChatId]) {
-      chatMessages = loadedChats[selectedChatId].map((message) => {
+      const msgByDate = {};
+
+      loadedChats[selectedChatId].forEach((msg) => {
+        const msgDate = moment(msg.date).format("YYYY-MM-DD");
+
+        if (msgByDate[msgDate]) {
+          msgByDate[msgDate].push(msg);
+        } else {
+          msgByDate[msgDate] = [msg];
+        }
+      });
+
+      chatMessages = Object.keys(msgByDate).map((date) => {
         return (
-          <div
-            className={classes.Message}
-            key={uuid()}
-            style={{
-              justifyContent:
-                message.sender === user.id ? "flex-end" : "flex-start",
-              margin: message.sender === user.id ? "0 0 0 50px" : "0 50px 0 0",
-            }}
-          >
-            <Message {...message} isOwner={message.sender === user.id} />
+          <div>
+            <span className={classes.ChatDate}>
+              {date.split("-")[2] === new Date().getDate().toString() ? (
+                "Today"
+              ) : (
+                <ReactMoment format="MMMM Do">{Date.parse(date)}</ReactMoment>
+              )}
+            </span>
+            {msgByDate[date].map((message) => {
+              return (
+                <div
+                  className={classes.Message}
+                  key={uuid()}
+                  style={{
+                    justifyContent:
+                      message.sender === user.id ? "flex-end" : "flex-start",
+                    margin:
+                      message.sender === user.id ? "0 0 0 50px" : "0 50px 0 0",
+                  }}
+                >
+                  <Message {...message} isOwner={message.sender === user.id} />
+                </div>
+              );
+            })}
           </div>
         );
       });
@@ -222,6 +254,10 @@ class ChatContainer extends Component {
         </div>
       </div>
     );
+  }
+
+  componentWillUnmount() {
+    clearTimeout();
   }
 }
 

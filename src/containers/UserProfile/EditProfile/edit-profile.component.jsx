@@ -13,6 +13,7 @@ class EditProfile extends React.Component {
   componentDidMount() {
     this.props.onFetchProfile(this.props.token);
   }
+
   render() {
     let editProfile = this.props.error ? (
       <p>{this.props.error}</p>

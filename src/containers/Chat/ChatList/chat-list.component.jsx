@@ -27,7 +27,7 @@ class ChatList extends Component {
       clicked,
     } = this.props;
     let chatListItems;
-    if (chatList.length === 0) {
+    if (chatList && chatList.length === 0) {
       chatListItems = this.arrayUnique(contacts).map((contact) => {
         return (
           <div className={classes.ConnectionsContainer}>

@@ -98,6 +98,19 @@ const authLogout = (state, action) => {
     chats: null,
   });
 };
+
+const changeProfilePicStart = (state, action) => {
+  return updateObject(state, { loading: true, error: null });
+};
+const changeProfilePicSuccess = (state, action) => {
+  const updatedUser = { ...state.user };
+  const { avatar } = action.payload;
+  updatedUser.avatar = avatar;
+  return updateObject(state, { loading: false, user: updatedUser });
+};
+const changeProfilePicFailed = (state, action) => {
+  return updateObject(state, { loading: false, error: action.payload.error });
+};
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.REGISTRATION_START:
@@ -120,6 +133,12 @@ const reducer = (state = initialState, action) => {
       return authFailed(state, action);
     case actionTypes.AUTH_LOGOUT:
       return authLogout(state, action);
+    case actionTypes.CHANGE_PROFILE_PICTURE_START:
+      return changeProfilePicStart(state, action);
+    case actionTypes.CHANGE_PROFILE_PICTURE_SUCCESS:
+      return changeProfilePicSuccess(state, action);
+    case actionTypes.CHANGE_PROFILE_PICTURE_FAILED:
+      return changeProfilePicFailed(state, action);
     default:
       return state;
   }

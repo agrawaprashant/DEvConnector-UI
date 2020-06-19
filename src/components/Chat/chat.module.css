@@ -20,13 +20,13 @@
   padding: 1rem;
   border-radius: 10px;
   outline: none;
-  transition: all 0.2s ease;
+  /* transition: all 0.1s ease-in-out; */
 }
 
-.ChatBtn:hover {
+/* .ChatBtn:hover {
   background-color: #01373f;
-  /* transform: scale(1.1); */
-}
+  transform: scale(1.04);
+} */
 
 .ChatConsole {
   display: flex;
@@ -43,9 +43,36 @@
   /* border-top-left-radius: 10px; */
 }
 
+.UnreadMessageCount {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  background-color: #004752;
+  color: #fff;
+  border-radius: 50%;
+  font-size: 14px;
+  font-weight: bold;
+  height: 23px;
+  width: 23px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.UnreadMessageCount p {
+  line-height: 0;
+  /* padding: 1rem; */
+}
+
 @media screen and (max-width: 500px) {
   .ChatBtn {
     padding: 0.8rem;
+  }
+
+  .UnreadMessageCount {
+    font-size: 9px;
+    height: 22px;
+    width: 22px;
   }
 
   .ChatConsole {

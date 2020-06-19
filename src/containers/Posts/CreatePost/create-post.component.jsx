@@ -20,6 +20,7 @@ class CreatePost extends React.Component {
     },
     uplaodedImages: [],
     showAlert: false,
+    selectedImage: null,
   };
 
   postCreateCallback = () => {
@@ -72,28 +73,32 @@ class CreatePost extends React.Component {
   };
 
   fileInputChangedHandler = (event) => {
-    const imageUrl = URL.createObjectURL(event.target.files[0]);
-    const file = event.target.files[0];
-    const updatedImageList = [...this.state.uplaodedImages];
-    let imageOrientation;
-    const imgObj = new Image();
-    imgObj.onload = () => {
-      if (imgObj.width / imgObj.height > 1) {
-        imageOrientation = "landscape";
-      } else {
-        imageOrientation = "portrait";
-      }
-      const fileObj = {
-        file: file,
-        url: imageUrl,
-        orientation: imageOrientation,
+    let file = event.target.files[0];
+    if (file) {
+      const imageUrl = URL.createObjectURL(file);
+      const updatedImageList = [...this.state.uplaodedImages];
+      let imageOrientation;
+      const imgObj = new Image();
+      imgObj.onload = () => {
+        if (imgObj.width / imgObj.height > 1) {
+          imageOrientation = "landscape";
+        } else {
+          imageOrientation = "portrait";
+        }
+        const fileObj = {
+          file: file,
+          url: imageUrl,
+          orientation: imageOrientation,
+        };
+        updatedImageList.push(fileObj);
+        this.setState({
+          uplaodedImages: updatedImageList,
+          selectedImage: file,
+        });
       };
-      updatedImageList.push(fileObj);
-      this.setState({
-        uplaodedImages: updatedImageList,
-      });
-    };
-    imgObj.src = imageUrl;
+      imgObj.src = imageUrl;
+      event.target.value = null;
+    }
   };
 
   imageDeleteHandler = (imgUrl) => {
@@ -101,7 +106,7 @@ class CreatePost extends React.Component {
     const imageFile = updatedImageList.find((image) => image.url === imgUrl);
     const removeIndex = updatedImageList.indexOf(imageFile);
     updatedImageList.splice(removeIndex, 1);
-    this.setState({ uplaodedImages: updatedImageList });
+    this.setState({ uplaodedImages: updatedImageList, selectedImage: null });
   };
 
   alertCloseHandler = () => {
