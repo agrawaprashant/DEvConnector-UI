@@ -106,7 +106,7 @@ const editUserProfileFailed = (error) => {
   };
 };
 
-export const editProfile = (profileData, token) => {
+export const editProfile = (profileData, token, callback) => {
   return async (dispatch) => {
     try {
       dispatch(editUserProfileStart());
@@ -115,9 +115,11 @@ export const editProfile = (profileData, token) => {
         `${config.api.baseURL}/${config.api.endPoints.profile}/`,
         profileData
       );
+      callback();
       dispatch(editUserProfileSuccess(result.data));
     } catch (err) {
       console.log(err);
+      callback();
       dispatch(editUserProfileFailed(err.response.data));
     }
   };

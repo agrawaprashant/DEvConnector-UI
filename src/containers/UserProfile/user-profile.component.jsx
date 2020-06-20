@@ -16,7 +16,7 @@ class UserProfile extends React.Component {
     let profile = null;
     let dashboardData = {
       name: this.props.user.name,
-      avatar: this.props.user.avatar
+      avatar: this.props.user.avatar,
     };
 
     profile = this.props.error ? <p>{this.props.error}</p> : <Spinner />;
@@ -38,7 +38,7 @@ class UserProfile extends React.Component {
         location: this.props.profile.location,
         education: this.props.profile.education,
         skills: this.props.profile.skills,
-        handle: this.props.profile.handle
+        handle: this.props.profile.handle,
       };
 
       let mainSectionData = {
@@ -46,10 +46,12 @@ class UserProfile extends React.Component {
           education: this.props.profile.education,
           skills: this.props.profile.skills,
           experience: this.props.profile.experience,
-          bio: this.props.profile.bio
+          bio: this.props.profile.bio,
         },
         social: this.props.profile.social,
-        githubusername: this.props.profile.githubusername
+        githubusername: this.props.profile.githubusername,
+        followers: this.props.followers,
+        following: this.props.following,
       };
 
       profile = (
@@ -65,19 +67,21 @@ class UserProfile extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     token: state.auth.token,
     user: state.auth.user,
     profileNotFound: state.profile.profileNotFound,
     profile: state.profile.profileData,
-    error: state.profile.error
+    error: state.profile.error,
+    followers: state.connections.followers,
+    following: state.connections.following,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    onFetchUserProfile: token => dispatch(actions.fetchUserProfile(token))
+    onFetchUserProfile: (token) => dispatch(actions.fetchUserProfile(token)),
   };
 };
 

@@ -25,6 +25,7 @@ const registrationStart = (state, action) => {
 const registrationSuccess = (state, action) => {
   return updateObject(state, {
     token: action.payload.token,
+    socket: action.payload.socket,
     loading: false,
     error: null,
   });

@@ -34,8 +34,10 @@ class EditSkiils extends React.Component {
           </button>
         </div>
       )
+    ) : this.state.editSkillsComponent ? (
+      this.state.editSkillsComponent
     ) : (
-      <AddSkillsBox />
+      <AddSkillsBox clicked={this.editSkillsClicked} />
     );
   }
 }

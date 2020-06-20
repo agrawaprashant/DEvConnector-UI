@@ -1,16 +1,13 @@
 import React from "react";
 import classes from "./add-skills-box.module.css";
-import { withRouter } from "react-router-dom";
 
-const skillBox = props => {
+const skillBox = (props) => {
+  console.log(props);
   return (
-    <button
-      className={classes.AddBtn}
-      onClick={() => props.history.push(props.match.url + "/add-new-skill")}
-    >
+    <button className={classes.AddBtn} onClick={props.clicked}>
       Add Skills
     </button>
   );
 };
 
-export default withRouter(skillBox);
+export default skillBox;

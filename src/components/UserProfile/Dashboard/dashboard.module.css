@@ -91,6 +91,19 @@
   background-color: #f5c431;
 }
 
+.WelcomeMessage {
+  text-align: center;
+  color: #555;
+  font-size: 3.5rem;
+  padding-top: 4rem;
+}
+
+@media screen and (min-width: 751px) and (max-width: 1085px) {
+  .WelcomeMessage {
+    padding-top: 2rem;
+  }
+}
+
 @media screen and (max-width: 750px) {
   .Header {
     flex-direction: column;
@@ -153,5 +166,10 @@
   .Skills label,
   .Education label {
     width: 6rem;
+  }
+
+  .WelcomeMessage {
+    padding-top: 1rem;
+    font-size: 3.2rem;
   }
 }

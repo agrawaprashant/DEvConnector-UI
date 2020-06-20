@@ -40,6 +40,8 @@ class EditBio extends React.Component {
       ) : (
         bio
       )
+    ) : this.state.editBioComponent ? (
+      this.state.editBioComponent
     ) : (
       <AddBioBox addBio={this.addBioClickHandler} />
     );

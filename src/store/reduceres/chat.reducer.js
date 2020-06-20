@@ -13,17 +13,17 @@ const initialState = {
 };
 
 const selectChat = (state, action) => {
-  const { chatId, contactId } = action.payload;
+  const { chatId, contact } = action.payload;
   return updateObject(state, {
     selectedChat: chatId,
-    selectedContact: contactId,
+    selectedContact: contact,
   });
 };
 const selectContact = (state, action) => {
-  const { contactId } = action.payload;
+  const { contact } = action.payload;
   return updateObject(state, {
     selectedChat: null,
-    selectedContact: contactId,
+    selectedContact: contact,
   });
 };
 const unSelectChat = (state, action) => {
@@ -96,6 +96,7 @@ const chatMessageReceived = (state, action) => {
 };
 const chatMessageSent = (state, action) => {
   const { chatId, messageObject, receiver } = action.payload;
+  console.log(chatId, messageObject, receiver);
   const updatedLoadedChats = { ...state.loadedChats };
   let updatedChatList = [...state.chatList];
   if (updatedLoadedChats[chatId]) {

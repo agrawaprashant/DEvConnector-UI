@@ -6,6 +6,7 @@ import { checkValidity } from "../../../shared/checkInputValidity";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import * as actions from "../../../store/actions/actions";
+import Spinner from "../../../components/UI/SmallSpinner/small-spinner.component";
 
 class Login extends React.Component {
   state = {
@@ -39,6 +40,7 @@ class Login extends React.Component {
       },
     },
     error: null,
+    loading: false,
   };
 
   inputChangedHandler = (event, control) => {
@@ -67,10 +69,11 @@ class Login extends React.Component {
       this.state.loginForm.password.value,
       this.setError
     );
+    this.setState({ loading: true });
   };
 
   setError = (error) => {
-    this.setState({ error: error });
+    this.setState({ error: error, loading: false });
   };
 
   render() {
@@ -111,7 +114,7 @@ class Login extends React.Component {
             <form onSubmit={this.formSubmitHandler}>
               {form}
               <button type="submit" className={classes.LoginBtn}>
-                Login
+                {!this.state.loading ? "Login" : <Spinner />}
               </button>
             </form>
             {redirect}

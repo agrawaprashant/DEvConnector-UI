@@ -5,7 +5,7 @@ import { updateObject } from "../../../shared/utility";
 import { checkValidity } from "../../../shared/checkInputValidity";
 import { connect } from "react-redux";
 import * as actions from "../../../store/actions/actions";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 
 class SignUp extends React.Component {
   state = {
@@ -14,44 +14,44 @@ class SignUp extends React.Component {
         elementType: "input",
         elementConfig: {
           type: "text",
-          placeholder: "Enter Name"
+          placeholder: "Enter Name",
         },
         value: "",
         valid: false,
         validationRules: {
-          required: true
+          required: true,
         },
-        touched: false
+        touched: false,
       },
       email: {
         elementType: "input",
         elementConfig: {
           type: "email",
-          placeholder: "Enter Email"
+          placeholder: "Enter Email",
         },
         value: "",
         valid: false,
         validationRules: {
           required: true,
-          email: true
+          email: true,
         },
-        touched: false
+        touched: false,
       },
       password: {
         elementType: "input",
         elementConfig: {
           type: "password",
-          placeholder: "Enter Password"
+          placeholder: "Enter Password",
         },
         value: "",
         valid: false,
         validationRules: {
           required: true,
-          minLength: 6
+          minLength: 6,
         },
-        touched: false
-      }
-    }
+        touched: false,
+      },
+    },
   };
 
   inputChangedHandler = (event, control) => {
@@ -62,16 +62,16 @@ class SignUp extends React.Component {
     const updatedControl = updateObject(this.state.signUpForm[control], {
       value: event.target.value,
       touched: true,
-      valid: valid
+      valid: valid,
     });
     const updatedForm = updateObject(this.state.signUpForm, {
-      [control]: updatedControl
+      [control]: updatedControl,
     });
 
     this.setState({ signUpForm: updatedForm });
   };
 
-  onSubmitForm = event => {
+  onSubmitForm = (event) => {
     event.preventDefault();
 
     this.props.onSignup(
@@ -82,6 +82,9 @@ class SignUp extends React.Component {
   };
 
   render() {
+    let redirect = null;
+    if (this.props.isAuthenticated && this.props.user.name)
+      redirect = <Redirect to="/profile" />;
     const signupFormElements = [];
     for (let key in this.state.signUpForm) {
       signupFormElements.push({
@@ -90,11 +93,11 @@ class SignUp extends React.Component {
         elementConfig: this.state.signUpForm[key].elementConfig,
         value: this.state.signUpForm[key].value,
         valid: this.state.signUpForm[key].valid,
-        touched: this.state.signUpForm[key].touched
+        touched: this.state.signUpForm[key].touched,
       });
     }
 
-    let form = signupFormElements.map(control => {
+    let form = signupFormElements.map((control) => {
       return (
         <Input
           key={control.controlName}
@@ -103,7 +106,7 @@ class SignUp extends React.Component {
           value={control.value}
           valid={control.valid}
           touched={control.touched}
-          changed={event =>
+          changed={(event) =>
             this.inputChangedHandler(event, control.controlName)
           }
         />
@@ -112,7 +115,7 @@ class SignUp extends React.Component {
     return (
       <div className={classes.SignupForm}>
         <h3>Register for DevConnector!</h3>
-        <form onSubmit={event => this.onSubmitForm(event)}>
+        <form onSubmit={(event) => this.onSubmitForm(event)}>
           {form}
           <button type="submit" className={classes.SignupBtn}>
             Register
@@ -122,16 +125,24 @@ class SignUp extends React.Component {
         <p>
           Already have an account ? <Link to="/login">Login Here</Link>
         </p>
+        {redirect}
       </div>
     );
   }
 }
 
-const mapDispatchToProps = dispatch => {
+const mapStateToProps = (state) => {
   return {
-    onSignup: (name, email, password) =>
-      dispatch(actions.register(name, email, password))
+    isAuthenticated: state.auth.token !== null,
+    user: state.auth.user,
   };
 };
 
-export default connect(null, mapDispatchToProps)(SignUp);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onSignup: (name, email, password) =>
+      dispatch(actions.register(name, email, password)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp);

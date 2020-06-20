@@ -7,6 +7,7 @@ import ImagePreview from "../../../components/Posts/ImagePreview/image-preview.c
 import * as actions from "../../../store/actions/actions";
 import Aux from "../../../hoc/Auxilliary/auxilliary";
 import AlertMessage from "../../../components/UI/AlertMessage/alert-message.component";
+import SmallSpinner from "../../../components/UI/SmallSpinner/small-spinner.component";
 
 class CreatePost extends React.Component {
   state = {
@@ -21,6 +22,7 @@ class CreatePost extends React.Component {
     uplaodedImages: [],
     showAlert: false,
     selectedImage: null,
+    loading: false,
   };
 
   postCreateCallback = () => {
@@ -37,6 +39,7 @@ class CreatePost extends React.Component {
       postCreationForm: updatedForm,
       uplaodedImages: [],
       showAlert: true,
+      loading: false,
     });
   };
 
@@ -70,6 +73,7 @@ class CreatePost extends React.Component {
       this.props.token,
       this.postCreateCallback
     );
+    this.setState({ loading: true });
   };
 
   fileInputChangedHandler = (event) => {
@@ -139,6 +143,7 @@ class CreatePost extends React.Component {
             <AlertMessage
               message="Post has been created!"
               closed={this.alertCloseHandler}
+              type="success"
             />
           </div>
         ) : null}
@@ -183,6 +188,11 @@ class CreatePost extends React.Component {
               style={{ display: "none" }}
               onChange={(event) => this.fileInputChangedHandler(event)}
             />
+            {this.state.loading ? (
+              <div className={classes.Spinner}>
+                <SmallSpinner />
+              </div>
+            ) : null}
           </div>
           {this.state.uplaodedImages.length !== 0 ? (
             <div className={classes.ImagePreviewSeciton}>

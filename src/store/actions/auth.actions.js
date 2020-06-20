@@ -1,4 +1,5 @@
 import * as actionTypes from "./actionTypes";
+import { loadConnections } from "./actions";
 import { setAuthorizationToken } from "../../shared/utility";
 import io from "socket.io-client";
 import axios from "axios";
@@ -10,11 +11,12 @@ const registrationStart = () => {
   };
 };
 
-const registrationSuccess = (token) => {
+const registrationSuccess = (token, socket) => {
   return {
     type: actionTypes.REGISTRATION_SUCCESS,
     payload: {
-      token: token,
+      token,
+      socket,
     },
   };
 };
@@ -43,8 +45,11 @@ export const register = (name, email, password) => {
         registrationdata
       );
       localStorage.setItem("jwtToken", result.data.token);
-      dispatch(registrationSuccess(result.data.token));
-      dispatch(fetchUser(result.data.token));
+      const socket = io(`${config.socket}`, {
+        transports: ["websocket"],
+      });
+      dispatch(registrationSuccess(result.data.token, socket));
+      dispatch(fetchUser(result.data.token, socket));
     } catch (err) {
       console.log(err.response.data.errors[0].msg);
       dispatch(registrationFailed(err.response.data.errors[0].msg));
@@ -91,6 +96,7 @@ export const fetchUser = (token, socket) => {
         `${config.api.baseURL}/${config.api.endPoints.auth}`
       );
       dispatch(fetchUserDetailsSuccess(result.data, socket));
+      dispatch(loadConnections(result.data.followers, result.data.following));
     } catch (err) {
       console.log(err.response.data.errors[0].msg);
       dispatch(fetchUserDetailsFailed(err.response.data.errors[0].msg));
@@ -139,6 +145,7 @@ export const login = (email, password, setError) => {
       });
       dispatch(authSuccess(result.data.token, socket));
       dispatch(fetchUser(result.data.token, socket));
+
       setError(null);
     } catch (err) {
       console.log(err.response.data.errors[0].msg);

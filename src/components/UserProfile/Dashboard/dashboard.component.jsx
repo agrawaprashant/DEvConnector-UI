@@ -9,7 +9,9 @@ const dashboard = (props) => {
         <img src={props.data.avatar} alt="avatar" />
       </div>
       <div className={classes.UserDetails}>
-        <h1 style={{ color: "#333" }}>Welcome {props.data.name}</h1>
+        <h1 className={classes.WelcomeMessage}>
+          Hi {props.data.name.split(" ")[0]}, Welcome to DevConnector!
+        </h1>
       </div>
       <div className={classes.EditBtn}>
         <button
@@ -32,17 +34,21 @@ const dashboard = (props) => {
         <div className={classes.UserDetails}>
           <h3>{props.data.name}</h3>
           <div className={classes.CompanyLocation}>
-            <div className={classes.Company}>
-              <i className="fas fa-briefcase"></i>
-              <p>
-                {props.data.profileData.status} at{" "}
-                {props.data.profileData.company}
-              </p>
-            </div>
-            <div className={classes.Location}>
-              <i className="fas fa-map-marker-alt"></i>
-              <p>{props.data.profileData.location}</p>
-            </div>
+            {props.data.profileData.status && props.data.profileData.company ? (
+              <div className={classes.Company}>
+                <i className="fas fa-briefcase"></i>
+                <p>
+                  {props.data.profileData.status} at{" "}
+                  {props.data.profileData.company}
+                </p>
+              </div>
+            ) : null}
+            {props.data.profileData.location ? (
+              <div className={classes.Location}>
+                <i className="fas fa-map-marker-alt"></i>
+                <p>{props.data.profileData.location}</p>
+              </div>
+            ) : null}
           </div>
           <div className={classes.Skills}>
             <label>Skills:</label>

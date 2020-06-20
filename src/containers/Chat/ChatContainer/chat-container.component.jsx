@@ -50,25 +50,26 @@ class ChatContainer extends Component {
       this.setState({ isChatLoading: true });
     }
     socket.emit(USER_ONLINE, selectedContact._id, this.getIsUserOnline);
-    const chatObject = chatList.find((chat) => chat._id === selectedChatId);
 
+    const chatObject = chatList.find((chat) => chat._id === selectedChatId);
     if (chatObject && chatObject.unreadMessageCount !== 0) {
-      setTimeout(() => {
-        socket.emit(MESSAGE_SEEN, selectedChatId, user.id, selectedContact._id);
-        onMessageSeen(selectedChatId, user.id, selectedContact._id);
-      }, 4000);
+      socket.emit(MESSAGE_SEEN, selectedChatId, user.id, selectedContact._id);
+      onMessageSeen(selectedChatId, user.id, selectedContact._id);
     }
-    socket.on(USER_ONLINE, (userId, isOnline) => {
-      if (userId === selectedContact._id)
-        this.setState({ isUserOnline: isOnline });
-    });
-    socket.on(CHAT_CREATED, (data) => {
+
+    socket.on(`${CHAT_CREATED}-${selectedContact._id}`, (data) => {
+      console.log("CHAT has been created");
       const { chatId, messageText } = data;
       onSetSelectedChat(chatId, selectedContact);
       onMessageSend(
         chatId,
         createChatMessage(messageText, user.id, selectedContact._id)
       );
+    });
+
+    socket.on(USER_ONLINE, (userId, isOnline) => {
+      if (userId === selectedContact._id)
+        this.setState({ isUserOnline: isOnline });
     });
     socket.on(SEND_TYPING, ({ sender, isTyping }) => {
       if (sender === selectedContact._id) {
@@ -100,6 +101,7 @@ class ChatContainer extends Component {
       onMessageSend,
     } = this.props;
     if (selectedChatId) {
+      console.log("chat is aval.");
       socket.emit(PRIVATE_CHAT_MESSAGE, {
         sender: user.id,
         receiver: selectedContact._id,
@@ -111,6 +113,7 @@ class ChatContainer extends Component {
         createChatMessage(messageText, user.id, selectedContact._id)
       );
     } else {
+      console.log("chat not aval.");
       socket.emit(CHAT_CREATED, {
         sender: user.id,
         receiver: selectedContact._id,
@@ -136,6 +139,7 @@ class ChatContainer extends Component {
   };
 
   componentDidUpdate(prevProps) {
+    console.log("componend did updated callledddd");
     const {
       onFetchChatMessages,
       token,
@@ -146,8 +150,11 @@ class ChatContainer extends Component {
       user,
       onMessageSeen,
       chatList,
+      onSetSelectedChat,
+      onMessageSend,
     } = this.props;
     if (prevProps.selectedContact._id !== selectedContact._id) {
+      console.log("CONTACT CHANGED!!");
       if (selectedChatId && !loadedChats[selectedChatId]) {
         onFetchChatMessages(token, selectedChatId, this.chatLoadingCallback);
         this.setState({ isChatLodaing: true });
@@ -155,13 +162,24 @@ class ChatContainer extends Component {
       socket.emit(USER_ONLINE, selectedContact._id, this.getIsUserOnline);
     }
 
+    socket.on(`${CHAT_CREATED}-${selectedContact._id}`, (data) => {
+      console.log("CHAT has been created with different contact than before!");
+      const { chatId, messageText } = data;
+      if (selectedContact._id !== prevProps.selectedContact._id) {
+        onSetSelectedChat(chatId, selectedContact);
+        onMessageSend(
+          chatId,
+          createChatMessage(messageText, user.id, selectedContact._id)
+        );
+      }
+    });
+
     const chatObject = chatList.find((chat) => chat._id === selectedChatId);
     if (chatObject && chatObject.unreadMessageCount !== 0) {
-      setTimeout(() => {
-        socket.emit(MESSAGE_SEEN, selectedChatId, user.id, selectedContact._id);
-        onMessageSeen(selectedChatId, user.id, selectedContact._id);
-      }, 4000);
+      socket.emit(MESSAGE_SEEN, selectedChatId, user.id, selectedContact._id);
+      onMessageSeen(selectedChatId, user.id, selectedContact._id);
     }
+
     socket.on(USER_ONLINE, (userId, isOnline) => {
       if (selectedContact._id === userId) {
         this.setState({ isContactOnline: isOnline });
@@ -257,6 +275,7 @@ class ChatContainer extends Component {
   }
 
   componentWillUnmount() {
+    this.props.socket.removeAllListeners();
     clearTimeout();
   }
 }

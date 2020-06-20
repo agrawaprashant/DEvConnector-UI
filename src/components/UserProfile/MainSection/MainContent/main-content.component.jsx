@@ -6,7 +6,8 @@ import Work from "./Work/work.component";
 import Education from "./Education/education.component";
 import Bio from "./Bio/bio.component";
 
-const mainContent = props => {
+const mainContent = (props) => {
+  console.log(props);
   return (
     <Aux>
       <div className={classes.Box}>

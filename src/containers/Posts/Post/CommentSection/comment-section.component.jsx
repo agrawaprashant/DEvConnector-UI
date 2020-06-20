@@ -53,6 +53,13 @@ class CommentSection extends React.Component {
       text: this.state.commentForm.commentText.value,
     };
     this.props.onCommentPost(this.props.postId, this.props.token, commentData);
+    const updatedFormControl = updateObject(
+      this.state.commentForm.commentText,
+      { value: "" }
+    );
+    const updatedForm = { ...this.state.commentForm };
+    updatedForm.commentText = updatedFormControl;
+    this.setState({ commentForm: updatedForm });
   };
 
   render() {
@@ -79,6 +86,7 @@ class CommentSection extends React.Component {
               placeholder={
                 this.state.commentForm.commentText.elementConfig.placeholder
               }
+              value={this.state.commentForm.commentText.value}
             />
             <button
               className={classes.CommentBtn}

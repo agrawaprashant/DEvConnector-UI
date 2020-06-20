@@ -77,7 +77,7 @@ class Chat extends React.Component {
             </button>
           </div>
         ));
-    return chat;
+    return chatList ? chat : null;
   }
 }
 

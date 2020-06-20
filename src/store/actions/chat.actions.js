@@ -126,10 +126,18 @@ const fetchLastActiveFailed = (error) => {
 };
 
 export const chatMessageReceived = (chatId, messageObject) => {
-  const sender = [
-    ...store.getState().auth.followers,
-    ...store.getState().auth.following,
-  ].find((user) => user.user.id === messageObject.sender).user;
+  let sender = [
+    ...store.getState().conenctions.followers,
+    ...store.getState().connections.following,
+  ].find((user) => user.user.id === messageObject.sender);
+  if (sender) {
+    sender = sender.user;
+  } else {
+    const chat = store
+      .getState()
+      .chat.chatList.find((chat) => chat._id === chatId);
+    sender = chat.sender;
+  }
   return {
     type: actionTypes.CHAT_MESSAGE_RECEIVED,
     payload: {
@@ -144,10 +152,16 @@ export const chatMessageReceived = (chatId, messageObject) => {
   };
 };
 export const chatMessageSent = (chatId, messageObject) => {
-  const receiver = [
-    ...store.getState().auth.followers,
-    ...store.getState().auth.following,
-  ].find((user) => user.user.id === messageObject.receiver).user;
+  let receiver = [
+    ...store.getState().connections.followers,
+    ...store.getState().connections.following,
+  ].find((user) => user.user.id === messageObject.receiver);
+  if (receiver) {
+    receiver = receiver.user;
+  } else {
+    const chatList = store.getState().chat.chatList;
+    receiver = chatList.find((chat) => chat._id === chatId).receiver;
+  }
   return {
     type: actionTypes.CHAT_MESSAGE_SENT,
     payload: {
@@ -184,19 +198,19 @@ export const chatMessageSeenReceived = (chatId, seenSender, seenReceiver) => {
   };
 };
 
-export const selectContact = (contactId) => {
+export const selectContact = (contact) => {
   return {
     type: actionTypes.SELECT_CONTACT,
     payload: {
-      contactId,
+      contact,
     },
   };
 };
-export const selectChat = (chatId, contactId) => {
+export const selectChat = (chatId, contact) => {
   return {
     type: actionTypes.SELECT_CHAT,
     payload: {
-      contactId,
+      contact,
       chatId,
     },
   };

@@ -37,3 +37,8 @@ export {
   unSelectChat,
   unSelectContact,
 } from "./chat.actions";
+export {
+  loadConnections,
+  followUser,
+  unfollowUser,
+} from "./connections.actions";

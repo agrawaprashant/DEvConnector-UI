@@ -31,3 +31,14 @@
 .ProfileCreateBtn:hover {
   background-color: #f5c431;
 }
+
+@media screen and (max-width: 500px) {
+  .ProfileCreateBtn {
+    width: 80%;
+  }
+
+  .ProfileNotFoundContent h2 {
+    text-align: center;
+    font-size: 1.5rem;
+  }
+}

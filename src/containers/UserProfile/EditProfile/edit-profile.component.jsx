@@ -8,6 +8,7 @@ import GithubEdit from "./EditGitHubRepo/github-repo-edit.component";
 import { connect } from "react-redux";
 import * as actions from "../../../store/actions/actions";
 import AddSocial from "../AddSocial/add-social.component";
+import Spinner from "../../../components/UI/Spinner/spinner.component";
 
 class EditProfile extends React.Component {
   componentDidMount() {
@@ -15,11 +16,7 @@ class EditProfile extends React.Component {
   }
 
   render() {
-    let editProfile = this.props.error ? (
-      <p>{this.props.error}</p>
-    ) : (
-      <p>Loading...</p>
-    );
+    let editProfile = <Spinner />;
 
     let dashboardData = {
       name: this.props.user.name,

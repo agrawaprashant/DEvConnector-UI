@@ -4,6 +4,7 @@ import postReducer from "./reduceres/post.reducer";
 import profileReducer from "./reduceres/profile.reducer";
 import commentReducer from "./reduceres/comments.reducer";
 import chatReducer from "./reduceres/chat.reducer";
+import connectionsReducer from "./reduceres/connections.reducer";
 import thunk from "redux-thunk";
 
 const rootReducer = combineReducers({
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
   profile: profileReducer,
   comment: commentReducer,
   chat: chatReducer,
+  connections: connectionsReducer,
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

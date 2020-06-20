@@ -5,7 +5,7 @@ const createProfileBox = (props) => {
   return (
     <div className={classes.ProfileNotFound}>
       <div className={classes.ProfileNotFoundContent}>
-        <h2>You have not created your profile on DevConnector!</h2>
+        <h2>You have not created your profile!</h2>
         <button
           className={classes.ProfileCreateBtn}
           onClick={() => {

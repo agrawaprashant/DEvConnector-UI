@@ -5,6 +5,7 @@ import * as actions from "../../../store/actions/chat.actions";
 import ChatListItem from "../../../components/Chat/ChatSideBarComponents/ChatListItem/chat-list-item.component";
 
 import classes from "./chat-list.module.css";
+import Aux from "../../../hoc/Auxilliary/auxilliary";
 
 class ChatList extends Component {
   arrayUnique = (array) => {
@@ -30,19 +31,37 @@ class ChatList extends Component {
     if (chatList && chatList.length === 0) {
       chatListItems = this.arrayUnique(contacts).map((contact) => {
         return (
-          <div className={classes.ConnectionsContainer}>
-            <h3>Connections</h3>
-            <ChatListItem
-              contactId={contact.user.id}
-              name={contact.user.name}
-              avatar={contact.user.avatar}
-              key={contact.user.id}
-              clicked={onSelectContact}
-              select={clicked}
-            />
-          </div>
+          <ChatListItem
+            contactId={contact.user.id}
+            name={contact.user.name}
+            avatar={contact.user.avatar}
+            key={contact.user.id}
+            clicked={onSelectContact}
+            select={clicked}
+          />
         );
       });
+
+      chatListItems = (
+        <div className={classes.ConnectionsContainer}>
+          <h3>Connections</h3>
+          {chatListItems.length === 0 ? (
+            <p
+              style={{
+                marginTop: "1rem",
+                fontSize: "1.2rem",
+                textAlign: "center",
+                color: "#555",
+              }}
+            >
+              You do not have any connections. Start follow users to use this
+              feature!
+            </p>
+          ) : (
+            chatListItems
+          )}
+        </div>
+      );
     } else {
       chatListItems = chatList.map((chat) => {
         return (
@@ -60,6 +79,41 @@ class ChatList extends Component {
           />
         );
       });
+
+      const contactItems = this.arrayUnique(contacts)
+        .filter(
+          (conn) =>
+            chatList
+              .map((chat) => chat.receiver.name)
+              .indexOf(conn.user.name) === -1
+        )
+        .map((contact) => {
+          return (
+            <ChatListItem
+              key={contact._id}
+              name={contact.user.name}
+              avatar={contact.user.avatar}
+              contactId={contact.user.id}
+              clicked={onSelectContact}
+              select={clicked}
+            />
+          );
+        });
+
+      chatListItems = (
+        <Aux>
+          <div className={classes.ConnectionsContainer}>
+            <h3>Recent Chats</h3>
+            {chatListItems}
+          </div>
+          {contactItems.length !== 0 ? (
+            <div className={classes.ConnectionsContainer}>
+              <h3>Conenctions</h3>
+              {contactItems}
+            </div>
+          ) : null}
+        </Aux>
+      );
     }
 
     if (searchString) {
@@ -97,7 +151,7 @@ class ChatList extends Component {
       let contactElements = searchedContacts.map((contact) => {
         return (
           <ChatListItem
-            contactId={contact.user._id}
+            contactId={contact.user.id}
             name={contact.user.name}
             avatar={contact.user.avatar}
             key={contact._id}
@@ -127,7 +181,7 @@ class ChatList extends Component {
 const mapStateToProps = (state) => {
   return {
     chatList: state.chat.chatList,
-    contacts: [...state.auth.followers, ...state.auth.following],
+    contacts: [...state.connections.followers, ...state.connections.following],
   };
 };
 

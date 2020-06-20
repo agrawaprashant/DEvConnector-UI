@@ -5,17 +5,16 @@ import MainContent from "./MainContent/main-content.component";
 import Github from "./GitHub/github-repo.component";
 
 const MainSection = (props) => {
-  console.log(props);
   return (
     <main className={classes.ProfileContent}>
       <section className={classes.SideBar}>
         <div className={classes.Connections}>
           <ul>
             <li>
-              <a href="/">Followers (0)</a>
+              <a href="/">Followers ({props.data.followers.length})</a>
             </li>
             <li>
-              <a href="/">Following (0)</a>
+              <a href="/">Following ({props.data.following.length})</a>
             </li>
           </ul>
         </div>

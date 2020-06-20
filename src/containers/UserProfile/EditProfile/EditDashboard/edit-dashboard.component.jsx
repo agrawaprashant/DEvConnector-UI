@@ -8,6 +8,7 @@ import * as actions from "../../../../store/actions/actions";
 import AlertMessage from "../../../../components/UI/AlertMessage/alert-message.component";
 import Aux from "../../../../hoc/Auxilliary/auxilliary";
 import Spinner from "../../../../components/UI/SmallSpinner/small-spinner.component";
+import SmallSpinner from "../../../../components/UI/SmallSpinner/small-spinner.component";
 
 class EditDashboard extends React.Component {
   state = {
@@ -59,7 +60,9 @@ class EditDashboard extends React.Component {
     },
     selctedProfilePicture: null,
     isProfilePicChanging: false,
-    showAlert: false,
+    showProfilePicAlert: false,
+    loading: false,
+    showDashboardEditAlert: false,
   };
 
   inputChangedHandler = (event, controlName) => {
@@ -97,13 +100,16 @@ class EditDashboard extends React.Component {
   profilePicChangeCallback = () => {
     this.setState({
       isProfilePicChanging: false,
-      showAlert: true,
+      showProfilePicAlert: true,
       selctedProfilePicture: null,
     });
   };
 
   alertCloseHandler = () => {
-    this.setState({ showAlert: false });
+    this.setState({
+      showProfilePicAlert: false,
+      showDashboardEditAlert: false,
+    });
     clearTimeout();
   };
 
@@ -112,12 +118,21 @@ class EditDashboard extends React.Component {
     let userEnterdData = {};
     for (let key in this.state.dashBoardForm) {
       const value = this.state.dashBoardForm[key].value;
-      if (value.trim().length !== 0) {
+      if (value && value.trim().length !== 0) {
         userEnterdData[key] = value;
       }
     }
 
-    this.props.onEditProfile(userEnterdData, this.props.token);
+    this.props.onEditProfile(
+      userEnterdData,
+      this.props.token,
+      this.dashBoardEditCallback
+    );
+    this.setState({ loading: true });
+  };
+
+  dashBoardEditCallback = () => {
+    this.setState({ loading: false, showDashboardEditAlert: true });
   };
 
   profilePictureChangeHandler = (event) => {
@@ -129,7 +144,7 @@ class EditDashboard extends React.Component {
   };
 
   render() {
-    if (this.state.showAlert) {
+    if (this.state.showProfilePicAlert || this.state.showDashboardEditAlert) {
       setTimeout(() => {
         this.alertCloseHandler();
       }, 6000);
@@ -168,6 +183,15 @@ class EditDashboard extends React.Component {
           <div className={classes.AlertBox}>
             <AlertMessage
               message="Profile picture changed successfully!"
+              closed={this.alertCloseHandler}
+              type="success"
+            />
+          </div>
+        ) : null}
+        {this.state.showDashboardEditAlert ? (
+          <div className={classes.AlertBox}>
+            <AlertMessage
+              message="Profile updated!"
               closed={this.alertCloseHandler}
               type="success"
             />
@@ -229,7 +253,7 @@ class EditDashboard extends React.Component {
             >
               {formElements}
               <button type="submit" className={classes.SaveBtn}>
-                Save
+                {this.state.loading ? <SmallSpinner /> : `Save`}
               </button>
             </form>
           </div>
@@ -247,8 +271,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onEditProfile: (profileData, token) =>
-      dispatch(actions.editProfile(profileData, token)),
+    onEditProfile: (profileData, token, callback) =>
+      dispatch(actions.editProfile(profileData, token, callback)),
     onChangeProfile: (token, profilePicData, callback) =>
       dispatch(actions.changeProfilePicture(token, profilePicData, callback)),
   };

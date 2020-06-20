@@ -5,6 +5,7 @@ import { withRouter } from "react-router-dom";
 import * as actions from "../../store/actions/actions";
 import { connect } from "react-redux";
 import OtherPersonPosts from "../../containers/OtherPersonProfile/Posts/other-person-posts.component";
+import SmallSpinner from "../UI/SmallSpinner/small-spinner.component";
 
 class OtherPersonProfile extends React.Component {
   constructor(props) {
@@ -12,6 +13,7 @@ class OtherPersonProfile extends React.Component {
     this.state = {
       showAbout: true,
       showPosts: false,
+      loading: false,
     };
   }
 
@@ -24,6 +26,22 @@ class OtherPersonProfile extends React.Component {
       this.props.onFetchProfile(this.props.match.params.id);
     }
   }
+
+  connectionCallback = () => {
+    this.setState({ loading: false });
+  };
+
+  followClickHandler = () => {
+    const { token, onFollowUser } = this.props;
+    onFollowUser(token, this.props.match.params.id, this.connectionCallback);
+    this.setState({ loading: true });
+  };
+
+  unfollowClickHandler = () => {
+    const { token, onUnfollowUser } = this.props;
+    onUnfollowUser(token, this.props.match.params.id, this.connectionCallback);
+    this.setState({ loading: true });
+  };
 
   render() {
     return (
@@ -52,10 +70,35 @@ class OtherPersonProfile extends React.Component {
                 <i className="fas fa-map-marker-alt"></i>
                 <p>{this.props.profileData.location}</p>
               </div>
-              <div className={classes.Buttons}>
-                <button className={classes.FollowBtn}>Follow</button>
-                <button className={classes.MessageBtn}>Message</button>
-              </div>
+              {this.props.match.params.id !== this.props.user.id ? (
+                <div className={classes.Buttons}>
+                  <button
+                    onClick={() =>
+                      this.props.following.find(
+                        (conn) => conn.user.id === this.props.match.params.id
+                      )
+                        ? this.unfollowClickHandler()
+                        : this.followClickHandler()
+                    }
+                    className={classes.FollowBtn}
+                  >
+                    {this.props.following.find(
+                      (conn) => conn.user.id === this.props.match.params.id
+                    ) ? (
+                      this.state.loading ? (
+                        <SmallSpinner />
+                      ) : (
+                        "Unfollow"
+                      )
+                    ) : this.state.loading ? (
+                      <SmallSpinner />
+                    ) : (
+                      "Follow"
+                    )}
+                  </button>
+                  <button className={classes.MessageBtn}>Message</button>
+                </div>
+              ) : null}
             </div>
           </div>
         ) : (
@@ -137,6 +180,9 @@ class OtherPersonProfile extends React.Component {
 const mapStateToProps = (state) => {
   return {
     profileData: state.profile.otherPersonProfile,
+    user: state.auth.user,
+    following: state.connections.following,
+    token: state.auth.token,
   };
 };
 
@@ -144,6 +190,10 @@ const mapDispatchToProfile = (dispatch) => {
   return {
     onFetchProfile: (userId) =>
       dispatch(actions.fetchOtherPersonProfile(userId)),
+    onFollowUser: (token, userId, callback) =>
+      dispatch(actions.followUser(token, userId, callback)),
+    onUnfollowUser: (token, userId, callback) =>
+      dispatch(actions.unfollowUser(token, userId, callback)),
   };
 };
 
