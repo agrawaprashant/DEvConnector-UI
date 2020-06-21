@@ -1,7 +1,7 @@
 .ChatCotainerWrapper {
   position: relative;
   height: 100%;
-  width: 60vw;
+  width: 50vw;
   /* overflow-y: scroll; */
 }
 

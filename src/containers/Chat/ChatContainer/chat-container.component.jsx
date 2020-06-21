@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { v4 as uuid } from "uuid";
 
 import * as actions from "../../../store/actions/actions";
 import { createChatMessage } from "../../../shared/chat.utilities";
@@ -25,6 +24,7 @@ class ChatContainer extends Component {
     isChatLoading: false,
     isContactOnline: false,
     isContactTyping: false,
+    lastActive: null,
   };
 
   chatLoadingCallback = () => {
@@ -58,7 +58,6 @@ class ChatContainer extends Component {
     }
 
     socket.on(`${CHAT_CREATED}-${selectedContact._id}`, (data) => {
-      console.log("CHAT has been created");
       const { chatId, messageText } = data;
       onSetSelectedChat(chatId, selectedContact);
       onMessageSend(
@@ -68,8 +67,12 @@ class ChatContainer extends Component {
     });
 
     socket.on(USER_ONLINE, (userId, isOnline) => {
-      if (userId === selectedContact._id)
-        this.setState({ isUserOnline: isOnline });
+      if (userId === selectedContact._id) {
+        this.setState({
+          isUserOnline: isOnline,
+          lastActive: !isOnline ? new Date() : null,
+        });
+      }
     });
     socket.on(SEND_TYPING, ({ sender, isTyping }) => {
       if (sender === selectedContact._id) {
@@ -80,13 +83,8 @@ class ChatContainer extends Component {
   }
 
   getIsUserOnline = (isUserOnline) => {
-    const {
-      onFetchLastActive,
-      selectedContact,
-      token,
-      lastActiveMap,
-    } = this.props;
-    if (!isUserOnline && !lastActiveMap[selectedContact._id]) {
+    const { onFetchLastActive, selectedContact, token } = this.props;
+    if (!isUserOnline) {
       onFetchLastActive(token, selectedContact._id);
     }
     this.setState({ isContactOnline: isUserOnline });
@@ -101,7 +99,6 @@ class ChatContainer extends Component {
       onMessageSend,
     } = this.props;
     if (selectedChatId) {
-      console.log("chat is aval.");
       socket.emit(PRIVATE_CHAT_MESSAGE, {
         sender: user.id,
         receiver: selectedContact._id,
@@ -113,7 +110,6 @@ class ChatContainer extends Component {
         createChatMessage(messageText, user.id, selectedContact._id)
       );
     } else {
-      console.log("chat not aval.");
       socket.emit(CHAT_CREATED, {
         sender: user.id,
         receiver: selectedContact._id,
@@ -139,7 +135,6 @@ class ChatContainer extends Component {
   };
 
   componentDidUpdate(prevProps) {
-    console.log("componend did updated callledddd");
     const {
       onFetchChatMessages,
       token,
@@ -154,7 +149,6 @@ class ChatContainer extends Component {
       onMessageSend,
     } = this.props;
     if (prevProps.selectedContact._id !== selectedContact._id) {
-      console.log("CONTACT CHANGED!!");
       if (selectedChatId && !loadedChats[selectedChatId]) {
         onFetchChatMessages(token, selectedChatId, this.chatLoadingCallback);
         this.setState({ isChatLodaing: true });
@@ -163,7 +157,6 @@ class ChatContainer extends Component {
     }
 
     socket.on(`${CHAT_CREATED}-${selectedContact._id}`, (data) => {
-      console.log("CHAT has been created with different contact than before!");
       const { chatId, messageText } = data;
       if (selectedContact._id !== prevProps.selectedContact._id) {
         onSetSelectedChat(chatId, selectedContact);
@@ -199,7 +192,12 @@ class ChatContainer extends Component {
       backBtnClicked,
       closed,
     } = this.props;
-    const { isChatLoading, isContactTyping, isContactOnline } = this.state;
+    const {
+      isChatLoading,
+      isContactTyping,
+      isContactOnline,
+      lastActive,
+    } = this.state;
     let chatMessages = null;
     if (selectedChatId && loadedChats[selectedChatId]) {
       const msgByDate = {};
@@ -224,20 +222,13 @@ class ChatContainer extends Component {
                 <ReactMoment format="MMMM Do">{Date.parse(date)}</ReactMoment>
               )}
             </span>
-            {msgByDate[date].map((message) => {
+            {msgByDate[date].map((message, i) => {
               return (
-                <div
-                  className={classes.Message}
-                  key={uuid()}
-                  style={{
-                    justifyContent:
-                      message.sender === user.id ? "flex-end" : "flex-start",
-                    margin:
-                      message.sender === user.id ? "0 0 0 50px" : "0 50px 0 0",
-                  }}
-                >
-                  <Message {...message} isOwner={message.sender === user.id} />
-                </div>
+                <Message
+                  key={i}
+                  {...message}
+                  isOwner={message.sender === user.id}
+                />
               );
             })}
           </div>
@@ -254,7 +245,9 @@ class ChatContainer extends Component {
             {...selectedContact}
             closed={closed}
             lastActive={
-              lastActiveMap[selectedContact._id]
+              lastActive
+                ? lastActive
+                : lastActiveMap[selectedContact._id]
                 ? lastActiveMap[selectedContact._id]
                 : null
             }

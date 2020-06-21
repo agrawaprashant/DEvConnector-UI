@@ -6,6 +6,7 @@ import * as actions from "../../store/actions/actions";
 import { connect } from "react-redux";
 import OtherPersonPosts from "../../containers/OtherPersonProfile/Posts/other-person-posts.component";
 import SmallSpinner from "../UI/SmallSpinner/small-spinner.component";
+import { updateObject } from "../../shared/utility";
 
 class OtherPersonProfile extends React.Component {
   constructor(props) {
@@ -14,6 +15,7 @@ class OtherPersonProfile extends React.Component {
       showAbout: true,
       showPosts: false,
       loading: false,
+      profileData: null,
     };
   }
 
@@ -24,6 +26,13 @@ class OtherPersonProfile extends React.Component {
   componentDidUpdate(prevProps) {
     if (this.props.match.params.id !== prevProps.match.params.id) {
       this.props.onFetchProfile(this.props.match.params.id);
+      this.setState({
+        showAbout: true,
+        showPosts: false,
+      });
+    }
+    if (this.props.profileData !== prevProps.profileData) {
+      this.setState({ profileData: this.props.profileData });
     }
   }
 
@@ -55,19 +64,28 @@ class OtherPersonProfile extends React.Component {
               <div className={classes.NameHandle}>
                 <h2>{this.props.profileData.user.name}</h2>
                 <div className={classes.Handle}>
-                  <i className="fas fa-at"></i>
+                  {/* <i
+                    key={this.props.profileData.user.name}
+                    className="fas fa-at"
+                  ></i> */}
                   <p>{this.props.profileData.handle}</p>
                 </div>
               </div>
               <div className={classes.Work}>
-                <i className="fas fa-briefcase"></i>
+                {/* <i
+                  key={this.props.profileData.user.name}
+                  className="fas fa-briefcase"
+                ></i> */}
                 <p>
                   {this.props.profileData.status} at{" "}
                   {this.props.profileData.company}
                 </p>
               </div>
               <div className={classes.Location}>
-                <i className="fas fa-map-marker-alt"></i>
+                {/* <i
+                  key={this.props.profileData.user.name}
+                  className="fas fa-map-marker-alt"
+                ></i> */}
                 <p>{this.props.profileData.location}</p>
               </div>
               {this.props.match.params.id !== this.props.user.id ? (
@@ -96,7 +114,11 @@ class OtherPersonProfile extends React.Component {
                       "Follow"
                     )}
                   </button>
-                  <button className={classes.MessageBtn}>Message</button>
+                  {this.props.following.find(
+                    (conn) => conn.user.id === this.props.match.params.id
+                  ) ? (
+                    <button className={classes.MessageBtn}>Message</button>
+                  ) : null}
                 </div>
               ) : null}
             </div>
@@ -149,8 +171,16 @@ class OtherPersonProfile extends React.Component {
           </ul>
         </div>
         {this.state.showAbout ? (
-          this.props.profileData ? (
-            <About {...this.props.profileData} />
+          this.state.profileData ? (
+            <About
+              {...this.state.profileData}
+              isOwner={
+                this.props.user
+                  ? this.props.user.id === this.props.match.params.id
+                  : false
+              }
+              userId={this.props.match.params.id}
+            />
           ) : (
             <div className="ph-item">
               <div className="ph-col-12">
@@ -182,6 +212,7 @@ const mapStateToProps = (state) => {
     profileData: state.profile.otherPersonProfile,
     user: state.auth.user,
     following: state.connections.following,
+    followers: state.connections.followers,
     token: state.auth.token,
   };
 };

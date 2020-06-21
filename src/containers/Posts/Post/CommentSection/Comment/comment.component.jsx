@@ -5,7 +5,6 @@ import Moment from "react-moment";
 import { withRouter, Link } from "react-router-dom";
 
 const Comment = (props) => {
-  console.log(props);
   const [isReadMoreClicked, setReadMoreClick] = useState(false);
   const shorterComment = isReadMoreClicked ? (
     <div style={{ display: "inline" }}>

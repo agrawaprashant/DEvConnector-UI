@@ -1,7 +1,7 @@
 import React from "react";
 import classes from "./post.module.css";
 import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 import * as actions from "../../../store/actions/actions";
 
 import LikeButton from "../../../components/UI/Button/LikeButton/like-button.component";
@@ -60,6 +60,10 @@ class Post extends React.Component {
   };
 
   render() {
+    let currentPath = window.location.href;
+    if (currentPath !== "") {
+      currentPath = "";
+    }
     let images = null;
     if (this.props.postData.images.length !== 0) {
       images = <ImageContainer images={this.props.postData.images} />;
@@ -70,13 +74,9 @@ class Post extends React.Component {
           <img src={this.props.postData.avatar} alt="avatar" />
           <div className={classes.AuthorDetails}>
             <h3>{this.props.postData.name}</h3>
-            <p
-              onClick={() =>
-                this.props.history.push(`profile/${this.props.postData.user}`)
-              }
-            >
-              {this.props.postData.handle}
-            </p>
+            <Link to={`${currentPath}/profile/${this.props.postData.user}`}>
+              <p>{this.props.postData.handle}</p>
+            </Link>
           </div>
           <div className={classes.PostDate}>
             <Moment format="MMMM Do YYYY">{this.props.postData.date}</Moment> (

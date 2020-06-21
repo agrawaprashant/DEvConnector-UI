@@ -127,17 +127,10 @@ const fetchLastActiveFailed = (error) => {
 
 export const chatMessageReceived = (chatId, messageObject) => {
   let sender = [
-    ...store.getState().conenctions.followers,
+    ...store.getState().connections.followers,
     ...store.getState().connections.following,
-  ].find((user) => user.user.id === messageObject.sender);
-  if (sender) {
-    sender = sender.user;
-  } else {
-    const chat = store
-      .getState()
-      .chat.chatList.find((chat) => chat._id === chatId);
-    sender = chat.sender;
-  }
+  ].find((user) => user.user.id === messageObject.sender).user;
+
   return {
     type: actionTypes.CHAT_MESSAGE_RECEIVED,
     payload: {
@@ -155,13 +148,8 @@ export const chatMessageSent = (chatId, messageObject) => {
   let receiver = [
     ...store.getState().connections.followers,
     ...store.getState().connections.following,
-  ].find((user) => user.user.id === messageObject.receiver);
-  if (receiver) {
-    receiver = receiver.user;
-  } else {
-    const chatList = store.getState().chat.chatList;
-    receiver = chatList.find((chat) => chat._id === chatId).receiver;
-  }
+  ].find((user) => user.user.id === messageObject.receiver).user;
+
   return {
     type: actionTypes.CHAT_MESSAGE_SENT,
     payload: {
@@ -187,7 +175,6 @@ export const chatMessageSeenSent = (chatId, seenSender, seenReceiver) => {
   };
 };
 export const chatMessageSeenReceived = (chatId, seenSender, seenReceiver) => {
-  console.log(seenReceiver);
   return {
     type: actionTypes.CHAT_MESSAGE_SEEN_RECEIVED,
     payload: {

@@ -1,6 +1,7 @@
 import React from "react";
 import classes from "./chat-contact-header.module.css";
 import Moment from "react-moment";
+import { Link } from "react-router-dom";
 
 class ChatContactHeader extends React.Component {
   constructor(props) {
@@ -22,6 +23,10 @@ class ChatContactHeader extends React.Component {
   };
 
   render() {
+    let currentPath = window.location.href;
+    if (currentPath !== "") {
+      currentPath = "";
+    }
     const {
       name,
       avatar,
@@ -30,6 +35,7 @@ class ChatContactHeader extends React.Component {
       isOnline,
       lastActive,
       backBtnClicked,
+      _id,
     } = this.props;
 
     return (
@@ -45,11 +51,13 @@ class ChatContactHeader extends React.Component {
           ) : null}
           <img src={avatar} alt="avatar" />
           <div className={classes.ContactInfo}>
-            <h3>
-              {name.length < 13 || !this.state.switchedToMobile
-                ? name
-                : name.substring(0, 13) + "..."}
-            </h3>
+            <Link to={`${currentPath}/profile/${_id}`}>
+              <h3>
+                {name.length < 13 || !this.state.switchedToMobile
+                  ? name
+                  : name.substring(0, 13) + "..."}
+              </h3>
+            </Link>
             <div className={classes.ContactStatus}>
               {isTyping ? (
                 <p className={classes.Typing}>Typing...</p>

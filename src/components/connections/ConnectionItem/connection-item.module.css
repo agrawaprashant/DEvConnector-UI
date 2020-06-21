@@ -1,0 +1,27 @@
+.ConnectionItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: lightblue;
+}
+
+.ConnectionItem img {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+}
+
+.ConnectionItem p {
+  font-size: 1rem;
+}
+.ConnectionItem a {
+  color: #555;
+}
+
+.ConnectionItem button {
+  border: none;
+  background: #333;
+  padding: 5px;
+  cursor: pointer;
+  outline: none;
+}

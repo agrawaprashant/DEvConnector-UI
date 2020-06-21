@@ -41,4 +41,5 @@ export {
   loadConnections,
   followUser,
   unfollowUser,
+  fetchUserConnections,
 } from "./connections.actions";

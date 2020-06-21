@@ -9,6 +9,10 @@
   border-bottom: 1px solid #ccc;
 }
 
+.ChatContactHeader a {
+  color: #555;
+}
+
 .ContactDetails {
   display: flex;
   align-items: center;
@@ -69,6 +73,9 @@
     background-color: #004752;
     color: #fff;
     border-bottom: 3px solid #ff9158;
+  }
+  .ChatContactHeader a {
+    color: #fff;
   }
 
   .ContactInfo h3 {
