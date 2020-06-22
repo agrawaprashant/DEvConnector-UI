@@ -82,8 +82,8 @@ const chatMessageReceived = (state, action) => {
     updatedChat.lastMessage = messageObject.messageText;
     updatedChat.unreadMessageCount = updatedChat.unreadMessageCount + 1;
     updatedChat.lastMessageDate = new Date();
-
-    updatedChatList[updatedChatIndex] = updatedChat;
+    updatedChatList.splice(updatedChatIndex, 1);
+    updatedChatList = [updatedChat].concat(updatedChatList);
   } else {
     updatedChat = createChat(chatId, messageObject.messageText, sender);
     updatedChat.unreadMessageCount = 1;
@@ -111,7 +111,8 @@ const chatMessageSent = (state, action) => {
     const updatedChatIndex = updatedChatList.indexOf(updatedChat);
     updatedChat.lastMessage = messageObject.messageText;
     updatedChat.lastMessageDate = new Date();
-    updatedChatList[updatedChatIndex] = updatedChat;
+    updatedChatList.splice(updatedChatIndex, 1);
+    updatedChatList = [updatedChat].concat(updatedChatList);
   } else {
     updatedChat = createChat(chatId, messageObject.messageText, receiver);
     updatedChatList = [updatedChat].concat(updatedChatList);

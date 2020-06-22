@@ -4,6 +4,18 @@ import classes from "./modal.module.css";
 import Aux from "../../../hoc/Auxilliary/auxilliary";
 import Backdrop from "../Backdrop/backdrop.component";
 class Modal extends React.Component {
+  state = {
+    switchedToMobile: false,
+  };
+  componentDidMount() {
+    window.addEventListener("resize", this.updateWindowSize);
+    this.setState({ switchedToMobile: window.innerWidth <= 500 });
+  }
+  updateWindowSize = () => {
+    this.setState({
+      switchedToMobile: window.innerWidth <= 500,
+    });
+  };
   shouldComponentUpdate(nextProps, nextState) {
     return (
       nextProps.show !== this.props.show ||
@@ -14,22 +26,25 @@ class Modal extends React.Component {
   //   console.log("Modal Reremder..");
   // }
   render() {
+    const { switchedToMobile } = this.state;
+    const modalImageClasses = [classes.Modal];
+    if (!switchedToMobile) {
+      if (this.props.orientation === "landscape") {
+        modalImageClasses.push(classes.LandscapeDesktop);
+      } else {
+        modalImageClasses.push(classes.PortraitDesktop);
+      }
+    } else {
+      if (this.props.orientation === "landscape") {
+        modalImageClasses.push(classes.LandscapeMobile);
+      } else {
+        modalImageClasses.push(classes.PortraitMobile);
+      }
+    }
     return (
       <Aux>
         <Backdrop show={this.props.show} clicked={this.props.modalClosed} />
-        <div
-          className={classes.Modal}
-          style={
-            this.props.orientation === "landscape"
-              ? {
-                  transform: "translateY(-190px)",
-                  opacity: this.props.show ? "1" : "0",
-                }
-              : null
-          }
-        >
-          {this.props.children}
-        </div>
+        <div className={modalImageClasses.join(" ")}>{this.props.children}</div>
       </Aux>
     );
   }

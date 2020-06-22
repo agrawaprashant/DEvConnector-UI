@@ -49,7 +49,10 @@ class ChatContactHeader extends React.Component {
               <i className="fas fa-arrow-left"></i>
             </button>
           ) : null}
-          <img src={avatar} alt="avatar" />
+          <Link to={`${currentPath}/profile/${_id}`}>
+            <img src={avatar} alt="avatar" />
+          </Link>
+
           <div className={classes.ContactInfo}>
             <Link to={`${currentPath}/profile/${_id}`}>
               <h3>
@@ -58,6 +61,7 @@ class ChatContactHeader extends React.Component {
                   : name.substring(0, 13) + "..."}
               </h3>
             </Link>
+
             <div className={classes.ContactStatus}>
               {isTyping ? (
                 <p className={classes.Typing}>Typing...</p>

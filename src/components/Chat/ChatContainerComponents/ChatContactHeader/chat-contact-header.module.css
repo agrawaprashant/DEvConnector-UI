@@ -70,12 +70,15 @@
 @media screen and (max-width: 500px) {
   .ChatContactHeader {
     height: 100%;
-    background-color: #004752;
+    background-color: #825;
     color: #fff;
-    border-bottom: 3px solid #ff9158;
+    border-bottom: 4px solid #fb9214;
   }
   .ChatContactHeader a {
     color: #fff;
+  }
+  .ContactDetails {
+    margin-bottom: -6px;
   }
 
   .ContactInfo h3 {

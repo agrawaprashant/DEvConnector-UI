@@ -1,0 +1,53 @@
+.Connections {
+  padding: 1rem;
+  background-color: #ededed;
+  border-radius: 10px;
+  width: 30vw;
+
+  border: 1px solid #ccc;
+}
+
+.Header p {
+  font-size: 1.5rem;
+  padding-bottom: 1rem;
+}
+
+.Header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 1rem;
+}
+
+.CloseBtn {
+  /* margin-left: auto; */
+  border: none;
+  background-color: #333;
+  padding: 4px 6px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+  outline: none;
+}
+
+.CloseBtn:hover {
+  background-color: #555;
+  color: #eee;
+}
+
+.ConnectionList {
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: 50vh;
+  padding-right: 1rem;
+}
+
+.ConnectionList::-webkit-scrollbar-track {
+  background: #ededed;
+}
+
+.ConnectionList::-webkit-scrollbar-thumb {
+  background: #aaa;
+}

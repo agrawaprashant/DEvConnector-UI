@@ -40,9 +40,9 @@
 @media screen and (max-width: 500px) {
   .UserInfoHeader {
     height: 75px;
-    background-color: #004752;
+    background-color: #825;
     color: #fff;
-    border-bottom: 5px solid #ff9158;
+    border-bottom: 4px solid #fb9214;
   }
 
   .UserInfoHeader a {

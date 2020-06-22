@@ -6,7 +6,6 @@ import * as actions from "../../store/actions/actions";
 import { connect } from "react-redux";
 import OtherPersonPosts from "../../containers/OtherPersonProfile/Posts/other-person-posts.component";
 import SmallSpinner from "../UI/SmallSpinner/small-spinner.component";
-import { updateObject } from "../../shared/utility";
 
 class OtherPersonProfile extends React.Component {
   constructor(props) {
@@ -16,6 +15,7 @@ class OtherPersonProfile extends React.Component {
       showPosts: false,
       loading: false,
       profileData: null,
+      connectionsOnMobile: false,
     };
   }
 
@@ -55,120 +55,127 @@ class OtherPersonProfile extends React.Component {
   render() {
     return (
       <div className={classes.OtherPersonProfile}>
-        {this.props.profileData ? (
-          <div className={classes.ProfileData}>
-            <div className={classes.Avatar}>
-              <img src={this.props.profileData.user.avatar} alt="user-avatar" />
-            </div>
-            <div className={classes.Info}>
-              <div className={classes.NameHandle}>
-                <h2>{this.props.profileData.user.name}</h2>
-                <div className={classes.Handle}>
-                  {/* <i
+        <div
+          style={{ display: this.state.connectionsOnMobile ? "none" : null }}
+        >
+          {this.props.profileData ? (
+            <div className={classes.ProfileData}>
+              <div className={classes.Avatar}>
+                <img
+                  src={this.props.profileData.user.avatar}
+                  alt="user-avatar"
+                />
+              </div>
+              <div className={classes.Info}>
+                <div className={classes.NameHandle}>
+                  <h2>{this.props.profileData.user.name}</h2>
+                  <div className={classes.Handle}>
+                    {/* <i
                     key={this.props.profileData.user.name}
                     className="fas fa-at"
                   ></i> */}
-                  <p>{this.props.profileData.handle}</p>
+                    <p>@{this.props.profileData.handle}</p>
+                  </div>
                 </div>
-              </div>
-              <div className={classes.Work}>
-                {/* <i
+                <div className={classes.Work}>
+                  {/* <i
                   key={this.props.profileData.user.name}
                   className="fas fa-briefcase"
                 ></i> */}
-                <p>
-                  {this.props.profileData.status} at{" "}
-                  {this.props.profileData.company}
-                </p>
-              </div>
-              <div className={classes.Location}>
-                {/* <i
+                  <p>
+                    {this.props.profileData.status} at{" "}
+                    {this.props.profileData.company}
+                  </p>
+                </div>
+                <div className={classes.Location}>
+                  {/* <i
                   key={this.props.profileData.user.name}
                   className="fas fa-map-marker-alt"
                 ></i> */}
-                <p>{this.props.profileData.location}</p>
-              </div>
-              {this.props.match.params.id !== this.props.user.id ? (
-                <div className={classes.Buttons}>
-                  <button
-                    onClick={() =>
-                      this.props.following.find(
+                  <p>{this.props.profileData.location}</p>
+                </div>
+                {this.props.match.params.id !== this.props.user.id ? (
+                  <div className={classes.Buttons}>
+                    <button
+                      onClick={() =>
+                        this.props.following.find(
+                          (conn) => conn.user.id === this.props.match.params.id
+                        )
+                          ? this.unfollowClickHandler()
+                          : this.followClickHandler()
+                      }
+                      className={classes.FollowBtn}
+                    >
+                      {this.props.following.find(
                         (conn) => conn.user.id === this.props.match.params.id
-                      )
-                        ? this.unfollowClickHandler()
-                        : this.followClickHandler()
-                    }
-                    className={classes.FollowBtn}
-                  >
+                      ) ? (
+                        this.state.loading ? (
+                          <SmallSpinner />
+                        ) : (
+                          "Unfollow"
+                        )
+                      ) : this.state.loading ? (
+                        <SmallSpinner />
+                      ) : (
+                        "Follow"
+                      )}
+                    </button>
                     {this.props.following.find(
                       (conn) => conn.user.id === this.props.match.params.id
                     ) ? (
-                      this.state.loading ? (
-                        <SmallSpinner />
-                      ) : (
-                        "Unfollow"
-                      )
-                    ) : this.state.loading ? (
-                      <SmallSpinner />
-                    ) : (
-                      "Follow"
-                    )}
-                  </button>
-                  {this.props.following.find(
-                    (conn) => conn.user.id === this.props.match.params.id
-                  ) ? (
-                    <button className={classes.MessageBtn}>Message</button>
-                  ) : null}
-                </div>
-              ) : null}
+                      <button className={classes.MessageBtn}>Message</button>
+                    ) : null}
+                  </div>
+                ) : null}
+              </div>
             </div>
+          ) : (
+            <div className="ph-item">
+              <div className="ph-col-2">
+                <div className="ph-picture"></div>
+              </div>
+              <div className="ph-row">
+                <div className="ph-col-6"></div>
+
+                <div className="ph-col"></div>
+
+                <div className="ph-col"></div>
+                <div className="ph-col"></div>
+              </div>
+            </div>
+          )}
+
+          <div className={classes.Tabs}>
+            <ul>
+              <li>
+                <button
+                  className={`${this.state.showAbout ? classes.Active : null} ${
+                    classes.TabButton
+                  }`}
+                  onClick={() =>
+                    this.setState({ showAbout: true, showPosts: false })
+                  }
+                >
+                  About
+                </button>
+              </li>
+              <li>
+                <button
+                  className={`${this.state.showPosts ? classes.Active : null} ${
+                    classes.TabButton
+                  }`}
+                  onClick={() =>
+                    this.setState({ showPosts: true, showAbout: false })
+                  }
+                >
+                  Posts
+                </button>
+              </li>
+              <li>
+                <button className={classes.TabButton}>Github</button>
+              </li>
+            </ul>
           </div>
-        ) : (
-          <div className="ph-item">
-            <div className="ph-col-2">
-              <div className="ph-picture"></div>
-            </div>
-            <div className="ph-row">
-              <div className="ph-col-6"></div>
-
-              <div className="ph-col"></div>
-
-              <div className="ph-col"></div>
-              <div className="ph-col"></div>
-            </div>
-          </div>
-        )}
-
-        <div className={classes.Tabs}>
-          <ul>
-            <li>
-              <button
-                className={`${this.state.showAbout ? classes.Active : null} ${
-                  classes.TabButton
-                }`}
-                onClick={() =>
-                  this.setState({ showAbout: true, showPosts: false })
-                }
-              >
-                About
-              </button>
-            </li>
-            <li>
-              <button
-                className={`${this.state.showPosts ? classes.Active : null} ${
-                  classes.TabButton
-                }`}
-                onClick={() =>
-                  this.setState({ showPosts: true, showAbout: false })
-                }
-              >
-                Posts
-              </button>
-            </li>
-            <li>
-              <button className={classes.TabButton}>Github</button>
-            </li>
-          </ul>
         </div>
         {this.state.showAbout ? (
           this.state.profileData ? (
@@ -180,6 +187,9 @@ class OtherPersonProfile extends React.Component {
                   : false
               }
               userId={this.props.match.params.id}
+              clickConnectionOnMobile={(isConnectionClicked) =>
+                this.setState({ connectionsOnMobile: isConnectionClicked })
+              }
             />
           ) : (
             <div className="ph-item">

@@ -59,10 +59,11 @@
   color: #fff;
   outline: none;
   border-radius: 20px;
+  transition: all 0.2s ease-in-out;
 }
 
 .AddPostBtn {
-  background-color: #a9c23f;
+  background-color: #fb9214;
 }
 
 .AddPostBtn:hover {
@@ -70,7 +71,7 @@
 }
 
 .AddPictureBtn {
-  background-color: #00c1e7;
+  background-color: #fb9214;
 }
 
 .AddPictureBtn:hover {
@@ -78,7 +79,7 @@
 }
 
 .TagPeopleBtn {
-  background-color: #87189d;
+  background-color: #fb9214;
 }
 
 .TagPeopleBtn:hover {

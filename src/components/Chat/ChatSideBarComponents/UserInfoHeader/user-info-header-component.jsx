@@ -12,7 +12,9 @@ class UserInfoHeader extends Component {
     const { userDetails } = this.props;
     return (
       <div className={classes.UserInfoHeader}>
-        <img src={userDetails.avatar} alt="user-avatar" />
+        <Link to={`${currentPath}/profile/${userDetails.id}`}>
+          <img src={userDetails.avatar} alt="user-avatar" />
+        </Link>
         <Link to={`${currentPath}/profile/${userDetails.id}`}>
           <h3>{userDetails.name}</h3>
         </Link>

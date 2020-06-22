@@ -1,8 +1,14 @@
 import React from "react";
 import classes from "./connections-container.module.css";
-import ConnectionItem from "../../components/connections/ConnectionItem/connection-item.component";
+import ConnectionItem from "../../../components/connections/ConnectionItem/connection-item.component";
 
-const Connections = ({ connectionType, followers, following, isOwner }) => {
+const Connections = ({
+  connectionType,
+  followers,
+  following,
+  isOwner,
+  closed,
+}) => {
   let connections;
   switch (connectionType) {
     case "followers":
@@ -18,8 +24,15 @@ const Connections = ({ connectionType, followers, following, isOwner }) => {
       });
       connections = (
         <div className={classes.Connections}>
-          <p>Followers</p>
-          {connections.length !== 0 ? connections : <p> 0 Followers</p>}
+          <div className={classes.Header}>
+            <p>Followers</p>
+            <button onClick={closed} className={classes.CloseBtn}>
+              Close
+            </button>
+          </div>
+          <div className={classes.ConnectionList}>
+            {connections.length !== 0 ? connections : <p> 0 Followers</p>}
+          </div>
         </div>
       );
       break;
@@ -36,8 +49,15 @@ const Connections = ({ connectionType, followers, following, isOwner }) => {
       });
       connections = (
         <div className={classes.Connections}>
-          <p>Following</p>
-          {connections.length !== 0 ? connections : <p> 0 Following</p>}
+          <div className={classes.Header}>
+            <p>Following</p>
+            <button onClick={closed} className={classes.CloseBtn}>
+              Close
+            </button>
+          </div>
+          <div className={classes.ConnectionList}>
+            {connections.length !== 0 ? connections : <p> 0 Following</p>}
+          </div>
         </div>
       );
       break;

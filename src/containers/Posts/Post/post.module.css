@@ -75,8 +75,8 @@
 .PostTools {
   width: 90%;
   margin: auto;
-  border-top: 1px solid #ff9900;
-  border-bottom: 1px solid #ff9900;
+  border-top: 1px solid #825;
+  border-bottom: 1px solid #825;
   display: flex;
   justify-content: flex-start;
   padding: 10px;

@@ -268,7 +268,6 @@ class ChatContainer extends Component {
   }
 
   componentWillUnmount() {
-    this.props.socket.removeAllListeners();
     clearTimeout();
   }
 }

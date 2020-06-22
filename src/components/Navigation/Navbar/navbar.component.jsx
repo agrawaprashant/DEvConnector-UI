@@ -3,6 +3,7 @@ import classes from "./navbar.module.css";
 import NavigationItems from "../NavigationItems/navigation-items";
 import { NavLink } from "react-router-dom";
 import Hamburger from "./Hamburger/hamburger.component";
+import Logo from "../../../assets/img/logo.png";
 // import HamburgerMenu from "./Hamburger/HamburgerMenu/hamburger-menu.component";
 
 class Navbar extends React.Component {
@@ -27,7 +28,7 @@ class Navbar extends React.Component {
     return (
       <div className={classes.Navbar}>
         <NavLink to="/">
-          <h3 className={classes.Logo}>{`</>DevConnector`}</h3>
+          <img className={classes.Logo} src={Logo} alt="logo" />
         </NavLink>
         <Hamburger clicked={this.hamburgerOpenHandler} />
 

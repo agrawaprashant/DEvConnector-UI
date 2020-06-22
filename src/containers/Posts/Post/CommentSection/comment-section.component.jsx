@@ -63,7 +63,11 @@ class CommentSection extends React.Component {
   };
 
   render() {
-    let comments = <Spinner />;
+    let comments = (
+      <div style={{ margin: "1rem 0" }}>
+        <Spinner />
+      </div>
+    );
     if (this.props.comments[this.props.postId]) {
       comments = (
         <div className={classes.CommentSection}>

@@ -13,14 +13,14 @@
   max-height: 350px;
   height: 100%;
   width: 200px;
-  border-radius: 10px
+  border-radius: 10px;
 }
 
 .LandscapeImage img {
   height: 200px;
   max-width: 350px;
   width: 100%;
-  border-radius: 10px
+  border-radius: 10px;
 }
 
 .ImageToggleBtn button {
@@ -29,7 +29,7 @@
   background: none;
   cursor: pointer;
   outline: none;
-  color: #333;
+  color: #825;
   margin: 10px;
 }
 
@@ -46,5 +46,5 @@
   border: #fff;
   background: none;
   cursor: pointer;
-  outline: none
+  outline: none;
 }

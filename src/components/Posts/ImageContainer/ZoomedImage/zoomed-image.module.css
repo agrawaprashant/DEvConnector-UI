@@ -1,61 +1,73 @@
 .Image {
-    padding: 10px;
-    overflow: hidden;
-    /* border: 2px solid #ccc; */
-    margin: 10px 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 10px;
+  padding: 10px;
+  overflow: hidden;
+  /* border: 2px solid #ccc; */
+  margin: 10px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
 }
 
 .PortraitImage img {
-    height: 550px;
-    /* height: 100%; */
-    width: 300px;
-    border-radius: 10px
+  height: 550px;
+  /* height: 100%; */
+  width: 300px;
+  border-radius: 10px;
 }
 
 .LandscapeImage img {
-    height: 550px;
-    width: 800px;
-    /* width: 100%; */
-    border-radius: 10px
+  height: 550px;
+  width: 800px;
+  /* width: 100%; */
+  border-radius: 10px;
 }
 
 .ImageToggleBtn button {
-    z-index: 2;
-    border: none;
-    background: none;
-    cursor: pointer;
-    outline: none;
-    color: #333;
-    margin: 10px;
+  z-index: 2;
+  border: none;
+  background: none;
+  cursor: pointer;
+  outline: none;
+  color: #825;
+  margin: 10px;
 }
 
 .DisableBtn button {
-    color: #ccc;
-    cursor: auto;
+  color: #ccc;
+  cursor: auto;
 }
 
 .ImageToggleBtn button:hover {
-    color: #ccc;
+  color: #ccc;
 }
 
 .CloseBtn {
-    position: absolute;
-    top: 1rem;
-    right: 2rem
+  position: absolute;
+  top: 1rem;
+  right: 2rem;
 }
 
 .CloseBtn button {
-    border: none;
-    background: none;
-    cursor: pointer;
-    color: #aaa;
-    outline: none
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: #aaa;
+  outline: none;
 }
 
 .CloseBtn button:hover {
-    color: #fff
+  color: #fff;
+}
+
+@media screen and (max-width: 500px) {
+  .LandscapeImage img {
+    height: 250px;
+    width: 300px;
+  }
+
+  .PortraitImage img {
+    height: 430px;
+    width: 250px;
+  }
 }

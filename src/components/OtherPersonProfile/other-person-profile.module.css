@@ -87,7 +87,7 @@
 .FollowBtn {
   border: none;
   padding: 5px 8px;
-  background: #333;
+  background: #825;
   color: #fff;
   cursor: pointer;
   margin: 0 10px;
@@ -136,7 +136,7 @@
 
 .Active {
   background: #ddd;
-  border-bottom: 2px solid #5ab75c;
+  border-bottom: 2px solid #825;
 }
 
 .Tabs ul li button:hover {
