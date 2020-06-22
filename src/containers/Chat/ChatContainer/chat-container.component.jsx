@@ -100,18 +100,19 @@ class ChatContainer extends Component {
     } = this.props;
     if (selectedChatId) {
       socket.emit(PRIVATE_CHAT_MESSAGE, {
-        sender: user.id,
+        sender: user,
         receiver: selectedContact._id,
         messageText,
         chatId: selectedChatId,
       });
       onMessageSend(
         selectedChatId,
-        createChatMessage(messageText, user.id, selectedContact._id)
+        createChatMessage(messageText, user.id, selectedContact._id),
+        selectedContact
       );
     } else {
       socket.emit(CHAT_CREATED, {
-        sender: user.id,
+        sender: user,
         receiver: selectedContact._id,
         messageText,
       });
@@ -162,7 +163,8 @@ class ChatContainer extends Component {
         onSetSelectedChat(chatId, selectedContact);
         onMessageSend(
           chatId,
-          createChatMessage(messageText, user.id, selectedContact._id)
+          createChatMessage(messageText, user.id, selectedContact._id),
+          selectedContact
         );
       }
     });

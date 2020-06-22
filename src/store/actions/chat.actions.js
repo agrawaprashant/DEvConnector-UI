@@ -2,7 +2,6 @@ import * as actionTypes from "./actionTypes";
 import axios from "axios";
 import { setAuthorizationToken } from "../../shared/utility";
 import config from "../../config/app-config.json";
-import store from "../store";
 
 export const fetchChatList = (token) => {
   return async (dispatch) => {
@@ -125,12 +124,7 @@ const fetchLastActiveFailed = (error) => {
   };
 };
 
-export const chatMessageReceived = (chatId, messageObject) => {
-  let sender = [
-    ...store.getState().connections.followers,
-    ...store.getState().connections.following,
-  ].find((user) => user.user.id === messageObject.sender).user;
-
+export const chatMessageReceived = (chatId, messageObject, sender) => {
   return {
     type: actionTypes.CHAT_MESSAGE_RECEIVED,
     payload: {
@@ -144,22 +138,13 @@ export const chatMessageReceived = (chatId, messageObject) => {
     },
   };
 };
-export const chatMessageSent = (chatId, messageObject) => {
-  let receiver = [
-    ...store.getState().connections.followers,
-    ...store.getState().connections.following,
-  ].find((user) => user.user.id === messageObject.receiver).user;
-
+export const chatMessageSent = (chatId, messageObject, receiver) => {
   return {
     type: actionTypes.CHAT_MESSAGE_SENT,
     payload: {
       chatId,
       messageObject,
-      receiver: {
-        _id: receiver.id,
-        name: receiver.name,
-        avatar: receiver.avatar,
-      },
+      receiver,
     },
   };
 };

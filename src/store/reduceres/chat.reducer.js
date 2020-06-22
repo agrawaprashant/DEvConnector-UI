@@ -137,7 +137,6 @@ const chatMessageSeenSent = (state, action) => {
 
 const chatMessageSeenReceived = (state, action) => {
   const { chatId, seenReceiver } = action.payload;
-  console.log(seenReceiver);
   const updatedLoadedChats = { ...state.loadedChats };
   if (updatedLoadedChats[chatId]) {
     updatedLoadedChats[chatId].forEach((message) => {

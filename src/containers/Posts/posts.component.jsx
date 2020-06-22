@@ -3,7 +3,7 @@ import Post from "./Post/post.component";
 import CreatePost from "./CreatePost/create-post.component";
 import * as actions from "../../store/actions/actions";
 import { connect } from "react-redux";
-import Spinner from "../../components/UI/Spinner/spinner.component";
+import Spinner from "../../components/UI/ChatSpinner/chat-spinner.component";
 import { PRIVATE_CHAT_MESSAGE, MESSAGE_SEEN } from "../../socket/Events";
 import { createChatMessage } from "../../shared/chat.utilities";
 class Posts extends React.Component {
@@ -32,11 +32,12 @@ class Posts extends React.Component {
       this.props.onFetchPosts(this.props.token);
       this.props.onFetchChatList(this.props.token);
       this.props.socket.on(PRIVATE_CHAT_MESSAGE, (data) => {
-        console.log("MESSAGE RECEIVED!!", data);
         const { chatId, sender, receiver, messageText } = data;
+
         this.props.onMessageReceived(
           chatId,
-          createChatMessage(messageText, sender, receiver)
+          createChatMessage(messageText, sender.id, receiver),
+          sender
         );
       });
       this.props.socket.on(MESSAGE_SEEN, (chatId, seenReceiver, seenSender) => {
@@ -107,8 +108,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onFetchPosts: (token) => dispatch(actions.fetchPosts(token)),
     onFetchChatList: (token) => dispatch(actions.fetchChatList(token)),
-    onMessageReceived: (chatId, messageObj) =>
-      dispatch(actions.chatMessageReceived(chatId, messageObj)),
+    onMessageReceived: (chatId, messageObj, sender) =>
+      dispatch(actions.chatMessageReceived(chatId, messageObj, sender)),
     onMessageSeen: (chatId, seenSender, seenReceiver) =>
       dispatch(
         actions.chatMessageSeenReceived(chatId, seenSender, seenReceiver)

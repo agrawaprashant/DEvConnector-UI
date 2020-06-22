@@ -22,10 +22,10 @@
 }
 
 .HomeContent a:hover {
-  background-color: #008080;
+  background-color: #825;
   color: #fff;
   /* border: none; */
-  border: 1px solid #008080;
+  border: 1px solid #825;
 }
 
 .HomeContent {
