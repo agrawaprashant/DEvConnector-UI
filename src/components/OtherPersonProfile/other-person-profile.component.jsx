@@ -82,10 +82,12 @@ class OtherPersonProfile extends React.Component {
                   key={this.props.profileData.user.name}
                   className="fas fa-briefcase"
                 ></i> */}
-                  <p>
-                    {this.props.profileData.status} at{" "}
-                    {this.props.profileData.company}
-                  </p>
+                  {this.props.profileData.company ? (
+                    <p>
+                      {this.props.profileData.status} at{" "}
+                      {this.props.profileData.company}
+                    </p>
+                  ) : null}
                 </div>
                 <div className={classes.Location}>
                   {/* <i

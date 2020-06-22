@@ -1,15 +1,24 @@
 .MessageBox {
-    height: 45vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    /* box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2), -1px -1px 3px rgba(0, 0, 0, 0.2); */
+  height: 45vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  /* box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2), -1px -1px 3px rgba(0, 0, 0, 0.2); */
 }
 
 .Message {
-    color: #f15e37;
-    font-weight: bold;
-    font-size: 2rem;
-    font-style: italic
+  color: #f15e37;
+  font-weight: bold;
+  font-size: 2rem;
+  font-style: italic;
+}
+
+@media screen and (max-width: 500px) {
+  .MessageBox {
+    height: 20vh;
+  }
+  .Message {
+    text-align: center;
+  }
 }

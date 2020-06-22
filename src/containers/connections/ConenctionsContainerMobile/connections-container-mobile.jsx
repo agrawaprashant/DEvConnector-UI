@@ -10,14 +10,19 @@ class Connections extends React.Component {
     this.state = {
       showFollowers: props.connectionType === "followers",
       showFollowing: props.connectionType !== "followers",
+      loading: false,
+      unfollowUserId: null,
     };
   }
 
   unfollowClickedHandler = (userId) => {
     this.props.onUnfollowUser(this.props.token, userId, this.unfollowCallback);
+    this.setState({ loading: true, unfollowUserId: userId });
   };
 
-  unfollowCallback = () => {};
+  unfollowCallback = () => {
+    this.setState({ loading: false, unfollowUserId: null });
+  };
 
   render() {
     const {
@@ -50,6 +55,8 @@ class Connections extends React.Component {
           isOwner={isOwner}
           clicked={clickOnConnection}
           unfollow={this.unfollowClickedHandler}
+          loading={this.state.loading}
+          unfollowUserId={this.state.unfollowUserId}
         />
       );
     });

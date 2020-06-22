@@ -1,6 +1,7 @@
 import React from "react";
 import classes from "./connection-item.module.css";
 import { Link } from "react-router-dom";
+import SmallSpinner from "../../UI/SmallSpinner/small-spinner.component";
 
 const ConnectionItem = ({
   id,
@@ -10,6 +11,8 @@ const ConnectionItem = ({
   type,
   clicked,
   unfollow,
+  loading,
+  unfollowUserId,
 }) => {
   let currentPath = window.location.href;
   if (currentPath !== "") {
@@ -26,7 +29,9 @@ const ConnectionItem = ({
         <p>{name}</p>
       </Link>
       {type === "following" && isOwner ? (
-        <button onClick={() => unfollow(id)}>Unfollow</button>
+        <button onClick={() => unfollow(id)}>
+          {loading && unfollowUserId === id ? <SmallSpinner /> : "Unfollow"}
+        </button>
       ) : null}
     </div>
   );
