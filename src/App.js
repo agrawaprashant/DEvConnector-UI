@@ -17,6 +17,8 @@ class App extends React.Component {
       <Switch>
         <Route path="/signup" component={SignUp} />
         <Route path="/login" component={Login} />
+
+        <Route path="/logout" component={Logout} />
         <Route path="/" component={Home} />
         <Redirect to="/" />
       </Switch>
@@ -25,6 +27,8 @@ class App extends React.Component {
     if (this.props.isAuthenticated) {
       routes = (
         <Switch>
+          <Route path="/signup" component={SignUp} />
+          <Route path="/login" component={Login} />
           <Route path="/profile/:id" component={OtherPersonProfile} />
           <Route path="/profile" component={Profile} />
           <Route path="/edit-profile" component={EditProfile} />

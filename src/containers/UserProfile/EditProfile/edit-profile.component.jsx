@@ -8,7 +8,7 @@ import GithubEdit from "./EditGitHubRepo/github-repo-edit.component";
 import { connect } from "react-redux";
 import * as actions from "../../../store/actions/actions";
 import AddSocial from "../AddSocial/add-social.component";
-import Spinner from "../../../components/UI/Spinner/spinner.component";
+import Spinner from "../../../components/UI/ChatSpinner/chat-spinner.component";
 
 class EditProfile extends React.Component {
   componentDidMount() {

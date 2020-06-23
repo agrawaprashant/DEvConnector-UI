@@ -30,7 +30,7 @@ class Navbar extends React.Component {
         <NavLink to="/">
           <img className={classes.Logo} src={Logo} alt="logo" />
         </NavLink>
-        <Hamburger clicked={this.hamburgerOpenHandler} />
+        <Hamburger clicked={props.showDrawer} />
 
         <div className={classes.NavItems}>
           <NavigationItems isAuth={props.isAuth} />

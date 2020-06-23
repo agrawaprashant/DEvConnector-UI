@@ -138,13 +138,19 @@ export const chatMessageReceived = (chatId, messageObject, sender) => {
     },
   };
 };
-export const chatMessageSent = (chatId, messageObject, receiver) => {
+export const chatMessageSent = (
+  chatId,
+  messageObject,
+  receiver,
+  messageType
+) => {
   return {
     type: actionTypes.CHAT_MESSAGE_SENT,
     payload: {
       chatId,
       messageObject,
       receiver,
+      messageType,
     },
   };
 };

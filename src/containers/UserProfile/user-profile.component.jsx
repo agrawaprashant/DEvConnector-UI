@@ -5,7 +5,7 @@ import * as actions from "../../store/actions/actions";
 import Dashboard from "../../components/UserProfile/Dashboard/dashboard.component";
 import MainSection from "../../components/UserProfile/MainSection/main-section.component";
 import CreateProfileBox from "../../components/UserProfile/CreateProfileBox/create-profile-box.component";
-import Spinner from "../../components/UI/Spinner/spinner.component";
+import Spinner from "../../components/UI/ChatSpinner/chat-spinner.component";
 
 class UserProfile extends React.Component {
   componentDidMount() {

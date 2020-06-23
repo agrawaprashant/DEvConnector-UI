@@ -6,6 +6,9 @@ import * as actions from "../../store/actions/actions";
 import { connect } from "react-redux";
 import OtherPersonPosts from "../../containers/OtherPersonProfile/Posts/other-person-posts.component";
 import SmallSpinner from "../UI/SmallSpinner/small-spinner.component";
+import ProfileMessage from "./Message/profile-message.component";
+
+import { Link } from "react-router-dom";
 
 class OtherPersonProfile extends React.Component {
   constructor(props) {
@@ -29,6 +32,7 @@ class OtherPersonProfile extends React.Component {
       this.setState({
         showAbout: true,
         showPosts: false,
+        showMessagePane: false,
       });
     }
     if (this.props.profileData !== prevProps.profileData) {
@@ -52,8 +56,45 @@ class OtherPersonProfile extends React.Component {
     this.setState({ loading: true });
   };
 
+  messagePaneClosedHandler = () => {
+    const { onunselectChat, onunselectContact } = this.props;
+    this.setState({ showMessagePane: false });
+    onunselectChat();
+    onunselectContact();
+  };
+
+  messageClickHandler = () => {
+    const { profileData, onSelectChat, onSelectContact, chatList } = this.props;
+    const chat = chatList.find(
+      (chat) => chat.receiver._id === this.props.match.params.id
+    );
+    if (chat) {
+      onSelectChat(chat._id, profileData.user);
+    } else {
+      onSelectContact(profileData.user);
+    }
+    this.setState({ showMessagePane: true });
+  };
   render() {
-    return (
+    const { showMessagePane } = this.state;
+    const { user, noProfile } = this.props;
+    const profileNotFound = (
+      <div className={classes.ProfileNotFound}>
+        {user.id === this.props.match.params.id ? (
+          <div>
+            <p>You have not created your profile!</p>
+            <Link className={classes.CreateProfileBtn} to="/edit-profile">
+              Create Profile
+            </Link>
+          </div>
+        ) : (
+          <p>User has not created profile!</p>
+        )}
+      </div>
+    );
+    return noProfile && noProfile.msg === "Profile not found!" ? (
+      profileNotFound
+    ) : (
       <div className={classes.OtherPersonProfile}>
         <div
           style={{ display: this.state.connectionsOnMobile ? "none" : null }}
@@ -125,7 +166,12 @@ class OtherPersonProfile extends React.Component {
                     {this.props.following.find(
                       (conn) => conn.user.id === this.props.match.params.id
                     ) ? (
-                      <button className={classes.MessageBtn}>Message</button>
+                      <button
+                        onClick={this.messageClickHandler}
+                        className={classes.MessageBtn}
+                      >
+                        Message
+                      </button>
                     ) : null}
                   </div>
                 ) : null}
@@ -179,6 +225,7 @@ class OtherPersonProfile extends React.Component {
             </ul>
           </div>
         </div>
+
         {this.state.showAbout ? (
           this.state.profileData ? (
             <About
@@ -214,6 +261,9 @@ class OtherPersonProfile extends React.Component {
         {this.state.showPosts ? (
           <OtherPersonPosts userId={this.props.match.params.id} />
         ) : null}
+        {showMessagePane ? (
+          <ProfileMessage closed={this.messagePaneClosedHandler} />
+        ) : null}
       </div>
     );
   }
@@ -226,6 +276,8 @@ const mapStateToProps = (state) => {
     following: state.connections.following,
     followers: state.connections.followers,
     token: state.auth.token,
+    chatList: state.chat.chatList,
+    noProfile: state.profile.error,
   };
 };
 
@@ -237,6 +289,11 @@ const mapDispatchToProfile = (dispatch) => {
       dispatch(actions.followUser(token, userId, callback)),
     onUnfollowUser: (token, userId, callback) =>
       dispatch(actions.unfollowUser(token, userId, callback)),
+    onSelectContact: (contact) => dispatch(actions.selectContact(contact)),
+    onSelectChat: (chatId, contact) =>
+      dispatch(actions.selectChat(chatId, contact)),
+    onunselectChat: () => dispatch(actions.unSelectChat()),
+    onunselectContact: () => dispatch(actions.unSelectContact()),
   };
 };
 

@@ -44,3 +44,18 @@
     padding: 0 2px;
   }
 }
+
+@media (max-width: 500px) {
+  .NavigationItems {
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 1rem;
+  }
+
+  .NavigationItems a {
+    margin-right: 0;
+    padding: 10px 0;
+    color: #fff;
+    font-size: 1.2rem;
+  }
+}

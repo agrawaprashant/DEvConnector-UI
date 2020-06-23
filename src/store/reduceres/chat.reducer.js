@@ -95,14 +95,16 @@ const chatMessageReceived = (state, action) => {
   });
 };
 const chatMessageSent = (state, action) => {
-  const { chatId, messageObject, receiver } = action.payload;
+  const { chatId, messageObject, receiver, messageType } = action.payload;
 
   const updatedLoadedChats = { ...state.loadedChats };
   let updatedChatList = [...state.chatList];
   if (updatedLoadedChats[chatId]) {
     updatedLoadedChats[chatId].push(messageObject);
   } else {
-    updatedLoadedChats[chatId] = [messageObject];
+    if (messageType !== "profile") {
+      updatedLoadedChats[chatId] = [messageObject];
+    }
   }
   let updatedChat = updatedChatList.find((chat) => {
     return chat._id === chatId;

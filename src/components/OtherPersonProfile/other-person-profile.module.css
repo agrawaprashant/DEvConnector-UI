@@ -145,6 +145,40 @@
   color: #666;
 }
 
+.ProfileNotFound {
+  padding: 1rem;
+  width: 35vw;
+  border-radius: 10px;
+  text-align: center;
+  background-color: #ededed;
+  height: 30vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 10rem auto;
+}
+
+.ProfileNotFound p {
+  font-size: 2rem;
+  padding-bottom: 1.5rem;
+}
+
+.CreateProfileBtn {
+  border: none;
+  background-color: #9fcfbe;
+  padding: 10px 20px;
+  color: #fff;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.CreateProfileBtn:hover {
+  color: #fff;
+  background-color: #7fa598;
+}
+
 @media screen and (max-width: 500px) {
   .OtherPersonProfile {
     box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2), -1px -1px 5px rgba(0, 0, 0, 0.2);
@@ -176,5 +210,17 @@
   .MessageBtn:hover,
   .FollowBtn:hover {
     background-color: #825;
+  }
+
+  .ProfileNotFound {
+    width: 80vw;
+  }
+
+  .ProfileNotFound p {
+    font-size: 1.5rem;
+  }
+
+  .CreateProfileBtn {
+    padding: 10px;
   }
 }
