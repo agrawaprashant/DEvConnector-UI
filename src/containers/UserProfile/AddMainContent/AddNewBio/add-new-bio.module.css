@@ -19,6 +19,12 @@
   outline: none;
 }
 
+.SaveBtn:disabled {
+  opacity: 0.65;
+  cursor: default;
+  background-color: #77d177;
+}
+
 .SaveBtn:hover {
   background-color: #77d177;
 }

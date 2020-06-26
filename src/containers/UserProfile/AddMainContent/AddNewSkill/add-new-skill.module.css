@@ -21,6 +21,12 @@
   outline: none;
 }
 
+.SaveBtn:disabled {
+  opacity: 0.65;
+  cursor: default;
+  background-color: #77d177;
+}
+
 .CancelBtn {
   border: none;
   background: none;

@@ -1,7 +1,7 @@
 import React from "react";
 import classes from "./input.module.css";
 
-const input = props => {
+const input = (props) => {
   let inputElement = null;
   let inputClasses = [classes.InputElement];
 
@@ -24,6 +24,8 @@ const input = props => {
     case "textarea":
       inputElement = (
         <textarea
+          cols="60"
+          rows="5"
           className={inputClasses}
           {...props.elementConfig}
           value={props.value}
@@ -41,7 +43,7 @@ const input = props => {
           <option value={props.elementConfig.placeholder} disabled>
             {props.elementConfig.placeholder}
           </option>
-          {props.elementConfig.options.map(option => {
+          {props.elementConfig.options.map((option) => {
             return (
               <option key={option.value} value={option.value}>
                 {option.displayName}

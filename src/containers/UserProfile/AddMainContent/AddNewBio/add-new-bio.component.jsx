@@ -1,6 +1,9 @@
 import React from "react";
 import { buildFormControl, updateObject } from "../../../../shared/utility";
-import { checkValidity } from "../../../../shared/checkInputValidity";
+import {
+  checkValidity,
+  checkFormValidity,
+} from "../../../../shared/checkInputValidity";
 import classes from "./add-new-bio.module.css";
 import Input from "../../../../components/UI/Input/input.component";
 import { connect } from "react-redux";
@@ -15,7 +18,12 @@ class AddNewBio extends React.Component {
         { required: true }
       ),
     },
+    isFormValid: false,
   };
+
+  componentDidMount() {
+    this.setState({ isFormValid: checkFormValidity(this.state.addBioForm) });
+  }
 
   inputChangedHandler = (event) => {
     const updatedBio = updateObject(this.state.addBioForm.bio, {
@@ -31,7 +39,10 @@ class AddNewBio extends React.Component {
       bio: updatedBio,
     });
 
-    this.setState({ addBioForm: updatedForm });
+    this.setState({
+      addBioForm: updatedForm,
+      isFormValid: checkFormValidity(updatedForm),
+    });
   };
 
   formSubmitHandler = (event) => {
@@ -57,7 +68,13 @@ class AddNewBio extends React.Component {
       <form onSubmit={this.formSubmitHandler} className={classes.BioForm}>
         {formControl}
         <div className={classes.BtnArea}>
-          <button className={classes.SaveBtn}>Save</button>
+          <button
+            type="submit"
+            disabled={!this.state.isFormValid}
+            className={classes.SaveBtn}
+          >
+            Save
+          </button>
           <button className={classes.CancelBtn} onClick={this.props.cancel}>
             Cancel
           </button>

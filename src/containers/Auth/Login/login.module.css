@@ -1,95 +1,151 @@
-.Container {
-  height: 89.2vh;
+.SignIn {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 3rem;
+}
+
+.Showcase {
+  width: 250px;
+  height: auto;
+  margin: auto;
+  box-shadow: 4px 4px 4px 3px rgba(251, 146, 20, 0.5),
+    -0px -0px 3px 1px rgba(251, 146, 20, 0.5);
+  border-radius: 25px;
+  transition: all 0.4s ease-in-out;
+}
+
+.Showcase:hover {
+  transform: scale(1.05);
+}
+
+.SignInForm {
+  background: #ededed;
+  padding: 2rem;
+  border-radius: 10px;
+  margin: auto;
+  width: 25%;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  margin-top: 4rem;
+  margin-left: -5rem;
+  box-shadow: 1px 1px 4px 1px rgba(251, 146, 20, 0.5),
+    -1px -1px 4px 1px rgba(251, 146, 20, 0.5);
+  margin-bottom: 1rem;
 }
 
-.Login {
-  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2), -1px -1px 3px rgba(0, 0, 0, 0.2);
-  width: 25%;
-  border-radius: 5px;
-  color: #555;
-}
-
-.LoginForm {
+.SignInForm h2 {
+  font-size: 2.3rem;
+  color: #825;
   text-align: center;
-  padding: 15px;
+  margin-bottom: -0.5rem;
 }
 
-.LoginForm h3 {
-  margin-top: 2rem;
-  color: #555;
-}
-
-.LoginBtn {
-  display: inline-block;
-  border: none;
-  background-color: #825;
-  padding: 10px 15px;
-  color: #fff;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-top: 1rem;
-  outline: none;
-}
-
-.OAuthLoginBox {
-  padding: 10px;
-  text-align: center;
-}
-
-.OAuthLoginBox p {
-  font-size: 1.2rem;
-}
-
-.AlternateLoginOptions {
-  display: flex;
-  justify-content: space-around;
+.LoginLink {
   margin: 1rem 0;
+  text-align: center;
+  color: #555;
+  font-weight: bold;
 }
 
-.AlternateLoginOptions button {
-  border: none;
-  padding: 1.5rem;
-  cursor: pointer;
-  outline: none;
-}
-
-.GoogleBtn {
-  background: url("../../../assets/img/google-logo.png") no-repeat center
-    center/cover;
+.LoginLink span a {
+  text-decoration: none;
+  margin-left: 5px;
+  color: #825;
 }
 
 .FacebookBtn {
-  background: url("../../../assets/img/facebook_log1.png") no-repeat center
-    center/cover;
-}
-.LinkedinBtn {
-  background: url("../../../assets/img/download.png") no-repeat center
-    center/cover;
+  background-color: #333;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  color: #fff;
+  border-radius: 3px;
+  margin: 10px 0;
 }
 
-.ErrorMessage {
+.BtnContent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.BtnContent p {
+  margin-left: 10px;
+  font-size: 13px;
+  line-height: 0;
+  font-weight: bold;
+}
+
+.NameInput {
+  display: flex;
+  justify-content: space-between;
+}
+
+.FormGroup {
+  margin: 5px 0;
+}
+
+.Label {
+  display: flex;
+  color: #333;
+  font-size: 13px;
+  justify-content: space-between;
+}
+
+.FormGroup input {
+  width: 100%;
+  padding: 8px;
+  margin: 5px 0;
+  border-radius: 3px;
+  border: 1px solid #ccc;
+}
+
+.SubmitBtn {
+  padding: 10px;
+  background-color: #5cb85c;
+  border: none;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 10px;
+  font-size: 13px;
+  border-radius: 3px;
+}
+
+.SubmitBtn:disabled {
+  opacity: 0.65;
+  cursor: default;
+  background-color: #6cbf6c;
+}
+.TermsText {
+  color: #555;
+  margin-top: 2rem;
+  font-size: 13px;
   text-align: center;
-  padding-bottom: 1rem;
-  color: #d9534f;
-  font-size: 18px;
 }
 
-@media screen and (min-width: 751px) {
-  .AlternateLoginOptions {
+.Bold {
+  color: #333;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 500px) {
+  .Showcase {
+    display: none;
+  }
+
+  .SignIn {
+    flex-direction: column;
     justify-content: center;
+    height: 65vh;
   }
-  .AlternateLoginOptions button {
-    margin-right: 1rem;
-    margin-left: 1rem;
-  }
-}
 
-@media screen and (max-width: 750px) {
-  .Login {
-    width: 80%;
+  .SignInForm {
+    width: 90%;
+    /* margin: none; */
+    margin-left: 0;
+    margin: auto;
   }
 }

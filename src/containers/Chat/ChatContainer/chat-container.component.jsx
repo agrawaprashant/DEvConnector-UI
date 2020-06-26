@@ -62,7 +62,8 @@ class ChatContainer extends Component {
       onSetSelectedChat(chatId, selectedContact);
       onMessageSend(
         chatId,
-        createChatMessage(messageText, user.id, selectedContact._id)
+        createChatMessage(messageText, user.id, selectedContact._id),
+        selectedContact
       );
     });
 
@@ -293,8 +294,8 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(actions.fetchChatMessages(token, chatId, callback)),
     onFetchLastActive: (token, contactId) =>
       dispatch(actions.fetchLastActive(token, contactId)),
-    onMessageSend: (chatId, messageObj) =>
-      dispatch(actions.chatMessageSent(chatId, messageObj)),
+    onMessageSend: (chatId, messageObj, receiver) =>
+      dispatch(actions.chatMessageSent(chatId, messageObj, receiver)),
     onSetSelectedChat: (chatId, contactId) =>
       dispatch(actions.selectChat(chatId, contactId)),
     onMessageSeen: (chatId, seenSender, seenReceiver) =>

@@ -3,11 +3,11 @@ import axios from "axios";
 export const updateObject = (oldObject, newObject) => {
   return {
     ...oldObject,
-    ...newObject
+    ...newObject,
   };
 };
 
-export const setAuthorizationToken = token => {
+export const setAuthorizationToken = (token) => {
   if (token) {
     axios.defaults.headers.common["x-auth-token"] = token;
   } else {
@@ -26,9 +26,9 @@ export const buildFormControl = (
     elementType: elementType,
     elementConfig: elementConfig,
     value: value.value,
-    valid: false,
+    valid: value.value !== "" || !validationRules.required ? true : false,
     validationRules: validationRules,
     touched: false,
-    styles: styles
+    styles: styles,
   };
 };

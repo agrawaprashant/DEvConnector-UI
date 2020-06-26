@@ -17,3 +17,14 @@ export const checkValidity = (value, rules) => {
 
   return valid;
 };
+
+export const checkFormValidity = (form) => {
+  let valid = true;
+  Object.keys(form).forEach((key) => {
+    if (!form[key].valid) {
+      valid = false;
+    }
+  });
+
+  return valid;
+};

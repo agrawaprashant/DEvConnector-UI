@@ -1,6 +1,9 @@
 import React from "react";
 import { buildFormControl, updateObject } from "../../../../shared/utility";
-import { checkValidity } from "../../../../shared/checkInputValidity";
+import {
+  checkValidity,
+  checkFormValidity,
+} from "../../../../shared/checkInputValidity";
 import classes from "./add-new-education.module.css";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
@@ -47,6 +50,7 @@ class AddNewEducation extends React.Component {
         {}
       ),
     },
+    isFormValid: false,
   };
   inputChangedHandler = (event, control) => {
     const updatedControl = updateObject(this.state.addEducationForm[control], {
@@ -62,7 +66,10 @@ class AddNewEducation extends React.Component {
       [control]: updatedControl,
     });
 
-    this.setState({ addEducationForm: updatedForm });
+    this.setState({
+      addEducationForm: updatedForm,
+      isFormValid: checkFormValidity(updatedForm),
+    });
   };
 
   formSubmitHandler = (event) => {
@@ -235,7 +242,13 @@ class AddNewEducation extends React.Component {
             >
               Cancel
             </button>
-            <button className={classes.SaveButton}>Save</button>
+            <button
+              type="submit"
+              disabled={!this.state.isFormValid}
+              className={classes.SaveButton}
+            >
+              Save
+            </button>
           </div>
         </form>
       );

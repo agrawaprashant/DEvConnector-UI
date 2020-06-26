@@ -1,6 +1,9 @@
 import React from "react";
 import { buildFormControl, updateObject } from "../../../../shared/utility";
-import { checkValidity } from "../../../../shared/checkInputValidity";
+import {
+  checkValidity,
+  checkFormValidity,
+} from "../../../../shared/checkInputValidity";
 import classes from "./add-new-work.module.css";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
@@ -53,6 +56,7 @@ class AddNewWork extends React.Component {
         {}
       ),
     },
+    isFormValid: false,
   };
 
   isCurrentWork = false;
@@ -78,7 +82,10 @@ class AddNewWork extends React.Component {
     }
     updatedForm.current.value = this.isCurrentWork;
 
-    this.setState({ addWorkForm: updatedForm });
+    this.setState({
+      addWorkForm: updatedForm,
+      isFormValid: checkFormValidity(updatedForm),
+    });
   };
 
   formSubmitHandler = (event) => {
@@ -256,7 +263,13 @@ class AddNewWork extends React.Component {
             >
               Cancel
             </button>
-            <button className={classes.SaveButton}>Save</button>
+            <button
+              type="submit"
+              disabled={!this.state.isFormValid}
+              className={classes.SaveButton}
+            >
+              Save
+            </button>
           </div>
         </form>
       );

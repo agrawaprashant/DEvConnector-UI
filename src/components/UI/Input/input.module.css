@@ -24,6 +24,7 @@ option {
   display: block;
   width: 100%;
   box-sizing: border-box;
+  resize: none;
 }
 
 .InputElement:focus {

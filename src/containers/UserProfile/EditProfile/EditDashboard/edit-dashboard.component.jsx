@@ -1,6 +1,9 @@
 import React from "react";
 import { updateObject, buildFormControl } from "../../../../shared/utility";
-import { checkValidity } from "../../../../shared/checkInputValidity";
+import {
+  checkValidity,
+  checkFormValidity,
+} from "../../../../shared/checkInputValidity";
 import InputWithIcon from "../../../../components/UI/InputWithIcon/input-icon.component";
 import classes from "./edit-dashboard.module.css";
 import { connect } from "react-redux";
@@ -21,7 +24,7 @@ class EditDashboard extends React.Component {
             ? this.props.data.profileData.company
             : "",
         },
-        {},
+        { required: true },
         { iconClass: "far fa-building" }
       ),
       location: buildFormControl(
@@ -32,7 +35,7 @@ class EditDashboard extends React.Component {
             ? this.props.data.profileData.location
             : "",
         },
-        {},
+        { required: true },
         { iconClass: "fas fa-map-marker-alt" }
       ),
       handle: buildFormControl(
@@ -54,7 +57,7 @@ class EditDashboard extends React.Component {
             ? this.props.data.profileData.status
             : "",
         },
-        {},
+        { required: true },
         { iconClass: "far fa-id-badge" }
       ),
     },
@@ -63,6 +66,11 @@ class EditDashboard extends React.Component {
     showProfilePicAlert: false,
     loading: false,
     showDashboardEditAlert: false,
+    isFormValid: false,
+  };
+
+  componentDidMount = () => {
+    this.setState({ isFormValid: checkFormValidity(this.state.dashBoardForm) });
   };
 
   inputChangedHandler = (event, controlName) => {
@@ -82,7 +90,10 @@ class EditDashboard extends React.Component {
       [controlName]: updatedFormControl,
     });
 
-    this.setState({ dashBoardForm: updatedForm });
+    this.setState({
+      dashBoardForm: updatedForm,
+      isFormValid: checkFormValidity(updatedForm),
+    });
   };
 
   onSelectProfilePic = () => {
@@ -252,7 +263,11 @@ class EditDashboard extends React.Component {
               className={classes.DashbordFormElements}
             >
               {formElements}
-              <button type="submit" className={classes.SaveBtn}>
+              <button
+                disabled={!this.state.isFormValid}
+                type="submit"
+                className={classes.SaveBtn}
+              >
                 {this.state.loading ? <SmallSpinner /> : `Save`}
               </button>
             </form>

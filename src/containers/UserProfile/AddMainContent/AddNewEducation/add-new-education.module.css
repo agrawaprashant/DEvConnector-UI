@@ -66,6 +66,12 @@
   font-weight: bold;
 }
 
+.SaveButton:disabled {
+  opacity: 0.65;
+  cursor: default;
+  background-color: #6cbf6c;
+}
+
 .SaveButton:hover {
   background-color: #6cbf6c;
 }

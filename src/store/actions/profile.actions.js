@@ -147,7 +147,7 @@ const addSkillsFailed = (error) => {
   };
 };
 
-export const addSkills = (token, skillData) => {
+export const addSkills = (token, skillData, callback) => {
   return async (dispatch) => {
     try {
       dispatch(addSkillsStart());
@@ -156,6 +156,7 @@ export const addSkills = (token, skillData) => {
         `${config.api.baseURL}/${config.api.endPoints.profile}/skills`,
         skillData
       );
+      callback();
       dispatch(addSkillsSuccess(result.data));
     } catch (err) {
       console.log(err);

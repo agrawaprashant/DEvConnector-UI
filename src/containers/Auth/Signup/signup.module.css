@@ -1,28 +1,151 @@
-.SignupForm {
-  text-align: center;
-  border: 1px solid #ccc;
-  width: 60%;
-  margin: 7rem auto;
-  padding: 15px;
-  box-sizing: border-box;
+.Signup {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
 }
 
-.SignupForm h3 {
-  color: rgb(92, 91, 91);
-}
-
-.SignupBtn {
-  display: inline-block;
-  padding: 10px 20px;
+.Showcase {
+  width: 250px;
+  height: auto;
   margin: auto;
-  margin-top: 10px;
+  box-shadow: 4px 4px 4px 3px rgba(251, 146, 20, 0.5),
+    -0px -0px 3px 1px rgba(251, 146, 20, 0.5);
+  border-radius: 25px;
+  transition: all 0.4s ease-in-out;
+}
+
+.Showcase:hover {
+  transform: scale(1.05);
+}
+
+.SignupForm {
+  background: #ededed;
+  padding: 1rem;
+  border-radius: 10px;
+  margin: auto;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 4rem;
+  margin-left: -5rem;
+  box-shadow: 1px 1px 4px 1px rgba(251, 146, 20, 0.5),
+    -1px -1px 4px 1px rgba(251, 146, 20, 0.5);
+  margin-bottom: 1rem;
+}
+
+.SignupForm h2 {
+  font-size: 2.3rem;
+  color: #825;
+  text-align: center;
+  margin-bottom: -0.5rem;
+}
+
+.LoginLink {
+  margin: 1rem 0;
+  text-align: center;
+  color: #555;
+  font-weight: bold;
+}
+
+.LoginLink span a {
+  text-decoration: none;
+  margin-left: 5px;
+  color: #825;
+}
+
+.FacebookBtn {
+  background-color: #333;
   border: none;
   cursor: pointer;
-  background-color: #825;
+  padding: 5px;
   color: #fff;
-  border-radius: 5px;
+  border-radius: 3px;
+  margin: 10px 0;
 }
 
-.SignupForm a {
-  color: #00aced;
+.BtnContent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.BtnContent p {
+  margin-left: 10px;
+  font-size: 13px;
+  line-height: 0;
+  font-weight: bold;
+}
+
+.NameInput {
+  display: flex;
+  justify-content: space-between;
+}
+
+.FormGroup {
+  margin: 5px 0;
+}
+
+.Label {
+  display: flex;
+  color: #333;
+  font-size: 13px;
+  justify-content: space-between;
+}
+
+.FormGroup input {
+  width: 100%;
+  padding: 8px;
+  margin: 5px 0;
+  border-radius: 3px;
+  border: 1px solid #ccc;
+}
+
+.SubmitBtn {
+  padding: 10px;
+  background-color: #5cb85c;
+  border: none;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 10px;
+  font-size: 13px;
+  border-radius: 3px;
+}
+
+.SubmitBtn:disabled {
+  opacity: 0.65;
+  cursor: default;
+  background-color: #6cbf6c;
+}
+.TermsText {
+  color: #555;
+  margin-top: 2rem;
+  font-size: 13px;
+  text-align: center;
+}
+
+.Bold {
+  color: #333;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 500px) {
+  .Showcase {
+    display: none;
+  }
+
+  .Signup {
+    flex-direction: column;
+    justify-content: center;
+    height: 80vh;
+  }
+
+  .SignupForm {
+    /* margin: none; */
+    margin-left: 0;
+    margin: auto;
+
+    width: 90%;
+  }
 }

@@ -1,10 +1,15 @@
 import React from "react";
 import { buildFormControl, updateObject } from "../../../../shared/utility";
-import { checkValidity } from "../../../../shared/checkInputValidity";
+import {
+  checkValidity,
+  checkFormValidity,
+} from "../../../../shared/checkInputValidity";
 import classes from "./add-new-skill.module.css";
 import Input from "../../../../components/UI/Input/input.component";
 import { connect } from "react-redux";
 import * as actions from "../../../../store/actions/actions";
+import AlertMessage from "../../../../components/UI/AlertMessage/alert-message.component";
+import Aux from "../../../../hoc/Auxilliary/auxilliary";
 class AddNewSkill extends React.Component {
   state = {
     addSkillForm: {
@@ -15,6 +20,21 @@ class AddNewSkill extends React.Component {
         { required: true }
       ),
     },
+    showAlert: false,
+    isFormValid: false,
+  };
+
+  componentDidMount() {
+    this.setState({ isFormValid: checkFormValidity(this.state.addSkillForm) });
+  }
+  editSkillsCallback = () => {
+    this.setState({ showAlert: true });
+  };
+  alertCloseHandler = () => {
+    this.setState({
+      showAlert: false,
+    });
+    clearTimeout();
   };
 
   inputChangedHandler = (event) => {
@@ -31,7 +51,10 @@ class AddNewSkill extends React.Component {
       skills: updatedSkills,
     });
 
-    this.setState({ addSkillForm: updatedForm });
+    this.setState({
+      addSkillForm: updatedForm,
+      isFormValid: checkFormValidity(updatedForm),
+    });
   };
 
   formSubmitHandler = (event) => {
@@ -39,10 +62,19 @@ class AddNewSkill extends React.Component {
     const skillData = {
       skills: this.state.addSkillForm.skills.value,
     };
-    this.props.onAddSkills(this.props.token, skillData);
+    this.props.onAddSkills(
+      this.props.token,
+      skillData,
+      this.editSkillsCallback
+    );
   };
 
   render() {
+    if (this.state.showAlert) {
+      setTimeout(() => {
+        this.alertCloseHandler();
+      }, 6000);
+    }
     let formControl = (
       <Input
         elementType={this.state.addSkillForm.skills.elementType}
@@ -54,23 +86,40 @@ class AddNewSkill extends React.Component {
       />
     );
     return (
-      <form onSubmit={this.formSubmitHandler} className={classes.SkillForm}>
-        {formControl}
-        <div className={classes.BtnArea}>
-          <button className={classes.SaveBtn}>Save</button>
-          <button className={classes.CancelBtn} onClick={this.props.cancel}>
-            Cancel
-          </button>
-        </div>
-      </form>
+      <Aux>
+        {this.state.showAlert ? (
+          <div className={classes.AlertBox}>
+            <AlertMessage
+              message="Skills updated!"
+              closed={this.alertCloseHandler}
+              type="success"
+            />
+          </div>
+        ) : null}
+        <form onSubmit={this.formSubmitHandler} className={classes.SkillForm}>
+          {formControl}
+          <div className={classes.BtnArea}>
+            <button
+              type="submit"
+              disabled={!this.state.isFormValid}
+              className={classes.SaveBtn}
+            >
+              Save
+            </button>
+            <button className={classes.CancelBtn} onClick={this.props.cancel}>
+              Cancel
+            </button>
+          </div>
+        </form>
+      </Aux>
     );
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onAddSkills: (token, skillData) =>
-      dispatch(actions.addSkills(token, skillData)),
+    onAddSkills: (token, skillData, callback) =>
+      dispatch(actions.addSkills(token, skillData, callback)),
   };
 };
 

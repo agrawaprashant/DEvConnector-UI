@@ -30,7 +30,7 @@ const registrationFailed = (error) => {
   };
 };
 
-export const register = (name, email, password) => {
+export const register = (name, email, password, callback) => {
   return async (dispatch) => {
     try {
       dispatch(registrationStart());
@@ -50,8 +50,10 @@ export const register = (name, email, password) => {
       });
       dispatch(registrationSuccess(result.data.token, socket));
       dispatch(fetchUser(result.data.token, socket));
+      callback(null);
     } catch (err) {
       console.log(err.response.data.errors[0].msg);
+      callback(err.response.data.errors[0].msg);
       dispatch(registrationFailed(err.response.data.errors[0].msg));
     }
   };

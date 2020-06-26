@@ -1,72 +1,65 @@
 import React from "react";
-import Input from "../../../components/UI/Input/input.component";
 import classes from "./login.module.css";
-import { updateObject } from "../../../shared/utility";
-import { checkValidity } from "../../../shared/checkInputValidity";
+import { updateObject, buildFormControl } from "../../../shared/utility";
+import {
+  checkValidity,
+  checkFormValidity,
+} from "../../../shared/checkInputValidity";
 import { connect } from "react-redux";
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 import * as actions from "../../../store/actions/actions";
 import Spinner from "../../../components/UI/SmallSpinner/small-spinner.component";
+import Logo from "../../../assets/img/logo.png";
 
 class Login extends React.Component {
   state = {
-    loginForm: {
-      email: {
-        elementType: "input",
-        elementConfig: {
-          type: "email",
-          placeholder: "Enter your registered email",
-        },
-        value: "",
-        valid: false,
-        validationRules: {
-          required: true,
-          email: true,
-        },
-        touched: false,
-      },
-      password: {
-        elementType: "input",
-        elementConfig: {
-          type: "password",
-          placeholder: "Enter your password",
-        },
-        value: "",
-        valid: false,
-        validationRules: {
-          required: true,
-        },
-        touched: false,
-      },
+    signInForm: {
+      email: buildFormControl(
+        "input",
+        { type: "email", placeholder: "Enter email" },
+        { value: "" },
+        { required: true }
+      ),
+      password: buildFormControl(
+        "input",
+        { type: "password", placeholder: "Enter Password " },
+        { value: "" },
+        { required: true }
+      ),
     },
     error: null,
     loading: false,
+    isFormValid: false,
   };
 
   inputChangedHandler = (event, control) => {
     let valid = checkValidity(
       event.target.value,
-      this.state.loginForm[control].validationRules
+      this.state.signInForm[control].validationRules
     );
 
-    let updatedControl = updateObject(this.state.loginForm[control], {
+    let updatedControl = updateObject(this.state.signInForm[control], {
       value: event.target.value,
       touched: true,
       valid: valid,
     });
 
-    let updatedForm = updateObject(this.state.loginForm, {
+    let updatedForm = updateObject(this.state.signInForm, {
       [control]: updatedControl,
     });
 
-    this.setState({ loginForm: updatedForm, error: null });
+    this.setState({
+      signInForm: updatedForm,
+      error: null,
+      isFormValid: checkFormValidity(updatedForm),
+    });
   };
 
   formSubmitHandler = (event) => {
     event.preventDefault();
     this.props.onLogin(
-      this.state.loginForm.email.value,
-      this.state.loginForm.password.value,
+      this.state.signInForm.email.value,
+      this.state.signInForm.password.value,
       this.setError
     );
     this.setState({ loading: true });
@@ -78,69 +71,128 @@ class Login extends React.Component {
 
   render() {
     let redirect = null;
+    const { signInForm } = this.state;
     if (this.props.isAuthenticated) redirect = <Redirect to="/" />;
-    const loginFormControls = [];
-    for (let control in this.state.loginForm) {
-      loginFormControls.push({
-        controlName: control,
-        elementType: this.state.loginForm[control].elementType,
-        elementConfig: this.state.loginForm[control].elementConfig,
-        value: this.state.loginForm[control].value,
-        valid: this.state.loginForm[control].valid,
-        touched: this.state.loginForm[control].touched,
-      });
-    }
 
-    let form = loginFormControls.map((control) => {
-      return (
-        <Input
-          key={control.controlName}
-          elementType={control.elementType}
-          elementConfig={control.elementConfig}
-          value={control.value}
-          valid={control.valid}
-          touched={control.touched}
-          changed={(event) =>
-            this.inputChangedHandler(event, control.controlName)
-          }
-        />
-      );
-    });
-    return (
-      <div className={classes.Container}>
-        <div className={classes.Login}>
-          <div className={classes.LoginForm}>
-            <p>Login to your account!</p>
-            <form onSubmit={this.formSubmitHandler}>
-              {form}
-              <button type="submit" className={classes.LoginBtn}>
-                {!this.state.loading ? "Login" : <Spinner />}
-              </button>
-            </form>
-            {redirect}
-            <h3>Or</h3>
-          </div>
-
-          <div className={classes.OAuthLoginBox}>
-            <p>Login with</p>
-            <div className={classes.AlternateLoginOptions}>
-              <button className={classes.GoogleBtn}>
-                {/* <i className="fab fa-google"></i> */}
-              </button>
-              <button className={classes.FacebookBtn}>
-                {/* <i className="fab fa-facebook-f"></i> */}
-              </button>
-              <button className={classes.LinkedinBtn}>
-                {/* <i className="fab fa-linkedin-in"></i> */}
-              </button>
+    let form = (
+      <div className={classes.SignIn}>
+        <img src={Logo} alt="logo" className={classes.Showcase} />
+        <div className={classes.SignInForm}>
+          <h2>Sign-in</h2>
+          <p className={classes.LoginLink}>
+            Don't have an account?
+            <span>
+              <Link to="/signup">Signup</Link>
+            </span>
+          </p>
+          <button className={classes.FacebookBtn}>
+            <div className={classes.BtnContent}>
+              <i className="fab fa-github fa-2x"></i> <p>Login via Github</p>
             </div>
+          </button>
+
+          <div className={classes.FormGroup}>
+            <div className={classes.Label}>
+              <label htmlFor="email">Email</label>
+              {signInForm.email.valid && signInForm.email.touched ? (
+                <span style={{ color: "#5cb85c" }}>
+                  <i className="far fa-smile"></i>
+                </span>
+              ) : null}
+              {!signInForm.email.valid && signInForm.email.touched ? (
+                <div
+                  style={{
+                    color: "#d9534f",
+                    display: "flex",
+                  }}
+                >
+                  <span>
+                    <p
+                      style={{
+                        fontSize: "11px",
+                        paddingRight: "3px",
+                        paddingTop: "2px",
+                      }}
+                    >
+                      Please enter a valid email!
+                    </p>
+                  </span>
+                  <span>
+                    <i className="far fa-frown"></i>
+                  </span>
+                </div>
+              ) : null}
+            </div>
+            <input
+              value={signInForm.email.value}
+              onChange={(e) => this.inputChangedHandler(e, "email")}
+              type="email"
+              name="email"
+            />
           </div>
+          <div className={classes.FormGroup}>
+            <div className={classes.Label}>
+              <label htmlFor="password">Password</label>
+              {!signInForm.password.valid && signInForm.password.touched ? (
+                <div
+                  style={{
+                    display: "flex",
+                    color: "#d9534f",
+                  }}
+                >
+                  <span>
+                    <p
+                      style={{
+                        fontSize: "10px",
+                        paddingRight: "5px",
+                        paddingTop: "2px",
+                      }}
+                    >
+                      Password must be 6 or more characters!
+                    </p>
+                  </span>
+                  <span>
+                    <i className="far fa-frown"></i>
+                  </span>
+                </div>
+              ) : null}
+              {signInForm.password.valid ? (
+                <span style={{ color: "#5cb85c" }}>
+                  <i className="far fa-smile"></i>
+                </span>
+              ) : null}
+            </div>
+            <input
+              value={signInForm.password.value}
+              onChange={(e) => this.inputChangedHandler(e, "password")}
+              type="password"
+              name="password"
+            />
+          </div>
+          <button
+            disabled={!this.state.isFormValid}
+            onClick={this.formSubmitHandler}
+            className={classes.SubmitBtn}
+          >
+            {!this.state.loading ? "Login" : <Spinner />}
+          </button>
           {this.state.error ? (
-            <p className={classes.ErrorMessage}>{this.state.error}</p>
+            <p
+              style={{
+                color: "#d9534f",
+                textAlign: "center",
+                fontSize: "1.2rem",
+                paddingTop: "1rem",
+              }}
+            >
+              {this.state.error}
+            </p>
           ) : null}
         </div>
+        {redirect}
       </div>
     );
+    return form;
   }
 }
 
