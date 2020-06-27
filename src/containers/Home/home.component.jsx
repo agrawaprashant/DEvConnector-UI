@@ -11,7 +11,7 @@ class Home extends React.Component {
     let homePage = (
       <div className={classes.HomeAuth}>
         <div className={classes.HomeContent}>
-          <h1>Welcome to DevConnector!</h1>
+          <h1>Welcome to Geeks on Fleek!</h1>
           <div className={classes.BtnArea}>
             <Link to="/signup" className={classes.SignupBtn}>
               Signup

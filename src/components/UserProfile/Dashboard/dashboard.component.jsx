@@ -10,7 +10,7 @@ const dashboard = (props) => {
       </div>
       <div className={classes.UserDetails}>
         <h1 className={classes.WelcomeMessage}>
-          Hi {props.data.name.split(" ")[0]}, Welcome to DevConnector!
+          Hi {props.data.name.split(" ")[0]}, You are welcome on Geeks on Fleek!
         </h1>
       </div>
       <div className={classes.EditBtn}>
