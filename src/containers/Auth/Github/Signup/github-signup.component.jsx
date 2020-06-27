@@ -132,6 +132,7 @@ class GithubSignup extends React.Component {
               onChange={(e) => this.inputChangedHandler(e, "username")}
               type="text"
               name="username"
+              autoComplete="off"
             />
           </div>
           <div className={classes.FormGroup}>
@@ -172,6 +173,7 @@ class GithubSignup extends React.Component {
               onChange={(e) => this.inputChangedHandler(e, "password")}
               type="password"
               name="password"
+              autoComplete="off"
             />
           </div>
           <button

@@ -168,7 +168,7 @@ class Login extends React.Component {
                         paddingTop: "2px",
                       }}
                     >
-                      Password must be 6 or more characters!
+                      Hey, you forgot the password!
                     </p>
                   </span>
                   <span>

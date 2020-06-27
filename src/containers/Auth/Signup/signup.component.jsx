@@ -92,7 +92,7 @@ class SignUp extends React.Component {
     return (
       <div className={classes.Signup}>
         <img src={Logo} alt="logo" className={classes.Showcase} />
-        <div className={classes.SignupForm}>
+        <form autoComplete="off" className={classes.SignupForm}>
           <h2>Sign-up</h2>
           <p className={classes.LoginLink}>
             Already have an account?
@@ -130,6 +130,7 @@ class SignUp extends React.Component {
                 name="firstName"
                 onChange={(e) => this.inputChangedHandler(e, "firstName")}
                 htmlFor="firstName"
+                autoComplete="off"
               />
             </div>
             <div className={classes.FormGroup}>
@@ -141,6 +142,7 @@ class SignUp extends React.Component {
                 onChange={(e) => this.inputChangedHandler(e, "lastName")}
                 type="text"
                 name="lastName"
+                autoComplete="off"
               />
             </div>
           </div>
@@ -171,11 +173,13 @@ class SignUp extends React.Component {
                 </div>
               ) : null}
             </div>
+            <input style={{ opacity: 0, position: "absolute" }} />
             <input
               value={signUpForm.email.value}
               onChange={(e) => this.inputChangedHandler(e, "email")}
               type="email"
               name="email"
+              autoComplete="off"
             />
           </div>
           <div className={classes.FormGroup}>
@@ -210,6 +214,7 @@ class SignUp extends React.Component {
               onChange={(e) => this.inputChangedHandler(e, "password")}
               type="password"
               name="password"
+              autoComplete="off"
             />
           </div>
           <button
@@ -236,7 +241,7 @@ class SignUp extends React.Component {
             <span className={classes.Bold}>Terms </span>
             and <span className={classes.Bold}>Privacy Policy</span>
           </p>
-        </div>
+        </form>
         {redirect}
       </div>
     );
