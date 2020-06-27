@@ -70,7 +70,7 @@
 @media screen and (max-width: 500px) {
   .ChatContactHeader {
     height: 100%;
-    background-color: #825;
+    background-color: #343a40;
     color: #fff;
     border-bottom: 4px solid #fb9214;
   }

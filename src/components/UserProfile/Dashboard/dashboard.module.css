@@ -81,10 +81,11 @@
 .EditBtn button {
   display: inline-block;
   border: none;
-  background-color: #428bca;
+  background-color: #343a40;
   color: #fff;
   padding: 10px 20px;
   cursor: pointer;
+  border-radius: 5px;
 }
 
 .EditBtn button:hover {

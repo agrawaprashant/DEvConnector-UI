@@ -1,10 +1,12 @@
 .HomeAuth {
   background: url("../../assets/img/showcase.jpg") no-repeat center top/cover;
-  height: 89.2vh;
+  height: 90.5vh;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
+  position: absolute;
+  width: 100%;
 }
 .HomeContent h1 {
   color: #fff;
@@ -22,10 +24,10 @@
 }
 
 .HomeContent a:hover {
-  background-color: #825;
+  background-color: #343a40;
   color: #fff;
   /* border: none; */
-  border: 1px solid #825;
+  border: 1px solid #343a40;
 }
 
 .HomeContent {
@@ -39,16 +41,24 @@
 }
 
 .HomeDarkOverlay {
-  height: 90.4vh;
+  height: 90.5vh;
   width: 100vw;
   position: absolute;
-  top: 63px;
+  top: 0;
   left: 0;
-  background-color: #17072b;
+  background-color: #333;
   opacity: 0.7;
 }
 
 @media screen and (max-width: 500px) {
+  .HomeAuth {
+    height: 87.6vh;
+  }
+
+  .HomeDarkOverlay {
+    height: 87.6vh;
+  }
+
   .HomeAuth h1 {
     font-size: 20px;
   }

@@ -17,7 +17,7 @@ const NavigationItems = (props) => {
           </button>
         </div> */}
 
-        <NavigationItem link="/profile">Profile</NavigationItem>
+        <NavigationItem link="/profile">Dashboard</NavigationItem>
 
         <NavigationItem link="/logout">Logout</NavigationItem>
       </Aux>

@@ -1,5 +1,9 @@
 import React from "react";
-import { updateObject, buildFormControl } from "../../../../shared/utility";
+import {
+  updateObject,
+  buildFormControl,
+  checkMimeType,
+} from "../../../../shared/utility";
 import {
   checkValidity,
   checkFormValidity,
@@ -67,6 +71,8 @@ class EditDashboard extends React.Component {
     loading: false,
     showDashboardEditAlert: false,
     isFormValid: false,
+    isMimeTypeValid: null,
+    showMimeError: false,
   };
 
   componentDidMount = () => {
@@ -100,12 +106,14 @@ class EditDashboard extends React.Component {
     const file = this.state.selctedProfilePicture.file;
     const formData = new FormData();
     formData.append("profile-picture", file);
-    this.props.onChangeProfile(
-      this.props.token,
-      formData,
-      this.profilePicChangeCallback
-    );
-    this.setState({ isProfilePicChanging: true });
+    if (this.state.isMimeTypeValid) {
+      this.props.onChangeProfile(
+        this.props.token,
+        formData,
+        this.profilePicChangeCallback
+      );
+      this.setState({ isProfilePicChanging: true });
+    }
   };
 
   profilePicChangeCallback = () => {
@@ -120,6 +128,7 @@ class EditDashboard extends React.Component {
     this.setState({
       showProfilePicAlert: false,
       showDashboardEditAlert: false,
+      showMimeError: false,
     });
     clearTimeout();
   };
@@ -149,13 +158,30 @@ class EditDashboard extends React.Component {
   profilePictureChangeHandler = (event) => {
     const file = event.target.files[0];
     if (file) {
-      const imgUrl = URL.createObjectURL(file);
-      this.setState({ selctedProfilePicture: { imgUrl, file } });
+      checkMimeType(file, (isValid) => {
+        if (!isValid) {
+          this.setState({
+            isMimeTypeValid: isValid,
+            showMimeError: !isValid,
+          });
+        } else {
+          const imgUrl = URL.createObjectURL(file);
+          this.setState({
+            selctedProfilePicture: { imgUrl, file },
+            isMimeTypeValid: true,
+          });
+        }
+      });
     }
+    event.target.value = null;
   };
 
   render() {
-    if (this.state.showProfilePicAlert || this.state.showDashboardEditAlert) {
+    if (
+      this.state.showProfilePicAlert ||
+      this.state.showDashboardEditAlert ||
+      this.state.showMimeError
+    ) {
       setTimeout(() => {
         this.alertCloseHandler();
       }, 6000);
@@ -208,6 +234,15 @@ class EditDashboard extends React.Component {
             />
           </div>
         ) : null}
+        {this.state.showMimeError ? (
+          <div className={classes.AlertBox}>
+            <AlertMessage
+              message="Invalid file type! Please choose a jpeg or a png file."
+              closed={this.alertCloseHandler}
+              type="error"
+            />
+          </div>
+        ) : null}
         <div className={classes.Dashboard}>
           <div className={classes.PhotoEdit}>
             <div className={classes.ProfilePhoto}>
@@ -224,7 +259,7 @@ class EditDashboard extends React.Component {
                 />
               )}
             </div>
-            {this.state.selctedProfilePicture ? (
+            {this.state.selctedProfilePicture && this.state.isMimeTypeValid ? (
               <div className={classes.SelectImageButtons}>
                 <button
                   onClick={() => this.onSelectProfilePic()}
