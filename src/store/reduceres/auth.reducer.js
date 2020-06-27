@@ -16,6 +16,7 @@ const initialState = {
   followers: null,
   socket: null,
   session: null,
+  githubToken: null,
 };
 
 const registrationStart = (state, action) => {
@@ -33,6 +34,56 @@ const registrationSuccess = (state, action) => {
 
 const registrationFailed = (state, action) => {
   return updateObject(state, { loading: false, error: action.payload.error });
+};
+
+const githubSignUpStart = (state, action) => {
+  return updateObject(state, { loading: true });
+};
+
+const githubSignUpSuccess = (state, action) => {
+  return updateObject(state, {
+    token: action.payload.token,
+    socket: action.payload.socket,
+    loading: false,
+    error: null,
+    githubToken: null,
+  });
+};
+
+const githubSignUpFailed = (state, action) => {
+  return updateObject(state, {
+    loading: false,
+    error: action.payload.error,
+  });
+};
+
+const githubSignUpCancelled = (state, action) => {
+  return updateObject(state, {
+    loading: false,
+    error: null,
+    githubToken: null,
+  });
+};
+
+const githubLoginStart = (state, action) => {
+  return updateObject(state, { loading: true, githubToken: null });
+};
+
+const githubLoginSuccess = (state, action) => {
+  return updateObject(state, {
+    token: action.payload.token,
+    socket: action.payload.socket,
+    loading: false,
+    error: null,
+  });
+};
+
+const githubLoginFailed = (state, action) => {
+  return updateObject(state, {
+    loading: false,
+    error: action.payload.error,
+    githubToken: action.payload.githubToken,
+  });
 };
 
 const fetchUserDetailsStart = (state, action) => {
@@ -140,6 +191,20 @@ const reducer = (state = initialState, action) => {
       return changeProfilePicSuccess(state, action);
     case actionTypes.CHANGE_PROFILE_PICTURE_FAILED:
       return changeProfilePicFailed(state, action);
+    case actionTypes.GITHUB_SIGNUP_START:
+      return githubSignUpStart(state, action);
+    case actionTypes.GITHUB_SIGNUP_SUCCESS:
+      return githubSignUpSuccess(state, action);
+    case actionTypes.GITHUB_SIGNUP_FAILED:
+      return githubSignUpFailed(state, action);
+    case actionTypes.GITHUB_SIGNUP_CANCELLED:
+      return githubSignUpCancelled(state, action);
+    case actionTypes.GITHUB_LOGIN_START:
+      return githubLoginStart(state, action);
+    case actionTypes.GITHUB_LOGIN_SUCCESS:
+      return githubLoginSuccess(state, action);
+    case actionTypes.GITHUB_LOGIN_FAILED:
+      return githubLoginFailed(state, action);
     default:
       return state;
   }

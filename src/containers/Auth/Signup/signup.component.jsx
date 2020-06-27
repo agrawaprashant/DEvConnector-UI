@@ -10,6 +10,7 @@ import * as actions from "../../../store/actions/actions";
 import { Link, Redirect } from "react-router-dom";
 import Logo from "../../../assets/img/logo.png";
 import Spinner from "../../../components/UI/SmallSpinner/small-spinner.component";
+import * as config from "../../../config/app-config.json";
 
 class SignUp extends React.Component {
   state = {
@@ -99,11 +100,15 @@ class SignUp extends React.Component {
               <Link to="/login">Login</Link>
             </span>
           </p>
-          <button className={classes.FacebookBtn}>
+          <a
+            href={`https://github.com/login/oauth/authorize?client_id=${config.githubOAuthClientID}
+                    &redirect_uri=http://192.168.1.4:3000/github-signup`}
+            className={classes.FacebookBtn}
+          >
             <div className={classes.BtnContent}>
               <i className="fab fa-github fa-2x"></i> <p>Join via Github</p>
             </div>
-          </button>
+          </a>
           <div className={classes.NameInput}>
             <div className={classes.FormGroup}>
               <div className={classes.Label}>

@@ -4,6 +4,9 @@ export {
   logout,
   login,
   changeProfilePicture,
+  githubLogin,
+  githubSignUp,
+  githubSignUpCancelled,
 } from "./auth.actions";
 export {
   fetchPosts,

@@ -1,23 +1,23 @@
 import React from "react";
-import classes from "./login.module.css";
-import { updateObject, buildFormControl } from "../../../shared/utility";
+import { connect } from "react-redux";
+import * as actions from "../../../../store/actions/auth.actions";
+
+import classes from "./github-signup.module.css";
+import SmallSpinner from "../../../../components/UI/SmallSpinner/small-spinner.component";
+import Logo from "../../../../assets/img/logo.png";
 import {
   checkValidity,
   checkFormValidity,
-} from "../../../shared/checkInputValidity";
-import { connect } from "react-redux";
-import { Redirect, Link } from "react-router-dom";
-import * as actions from "../../../store/actions/actions";
-import Spinner from "../../../components/UI/SmallSpinner/small-spinner.component";
-import Logo from "../../../assets/img/logo.png";
-import * as config from "../../../config/app-config.json";
+} from "../../../../shared/checkInputValidity";
+import { updateObject, buildFormControl } from "../../../../shared/utility";
+import { Redirect } from "react-router-dom";
 
-class Login extends React.Component {
+class GithubSignup extends React.Component {
   state = {
-    signInForm: {
-      email: buildFormControl(
+    githubSignupForm: {
+      username: buildFormControl(
         "input",
-        { type: "email", placeholder: "Enter email" },
+        { type: "text", placeholder: "Enter username" },
         { value: "" },
         { required: true }
       ),
@@ -31,37 +31,36 @@ class Login extends React.Component {
     error: null,
     loading: false,
     isFormValid: false,
+    githubOAuthCode: null,
   };
 
   componentDidMount() {
-    const { onLoginViaGithub } = this.props;
     const code =
       window.location.href.match(/\?code=(.*)/) &&
       window.location.href.match(/\?code=(.*)/)[1];
-
     if (code) {
-      onLoginViaGithub(code);
+      this.setState({ githubOAuthCode: code });
     }
   }
 
   inputChangedHandler = (event, control) => {
     let valid = checkValidity(
       event.target.value,
-      this.state.signInForm[control].validationRules
+      this.state.githubSignupForm[control].validationRules
     );
 
-    let updatedControl = updateObject(this.state.signInForm[control], {
+    let updatedControl = updateObject(this.state.githubSignupForm[control], {
       value: event.target.value,
       touched: true,
       valid: valid,
     });
 
-    let updatedForm = updateObject(this.state.signInForm, {
+    let updatedForm = updateObject(this.state.githubSignupForm, {
       [control]: updatedControl,
     });
 
     this.setState({
-      signInForm: updatedForm,
+      githubSignupForm: updatedForm,
       error: null,
       isFormValid: checkFormValidity(updatedForm),
     });
@@ -69,9 +68,11 @@ class Login extends React.Component {
 
   formSubmitHandler = (event) => {
     event.preventDefault();
-    this.props.onLogin(
-      this.state.signInForm.email.value,
-      this.state.signInForm.password.value,
+    this.props.onSignUpViaGithub(
+      this.state.githubSignupForm.username.value,
+      this.state.githubSignupForm.password.value,
+      this.state.githubOAuthCode,
+      this.props.githubToken,
       this.setError
     );
     this.setState({ loading: true });
@@ -82,44 +83,27 @@ class Login extends React.Component {
   };
 
   render() {
-    let redirect = null;
-    const { signInForm } = this.state;
+    let redirect;
     if (this.props.isAuthenticated) {
       redirect = <Redirect to="/" />;
-    } else if (this.props.githubToken) {
-      redirect = <Redirect to="/github-signup" />;
     }
-
-    let form = (
-      <div className={classes.SignIn}>
-        <img src={Logo} alt="logo" className={classes.Showcase} />
-        <div className={classes.SignInForm}>
-          <h2>Sign-in</h2>
-          <p className={classes.LoginLink}>
-            Don't have an account?
-            <span>
-              <Link to="/signup">Signup</Link>
-            </span>
-          </p>
-          <a
-            href={`https://github.com/login/oauth/authorize?client_id=${config.githubOAuthClientID}
-                    &redirect_uri=http://192.168.1.4:3000/login`}
-            className={classes.FacebookBtn}
-          >
-            <div className={classes.BtnContent}>
-              <i className="fab fa-github fa-2x"></i> <p>Login via Github</p>
-            </div>
-          </a>
-
+    const { githubSignupForm } = this.state;
+    const form = (
+      <div className={classes.GithubSignUpForm}>
+        <div className={classes.Form}>
+          <img src={Logo} alt="logo" />
+          <h2>Signup With Github</h2>
           <div className={classes.FormGroup}>
             <div className={classes.Label}>
-              <label htmlFor="email">Email</label>
-              {signInForm.email.valid && signInForm.email.touched ? (
+              <label htmlFor="user`name">Username</label>
+              {githubSignupForm.username.valid &&
+              githubSignupForm.username.touched ? (
                 <span style={{ color: "#5cb85c" }}>
                   <i className="far fa-smile"></i>
                 </span>
               ) : null}
-              {!signInForm.email.valid && signInForm.email.touched ? (
+              {!githubSignupForm.username.valid &&
+              githubSignupForm.username.touched ? (
                 <div
                   style={{
                     color: "#d9534f",
@@ -134,7 +118,7 @@ class Login extends React.Component {
                         paddingTop: "2px",
                       }}
                     >
-                      Please enter a valid email!
+                      Please enter a username!
                     </p>
                   </span>
                   <span>
@@ -144,16 +128,17 @@ class Login extends React.Component {
               ) : null}
             </div>
             <input
-              value={signInForm.email.value}
-              onChange={(e) => this.inputChangedHandler(e, "email")}
-              type="email"
-              name="email"
+              value={githubSignupForm.username.value}
+              onChange={(e) => this.inputChangedHandler(e, "username")}
+              type="text"
+              name="username"
             />
           </div>
           <div className={classes.FormGroup}>
             <div className={classes.Label}>
               <label htmlFor="password">Password</label>
-              {!signInForm.password.valid && signInForm.password.touched ? (
+              {!githubSignupForm.password.valid &&
+              githubSignupForm.password.touched ? (
                 <div
                   style={{
                     display: "flex",
@@ -176,14 +161,14 @@ class Login extends React.Component {
                   </span>
                 </div>
               ) : null}
-              {signInForm.password.valid ? (
+              {githubSignupForm.password.valid ? (
                 <span style={{ color: "#5cb85c" }}>
                   <i className="far fa-smile"></i>
                 </span>
               ) : null}
             </div>
             <input
-              value={signInForm.password.value}
+              value={githubSignupForm.password.value}
               onChange={(e) => this.inputChangedHandler(e, "password")}
               type="password"
               name="password"
@@ -194,7 +179,7 @@ class Login extends React.Component {
             onClick={this.formSubmitHandler}
             className={classes.SubmitBtn}
           >
-            {!this.state.loading ? "Login" : <Spinner />}
+            {!this.state.loading ? "Submit" : <SmallSpinner />}
           </button>
           {this.state.error ? (
             <p
@@ -214,20 +199,27 @@ class Login extends React.Component {
     );
     return form;
   }
+
+  componentWillUnmount() {
+    this.props.onSignUpViaGithubCancel();
+  }
 }
 
 const mapStateToProps = (state) => {
   return {
-    isAuthenticated: state.auth.token !== null,
     githubToken: state.auth.githubToken,
+    isAuthenticated: state.auth.token !== null,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onLogin: (email, password, callback) =>
-      dispatch(actions.login(email, password, callback)),
-    onLoginViaGithub: (code) => dispatch(actions.githubLogin(code)),
+    onSignUpViaGithub: (username, password, code, githubToken, callback) =>
+      dispatch(
+        actions.githubSignUp(username, password, code, githubToken, callback)
+      ),
+    onSignUpViaGithubCancel: () => dispatch(actions.githubSignUpCancelled()),
   };
 };
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+
+export default connect(mapStateToProps, mapDispatchToProps)(GithubSignup);

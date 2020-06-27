@@ -1,0 +1,84 @@
+.GithubSignUpForm {
+  margin-top: 3rem;
+}
+
+.Form {
+  background: #ededed;
+  padding: 2rem;
+  border-radius: 10px;
+  margin: auto;
+  width: 25%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 4rem;
+
+  box-shadow: 1px 1px 4px 1px rgba(251, 146, 20, 0.5),
+    -1px -1px 4px 1px rgba(251, 146, 20, 0.5);
+  margin-bottom: 1rem;
+}
+
+.Form h2 {
+  font-size: 2.3rem;
+  color: #825;
+  text-align: center;
+  margin-bottom: -0.5rem;
+}
+
+.Form img {
+  height: 100px;
+  width: 100px;
+  margin: auto;
+}
+
+.FormGroup {
+  margin: 5px 0;
+}
+
+.Label {
+  display: flex;
+  color: #333;
+  font-size: 13px;
+  justify-content: space-between;
+}
+
+.FormGroup input {
+  width: 100%;
+  padding: 8px;
+  margin: 5px 0;
+  border-radius: 3px;
+  border: 1px solid #ccc;
+}
+
+.SubmitBtn {
+  padding: 10px;
+  background-color: #5cb85c;
+  border: none;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 10px;
+  font-size: 13px;
+  border-radius: 3px;
+}
+
+.SubmitBtn:disabled {
+  opacity: 0.65;
+  cursor: default;
+  background-color: #6cbf6c;
+}
+
+@media screen and (max-width: 500px) {
+  .GithubSignUpForm {
+    flex-direction: column;
+    justify-content: center;
+    height: 65vh;
+  }
+
+  .Form {
+    width: 90%;
+    /* margin: none; */
+    margin-left: 0;
+    margin: auto;
+  }
+}

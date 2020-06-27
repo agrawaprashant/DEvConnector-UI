@@ -7,8 +7,10 @@
       "chat": "chat",
       "connections": "connections",
       "posts": "posts",
-      "profile": "profile"
+      "profile": "profile",
+      "github": "github"
     }
   },
-  "socket": "http://192.168.1.4:5000"
+  "socket": "http://192.168.1.4:5000",
+  "githubOAuthClientID": "f7b44fffa6a0b930b198"
 }
