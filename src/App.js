@@ -11,13 +11,15 @@ import Logout from "./containers/Auth/Logout/logout.component";
 import Login from "./containers/Auth/Login/login.component";
 import EditProfile from "./containers/UserProfile/EditProfile/edit-profile.component";
 import OtherPersonProfile from "./components/OtherPersonProfile/other-person-profile.component";
+import GithubSignUp from "./containers/Auth/Github/Signup/github-signup.component";
+
 class App extends React.Component {
   render() {
     let routes = (
       <Switch>
         <Route path="/signup" component={SignUp} />
         <Route path="/login" component={Login} />
-
+        <Route path="/github-signup" component={GithubSignUp} />
         <Route path="/logout" component={Logout} />
         <Route path="/" component={Home} />
         <Redirect to="/" />

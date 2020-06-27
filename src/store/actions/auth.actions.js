@@ -48,9 +48,9 @@ export const register = (name, email, password, callback) => {
       const socket = io(`${config.socket}`, {
         transports: ["websocket"],
       });
+      callback(null);
       dispatch(registrationSuccess(result.data.token, socket));
       dispatch(fetchUser(result.data.token, socket));
-      callback(null);
     } catch (err) {
       console.log(err.response.data.errors[0].msg);
       callback(err.response.data.errors[0].msg);
@@ -207,6 +207,95 @@ export const changeProfilePicture = (token, profilePicData, callback) => {
     } catch (err) {
       console.log(err);
       dispatch(changeProfilePictureFailed(err.response.data));
+    }
+  };
+};
+
+const githubSignUpStart = () => {
+  return {
+    type: actionTypes.GITHUB_SIGNUP_START,
+  };
+};
+const githubSignUpSuccess = (token, socket) => {
+  return {
+    type: actionTypes.GITHUB_SIGNUP_SUCCESS,
+    payload: { token, socket },
+  };
+};
+const githubSignUpFailed = (error) => {
+  return {
+    type: actionTypes.GITHUB_SIGNUP_FAILED,
+    payload: { error },
+  };
+};
+export const githubSignUpCancelled = () => {
+  return {
+    type: actionTypes.GITHUB_SIGNUP_CANCELLED,
+  };
+};
+
+export const githubSignUp = (username, password, code, token) => {
+  return async (dispatch) => {
+    try {
+      dispatch(githubSignUpStart());
+      const response = await axios.post(
+        `${config.api.baseURL}/${config.api.endPoints.github}/signup`,
+        {
+          username,
+          password,
+          code,
+          token,
+        }
+      );
+      const socket = io(`${config.socket}`, {
+        transports: ["websocket"],
+      });
+      dispatch(githubSignUpSuccess(response.data.token, socket));
+      dispatch(fetchUser(response.data.token, socket));
+    } catch (err) {
+      console.log(err);
+      dispatch(githubSignUpFailed(err.response.data));
+    }
+  };
+};
+const githubLoginStart = () => {
+  return {
+    type: actionTypes.GITHUB_LOGIN_START,
+  };
+};
+const githubLoginSuccess = (token, socket) => {
+  return {
+    type: actionTypes.GITHUB_LOGIN_SUCCESS,
+    payload: { token, socket },
+  };
+};
+const githubLoginFailed = (error) => {
+  const { githubToken } = error;
+  return {
+    type: actionTypes.GITHUB_LOGIN_FAILED,
+    payload: {
+      error: githubToken ? error.errors[0].msg : error,
+      githubToken: githubToken,
+    },
+  };
+};
+
+export const githubLogin = (code) => {
+  return async (dispatch) => {
+    try {
+      dispatch(githubLoginStart());
+      const response = await axios.post(
+        `${config.api.baseURL}/${config.api.endPoints.github}/login`,
+        { code: code }
+      );
+      const socket = io(`${config.socket}`, {
+        transports: ["websocket"],
+      });
+      dispatch(githubLoginSuccess(response.data.token, socket));
+      dispatch(fetchUser(response.data.token, socket));
+    } catch (err) {
+      console.log(err);
+      dispatch(githubLoginFailed(err.response.data));
     }
   };
 };
