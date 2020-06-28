@@ -19,7 +19,7 @@ class UserProfile extends React.Component {
       avatar: this.props.user.avatar,
     };
 
-    profile = this.props.error ? <p>{this.props.error}</p> : <Spinner />;
+    profile = <Spinner />;
 
     if (this.props.profileNotFound) {
       profile = (
@@ -73,7 +73,6 @@ const mapStateToProps = (state) => {
     user: state.auth.user,
     profileNotFound: state.profile.profileNotFound,
     profile: state.profile.profileData,
-    error: state.profile.error,
     followers: state.connections.followers,
     following: state.connections.following,
   };

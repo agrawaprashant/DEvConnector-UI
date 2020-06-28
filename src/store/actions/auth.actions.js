@@ -193,7 +193,6 @@ const changeProfilePictureFailed = (error) => {
 };
 
 export const changeProfilePicture = (token, profilePicData, callback) => {
-  console.log(profilePicData);
   return async (dispatch) => {
     try {
       dispatch(changeProfilePictureStart());

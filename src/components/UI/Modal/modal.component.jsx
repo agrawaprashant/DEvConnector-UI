@@ -22,9 +22,7 @@ class Modal extends React.Component {
       nextProps.children !== this.props.children
     );
   }
-  // componentDidUpdate() {
-  //   console.log("Modal Reremder..");
-  // }
+
   render() {
     const { switchedToMobile } = this.state;
     const modalImageClasses = [classes.Modal];

@@ -10,10 +10,10 @@ const dashboard = (props) => {
       </div>
       <div className={classes.UserDetails}>
         <h1 className={classes.WelcomeMessage}>
-          Hi {props.data.name.split(" ")[0]}, You are welcome on Geeks on Fleek!
+          Hi {props.data.name.split(" ")[0]}, Welcome to Geeks on Fleek!
         </h1>
       </div>
-      <div className={classes.EditBtn}>
+      {/* <div className={classes.EditBtn}>
         <button
           onClick={() => {
             props.history.push("/edit-profile");
@@ -21,7 +21,7 @@ const dashboard = (props) => {
         >
           Edit Profile
         </button>
-      </div>
+      </div> */}
     </header>
   );
 

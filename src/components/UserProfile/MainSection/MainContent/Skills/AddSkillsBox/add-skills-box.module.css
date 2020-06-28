@@ -1,7 +1,9 @@
 .AddBtn {
   display: block;
   border: 2px dashed #5bc0de;
-  padding: 40px 60px;
+  /* padding: 40px 60px; */
+  width: 200px;
+  height: 100px;
   color: #5bc0de;
   background-color: #fff;
   font-size: 16px;

@@ -10,7 +10,6 @@ class EditWork extends React.Component {
   };
 
   addNewClickHandler = () => {
-    console.log("asdfasdfasdf");
     this.setState({
       addNewWork: <AddNewWork cancel={this.cancelClickedHandler} />,
     });

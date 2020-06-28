@@ -103,7 +103,7 @@ class Login extends React.Component {
           </p>
           <a
             href={`https://github.com/login/oauth/authorize?client_id=${config.githubOAuthClientID}
-                    &redirect_uri=http://192.168.1.4:3000/login`}
+                    &redirect_uri=${config.githubRedirectURI}/login`}
             className={classes.FacebookBtn}
           >
             <div className={classes.BtnContent}>

@@ -29,6 +29,10 @@
   text-decoration: none;
 }
 
+.Social {
+  margin-right: 1rem;
+}
+
 .ProfileLink h4 {
   margin: 0;
   padding: 0;
@@ -70,9 +74,12 @@
   }
   .MainContent {
     margin-top: 1.5rem;
+    width: 90%;
+    margin: auto;
   }
 
   .Social {
     margin-top: 1.3rem;
+    margin-right: 0;
   }
 }

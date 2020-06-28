@@ -41,30 +41,11 @@ class Posts extends React.Component {
         );
       });
       this.props.socket.on(MESSAGE_SEEN, (chatId, seenReceiver, seenSender) => {
-        console.log(
-          "CHATID:",
-          chatId,
-          "SEEN_RECEIVER:",
-          seenReceiver,
-          "SEEN_SENDER:",
-          seenSender
-        );
         this.props.onMessageSeen(chatId, seenSender, seenReceiver);
       });
     }
   }
 
-  componentDidUpdate() {
-    console.log("component updated!");
-    // this.props.socket.on(PRIVATE_CHAT_MESSAGE, (data) => {
-    //   console.log("MESSAGE RECEIVED!!", data);
-    //   const { chatId, sender, receiver, messageText } = data;
-    //   this.props.onMessageReceived(
-    //     chatId,
-    //     createChatMessage(messageText, sender, receiver)
-    //   );
-    // });
-  }
   render() {
     let posts = null;
     if (this.props.posts.length === 0) {
@@ -88,7 +69,6 @@ class Posts extends React.Component {
     );
   }
   componentWillUnmount() {
-    console.log("component will unmount called");
     this.props.socket.removeAllListeners();
   }
 }

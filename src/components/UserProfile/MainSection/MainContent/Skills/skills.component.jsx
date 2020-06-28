@@ -4,11 +4,9 @@ import AddNewSKill from "../../../../../containers/UserProfile/AddMainContent/Ad
 import classes from "./skills.module.css";
 
 const Skills = (props) => {
-  console.log(props);
   const [newSkillComponent, setNewSkillComponent] = useState(null);
 
   const addSkillsClickedHandler = () => {
-    console.log("addSkillsClicked@!!");
     setNewSkillComponent(<AddNewSKill cancel={cancelClickedHandler} />);
   };
 

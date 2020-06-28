@@ -102,7 +102,7 @@ class SignUp extends React.Component {
           </p>
           <a
             href={`https://github.com/login/oauth/authorize?client_id=${config.githubOAuthClientID}
-                    &redirect_uri=http://192.168.1.4:3000/github-signup`}
+                    &redirect_uri=${config.githubRedirectURI}/github-signup`}
             className={classes.FacebookBtn}
           >
             <div className={classes.BtnContent}>
@@ -173,7 +173,7 @@ class SignUp extends React.Component {
                 </div>
               ) : null}
             </div>
-            <input style={{ opacity: 0, position: "absolute" }} />
+
             <input
               value={signUpForm.email.value}
               onChange={(e) => this.inputChangedHandler(e, "email")}

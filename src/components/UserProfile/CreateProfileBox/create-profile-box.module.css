@@ -1,11 +1,11 @@
 .ProfileNotFound {
-  height: 30vh;
-  border: 1px solid #ccc;
+  height: 25vh;
   max-width: 70%;
   margin: 20px auto;
   padding: 15px;
   color: #333;
-  background-color: #dfe3ee;
+  border-radius: 10px;
+  background-color: #ededed;
 }
 
 .ProfileNotFoundContent {
@@ -20,12 +20,13 @@
   display: inline-block;
   border: none;
   width: 30%;
-  background-color: #74d600;
+  background-color: #7fa598;
   padding: 15px;
   color: #fff;
   cursor: pointer;
   font-weight: bold;
   font-size: 16px;
+  border-radius: 5px;
 }
 
 .ProfileCreateBtn:hover {

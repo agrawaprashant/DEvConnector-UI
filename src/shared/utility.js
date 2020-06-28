@@ -42,7 +42,7 @@ export const checkMimeType = (file, callback) => {
     for (let i = 0; i < arr.length; i++) {
       header += arr[i].toString(16);
     }
-    console.log(header);
+
     switch (header) {
       case "89504e47": //image/png
         isValid = true;
