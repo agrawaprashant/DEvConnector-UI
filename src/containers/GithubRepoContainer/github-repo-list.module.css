@@ -1,0 +1,27 @@
+.Container {
+  padding: 0 1rem;
+}
+
+.Header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  /* background-color: #666; */
+  margin: 10px 0;
+}
+
+.Header p {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #aaa;
+}
+
+.Header img {
+  height: 32px;
+  width: 100px;
+  padding: 0 10px;
+}
+
+.List {
+}

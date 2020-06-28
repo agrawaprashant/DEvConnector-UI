@@ -11,25 +11,21 @@ const MainSection = (props) => {
         <div className={classes.Connections}>
           <ul>
             <li>
-              <a href="/">Followers ({props.data.followers.length})</a>
+              <p>Followers ({props.data.followers.length})</p>
             </li>
             <li>
-              <a href="/">Following ({props.data.following.length})</a>
+              <p>Following ({props.data.following.length})</p>
             </li>
           </ul>
         </div>
         <div className={classes.Social}>
           <Social data={props.data.social} />
         </div>
-        <div className={classes.ProfileLink}>
-          <h4>Profile Link</h4>
-          <p>http://www.hackerearth.com/@prashant815</p>
-        </div>
       </section>
       <section className={classes.MainContent}>
         <MainContent data={props.data.mainContentData} />
       </section>
-      <section>
+      <section className={classes.GithubRepository}>
         <Github data={props.data.githubusername} />
       </section>
     </main>

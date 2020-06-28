@@ -7,6 +7,7 @@ import { connect } from "react-redux";
 import OtherPersonPosts from "../../containers/OtherPersonProfile/Posts/other-person-posts.component";
 import SmallSpinner from "../UI/SmallSpinner/small-spinner.component";
 import ProfileMessage from "./Message/profile-message.component";
+import GithubRepositoryList from "./GithubRespositories/other-person-repo.component";
 
 import { Link } from "react-router-dom";
 
@@ -16,6 +17,7 @@ class OtherPersonProfile extends React.Component {
     this.state = {
       showAbout: true,
       showPosts: false,
+      showGithubRepo: false,
       loading: false,
       profileData: null,
       connectionsOnMobile: false,
@@ -32,6 +34,7 @@ class OtherPersonProfile extends React.Component {
       this.setState({
         showAbout: true,
         showPosts: false,
+        showGithubRepo: false,
         showMessagePane: false,
       });
     }
@@ -201,7 +204,11 @@ class OtherPersonProfile extends React.Component {
                     classes.TabButton
                   }`}
                   onClick={() =>
-                    this.setState({ showAbout: true, showPosts: false })
+                    this.setState({
+                      showAbout: true,
+                      showPosts: false,
+                      showGithubRepo: false,
+                    })
                   }
                 >
                   About
@@ -213,14 +220,31 @@ class OtherPersonProfile extends React.Component {
                     classes.TabButton
                   }`}
                   onClick={() =>
-                    this.setState({ showPosts: true, showAbout: false })
+                    this.setState({
+                      showPosts: true,
+                      showAbout: false,
+                      showGithubRepo: false,
+                    })
                   }
                 >
                   Posts
                 </button>
               </li>
               <li>
-                <button className={classes.TabButton}>Github</button>
+                <button
+                  className={`${
+                    this.state.showGithubRepo ? classes.Active : null
+                  } ${classes.TabButton}`}
+                  onClick={() =>
+                    this.setState({
+                      showPosts: false,
+                      showAbout: false,
+                      showGithubRepo: true,
+                    })
+                  }
+                >
+                  Github
+                </button>
               </li>
             </ul>
           </div>
@@ -260,6 +284,12 @@ class OtherPersonProfile extends React.Component {
         ) : null}
         {this.state.showPosts ? (
           <OtherPersonPosts userId={this.props.match.params.id} />
+        ) : null}
+        {this.state.showGithubRepo ? (
+          <GithubRepositoryList
+            repositoryList={this.props.profileData.githubRepositories}
+            githubusername={this.props.profileData.githubusername}
+          />
         ) : null}
         {showMessagePane ? (
           <ProfileMessage closed={this.messagePaneClosedHandler} />

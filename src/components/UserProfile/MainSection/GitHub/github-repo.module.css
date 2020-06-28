@@ -1,0 +1,7 @@
+.List {
+  /* box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2), -1px -1px 3px rgba(0, 0, 0, 0.2); */
+
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}

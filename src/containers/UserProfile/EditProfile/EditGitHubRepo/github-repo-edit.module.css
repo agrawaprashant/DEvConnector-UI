@@ -1,14 +1,17 @@
 .GitHubSection {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   height: 200px;
   width: 300px;
-  border: 1px solid #ccc;
   text-align: center;
   position: sticky;
-  top: 200px;
-  margin-top: 20px;
+  top: 250px;
   border-radius: 10px;
   color: #444;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  box-shadow: 1px 1px 3px 1px rgba(93, 92, 237, 0.5),
+    -1px -1px 3px 1px rgba(93, 92, 237, 0.5);
 }
 
 .GithubBtn {

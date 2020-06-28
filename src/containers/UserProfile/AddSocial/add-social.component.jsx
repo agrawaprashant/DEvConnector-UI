@@ -48,8 +48,8 @@ class AddSocial extends React.Component {
         { value: "" },
         {},
         { iconClass: "fab fa-youtube" }
-      )
-    }
+      ),
+    },
   };
   inputChangedHandler = (event, controlName) => {
     let valid = checkValidity(
@@ -61,17 +61,17 @@ class AddSocial extends React.Component {
       {
         value: event.target.value,
         valid: valid,
-        touched: true
+        touched: true,
       }
     );
     let updatedForm = updateObject(this.state.socialLinksForm, {
-      [controlName]: updatedFormControl
+      [controlName]: updatedFormControl,
     });
 
     this.setState({ socialLinksForm: updatedForm });
   };
 
-  onFormSubmit = event => {
+  onFormSubmit = (event) => {
     event.preventDefault();
   };
 
@@ -85,10 +85,10 @@ class AddSocial extends React.Component {
         value: this.state.socialLinksForm[key].value,
         valid: this.state.socialLinksForm[key].valid,
         touched: this.state.socialLinksForm[key].touched,
-        styles: this.state.socialLinksForm[key].styles
+        styles: this.state.socialLinksForm[key].styles,
       });
     }
-    let formElements = formControls.map(control => {
+    let formElements = formControls.map((control) => {
       return (
         <InputWithIcon
           key={control.controlName}
@@ -98,7 +98,7 @@ class AddSocial extends React.Component {
           valid={control.valid}
           value={control.value}
           touched={control.touched}
-          changed={event =>
+          changed={(event) =>
             this.inputChangedHandler(event, control.controlName)
           }
         />
@@ -107,7 +107,9 @@ class AddSocial extends React.Component {
     return (
       <form className={classes.SocialForm}>
         {formElements}
-        <button className={classes.SaveBtn}>Save</button>
+        <button disabled className={classes.SaveBtn}>
+          Save
+        </button>
       </form>
     );
   }

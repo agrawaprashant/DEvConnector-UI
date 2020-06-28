@@ -1,6 +1,6 @@
 import React from "react";
 import classes from "./dashboard.module.css";
-import { withRouter } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 
 const dashboard = (props) => {
   let dashboard = (
@@ -56,7 +56,7 @@ const dashboard = (props) => {
             {props.data.profileData.skills.length !== 0 ? (
               <p>{props.data.profileData.skills}</p>
             ) : (
-              <a href="/">Add Skills</a>
+              <Link to="/edit-profile">Add Skills</Link>
             )}
           </div>
           <div className={classes.Education}>
@@ -64,7 +64,7 @@ const dashboard = (props) => {
             {props.data.profileData.education.length !== 0 ? (
               <p>{props.data.profileData.education[0].school}</p>
             ) : (
-              <a href="/">Add Education</a>
+              <Link to="/edit-profile">Add Education</Link>
             )}
           </div>
         </div>

@@ -1,0 +1,13 @@
+.List {
+  width: 70%;
+  margin: auto;
+  border: 1px solid #ccc;
+  margin-top: 1.5rem;
+  border-radius: 5px;
+}
+
+@media screen and (max-width: 500px) {
+  .List {
+    width: 90%;
+  }
+}

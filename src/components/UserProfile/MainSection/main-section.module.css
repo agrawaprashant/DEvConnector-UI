@@ -1,11 +1,13 @@
 .ProfileContent {
   display: grid;
-  grid-template-columns: 1fr 3fr 1fr;
+  grid-template-columns: 1.5fr 33fr 2fr;
   padding: 20px 0;
   gap: 10px;
 }
 
 .SideBar {
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
 
 .Connections {
@@ -29,20 +31,6 @@
   text-decoration: none;
 }
 
-.Social {
-  margin-right: 1rem;
-}
-
-.ProfileLink h4 {
-  margin: 0;
-  padding: 0;
-  padding-bottom: 10px;
-}
-.ProfileLink {
-  padding: 10px;
-  text-align: center;
-}
-
 .MainContent {
   /* box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
   box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2), -1px -1px 3px rgba(0, 0, 0, 0.2);
@@ -55,6 +43,10 @@
     justify-content: center;
     align-items: center;
     padding: 5px 10px;
+  }
+
+  .SideBar {
+    margin-bottom: 10px;
   }
 
   .Connections {
@@ -81,5 +73,13 @@
   .Social {
     margin-top: 1.3rem;
     margin-right: 0;
+  }
+
+  .GithubRepository {
+    margin-top: 10px;
+  }
+
+  .ProfileLink {
+    margin-top: -1rem;
   }
 }
